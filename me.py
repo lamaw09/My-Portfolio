@@ -93,8 +93,9 @@ with st.sidebar:
     st.write("🌐 **Connect:**")
     st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lamaw09)")
     st.markdown("[![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://facebook.com)")
-    st.markdown("[![Instagram](https://www.instagram.com/_itsmenoob_/)")
-    st.markdown("[![Gmail](klydejosephy@gmail.com/)")
+    # Fixed Connections Below
+    st.markdown("[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/_itsmenoob_/)")
+    st.markdown("[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:klydejosephy@gmail.com)")
 
 # --- HOME SECTION ---
 if selection == "Home":
@@ -170,7 +171,7 @@ elif selection == "Contact":
                 st.success("Sent!")
     with c2:
         st.info("**📍 Location:** Clarin, Northern Mindanao")
-        st.info("**📧 Email:** yabo.klyde@example.com") # Replace with real email
+        st.info("**📧 Email:** klydejosephy@gmail.com")
 
 # --- FOOTER ---
 st.markdown("---")
