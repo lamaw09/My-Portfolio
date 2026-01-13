@@ -15,11 +15,20 @@ def load_lottieurl(url):
 
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 
-# --- CUSTOM CSS ---
+# --- CUSTOM CSS (ENHANCED UI/UX) ---
 st.markdown("""
     <style>
-    .main { background-color: #f8fafc; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    .main { background-color: #f1f5f9; }
     html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+
+    /* Glassmorphism Sidebar */
+    [data-testid="stSidebar"] {
+        background-image: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+        color: white;
+    }
+    [data-testid="stSidebar"] * { color: white !important; }
 
     /* Mobile Responsiveness */
     @media (max-width: 768px) {
@@ -29,62 +38,96 @@ st.markdown("""
         }
     }
 
-    /* CENTERED IMAGE & TEXT BOX */
+    /* CENTERED PROFILE BOX */
     .profile-box {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
+        padding: 2rem;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     }
 
     [data-testid="stImage"] img {
-        border-radius: 20px;
-        border: 5px solid white;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        max-width: 250px !important; /* Professional resize */
+        border-radius: 50% !important; /* Circular for a more professional look */
+        border: 4px solid #3b82f6;
+        padding: 5px;
+        transition: transform 0.3s ease;
+        max-width: 200px !important;
         height: auto;
-        margin-bottom: 15px;
+    }
+    
+    [data-testid="stImage"] img:hover {
+        transform: scale(1.05);
     }
 
-    /* Bento-style Cards */
+    /* Enhanced Project Cards */
     .project-card {
         background-color: white;
         padding: 1.5rem;
-        border-radius: 15px;
+        border-radius: 16px;
         border: 1px solid #e2e8f0;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         margin-bottom: 25px;
         height: 100%;
     }
     .project-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.1);
-        border-color: #2563eb;
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.15);
+        border-color: #3b82f6;
     }
     
-    /* Skill Tags */
+    /* Skill Tags (Modern) */
     .skill-tag {
         display: inline-block;
-        background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-        color: #2563eb;
-        padding: 5px 14px;
-        border-radius: 50px;
+        background: #eff6ff;
+        color: #1d4ed8;
+        padding: 6px 12px;
+        border-radius: 8px;
         font-size: 0.75rem;
-        font-weight: 700;
+        font-weight: 600;
         margin: 4px 2px;
+        border: 1px solid #dbeafe;
     }
 
-    /* Metric Box */
+    /* Metric Box (Modern Tiles) */
     .metric-box {
         text-align: center;
-        padding: 10px;
-        background: black;
-        color: white;
-        border-radius: 10px;
-        border-left: 5px solid #2563eb;
-        margin-bottom: 10px;
+        padding: 20px;
+        background: #1e293b;
+        color: #f8fafc;
+        border-radius: 12px;
+        border-bottom: 4px solid #3b82f6;
+        transition: 0.3s;
+    }
+    .metric-box:hover {
+        background: #0f172a;
+    }
+    .metric-box h3 {
+        margin: 0;
+        color: #3b82f6 !important;
+        font-size: 1.8rem;
+    }
+    .metric-box p {
+        margin: 0;
+        font-size: 0.8rem;
+        opacity: 0.8;
+    }
+
+    /* Custom Form Styling */
+    .stTextInput input, .stTextArea textarea {
+        border-radius: 10px !important;
+    }
+    .stButton button {
+        border-radius: 10px !important;
+        background-color: #3b82f6 !important;
+        color: white !important;
+        width: 100%;
+        font-weight: 600 !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -112,29 +155,31 @@ if selection == "Home":
         st.title("Klyde Joseph P. Yabo")
         st.write("""
         I build **Agentic AI systems** and **Automated Web Architectures**. 
-        Transforming manual workflows into autonomous digital processes.
+        Transforming manual workflows into autonomous digital processes through robust engineering.
         """)
         
         skills = ["Python", "Streamlit", "Playwright", "FastAPI", "Javascript", "OBS Studio", "HTML/CSS"]
         skill_html = "".join([f'<span class="skill-tag">{s}</span>' for s in skills])
         st.markdown(skill_html, unsafe_allow_html=True)
         
-        st.markdown("---")
+        st.markdown("<br>", unsafe_allow_html=True)
+        # Responsive Metric Row
         m_col1, m_col2, m_col3 = st.columns(3)
-        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Projects</p></div>', unsafe_allow_html=True)
-        with m_col2: st.markdown('<div class="metric-box"><h3>99%</h3><p>Uptime</p></div>', unsafe_allow_html=True)
-        with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Clients</p></div>', unsafe_allow_html=True)
+        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Projects Done</p></div>', unsafe_allow_html=True)
+        with m_col2: st.markdown('<div class="metric-box"><h3>99%</h3><p>System Uptime</p></div>', unsafe_allow_html=True)
+        with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Happy Clients</p></div>', unsafe_allow_html=True)
 
     with col2:
-        # WRAPPER TO CENTER BOTH IMAGE AND TEXT
         st.markdown('<div class="profile-box">', unsafe_allow_html=True)
         st.image("ID.png")
-        st.markdown("<p style='color: #64748b; font-size: 1rem; font-weight: bold; margin-top: -10px;'>Developer & Automation Specialist</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #1e293b; font-size: 1.1rem; font-weight: 700; margin-top: 15px; margin-bottom: 0px;'>Developer & Automation Specialist</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #64748b; font-size: 0.9rem;'>Available for Freelance</p>", unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
     st.title("🚀 Featured Projects")
+    st.write("A collection of systems designed for scale and efficiency.")
     
     projects = [
         {
@@ -160,30 +205,41 @@ elif selection == "Projects":
             tag_html = "".join([f'<span class="skill-tag">{tag}</span>' for tag in p['tags']])
             st.markdown(f"""
             <div class="project-card">
-                <img src="{p['image']}" style="width:100%; border-radius:10px; height:180px; object-fit:cover;">
-                <h3 style="margin-top:15px; font-size: 1.2rem;">{p['title']}</h3>
-                <p style="color:#64748b; font-size:0.85rem; min-height:45px;">{p['desc']}</p>
-                <div style="margin-bottom:15px;">{tag_html}</div>
-                <a href="{p['link']}" target="_blank" style="color:#2563eb; text-decoration:none; font-weight:bold; font-size: 0.9rem;">Source Code ↗</a>
+                <img src="{p['image']}" style="width:100%; border-radius:12px; height:200px; object-fit:cover;">
+                <h3 style="margin-top:20px; color:#0f172a;">{p['title']}</h3>
+                <p style="color:#475569; font-size:0.9rem; min-height:50px;">{p['desc']}</p>
+                <div style="margin-bottom:20px;">{tag_html}</div>
+                <a href="{p['link']}" target="_blank" style="color:#3b82f6; text-decoration:none; font-weight:700; font-size: 0.9rem; border: 1px solid #3b82f6; padding: 8px 16px; border-radius: 8px;">View Project ↗</a>
             </div>
             """, unsafe_allow_html=True)
 
 # --- CONTACT SECTION ---
 elif selection == "Contact":
     st.title("📬 Get In Touch")
+    st.write("Have an idea? Let's turn it into reality.")
+    
     c1, c2 = st.columns([2, 1])
     with c1:
         with st.form("contact_form"):
-            name = st.text_input("Full Name")
-            email = st.text_input("Email Address")
-            msg = st.text_area("Your Message")
+            name = st.text_input("Full Name", placeholder="John Doe")
+            email = st.text_input("Email Address", placeholder="john@example.com")
+            msg = st.text_area("Your Message", placeholder="Tell me about your project...")
             if st.form_submit_button("Send Message"):
                 st.balloons()
-                st.success(f"Thank you {name}!")
+                st.success(f"Thank you {name}, I'll be in touch soon!")
     with c2:
-        st.info("**📍 Location:** Clarin, Northern Mindanao, PH")
-        st.info("**📧 Direct Email:** klydejosephy@gmail.com")
+        st.markdown("""
+        <div style="background: white; padding: 20px; border-radius: 15px; border: 1px solid #e2e8f0;">
+            <p style="color:#64748b; font-weight:700; margin-bottom:5px;">LOCATION</p>
+            <p style="color:#0f172a; margin-bottom:20px;">📍 Clarin, Northern Mindanao, PH</p>
+            <p style="color:#64748b; font-weight:700; margin-bottom:5px;">EMAIL</p>
+            <p style="color:#0f172a; margin-bottom:20px;">📧 klydejosephy@gmail.com</p>
+            <p style="color:#64748b; font-weight:700; margin-bottom:5px;">AVAILABILITY</p>
+            <p style="color:#0f172a;">🟢 Currently Open for Work</p>
+        </div>
+        """, unsafe_allow_html=True)
 
 # --- FOOTER ---
+st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("---")
-st.markdown(f"<p style='text-align: center; color: #94a3b8; font-size: 0.8rem;'>© {date.today().year} Klyde Joseph | Built with Streamlit & ❤️</p>", unsafe_allow_html=True)
+st.markdown(f"<p style='text-align: center; color: #64748b; font-size: 0.8rem;'>© {date.today().year} Klyde Joseph | Modern Portfolio | Built with Streamlit</p>", unsafe_allow_html=True)
