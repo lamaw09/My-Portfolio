@@ -98,27 +98,7 @@ elif selection == "Projects":
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
             "tags": ["Python", "Playwright", "Webhooks"]
         },
-        {
-            "title": "Eco-Tracker Pro", 
-            "desc": "Real-time dashboard for monitoring small business carbon footprints and sustainability metrics.", 
-            "link": "#",
-            "image": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80",
-            "tags": ["Data Viz", "Streamlit", "GreenTech"]
-        },
-        {
-            "title": "AI Content Auditor", 
-            "desc": "Advanced NLP tool to verify human-written content vs AI generated text with high accuracy.", 
-            "link": "#",
-            "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
-            "tags": ["OpenAI", "NLP", "Python"]
-        },
-        {
-            "title": "Media Automation", 
-            "desc": "Python-driven OBS automation for dynamic scene switching and automated streaming workflows.", 
-            "link": "#",
-            "image": "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?auto=format&fit=crop&w=800&q=80",
-            "tags": ["OBS Studio", "Automation", "LiveStream"]
-        }
+        
     ]
     
     for i, p in enumerate(projects):
