@@ -1,0 +1,12 @@
+# 1. Prepare your changes (The "Gather" step)
+git add .
+
+# 2. Save your changes locally with a note (The "Label" step)
+git commit -m "Updated my projects and fixed the bio"
+
+# 3. Send them to the internet (The "Sync" step)
+git push
+
+
+
+PAGMAG PUSH KA SA IMO GITHUB!!!!

@@ -68,7 +68,7 @@ if selection == "Home":
         """)
         
         # Skill chips
-        skills = ["Python", "React", "TypeScript", "Streamlit", "SQL", "OBS Studio"]
+        skills = ["Python", "Streamlit", "HTML?CSS", "Javascript", "OBS Studio"]
         skill_html = "".join([f'<span class="skill-tag">{s}</span>' for s in skills])
         st.markdown(skill_html, unsafe_allow_html=True)
         
