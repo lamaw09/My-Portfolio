@@ -13,15 +13,22 @@ def load_lottieurl(url):
         return None
     return r.json()
 
-# Dynamic animation for the sidebar
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 
-# --- CUSTOM CSS ---
+# --- CUSTOM CSS (RESPONSIVE FOCUS) ---
 st.markdown("""
     <style>
     .main { background-color: #f8fafc; }
     html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
-    
+
+    /* Fix for mobile responsiveness: Stacking columns */
+    @media (max-width: 768px) {
+        .stColumn {
+            width: 100% !important;
+            margin-bottom: 20px;
+        }
+    }
+
     /* Bento-style Cards */
     .project-card {
         background-color: white;
@@ -31,6 +38,7 @@ st.markdown("""
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
         transition: all 0.3s ease;
         margin-bottom: 25px;
+        height: 100%;
     }
     .project-card:hover {
         transform: translateY(-10px);
@@ -50,26 +58,26 @@ st.markdown("""
         margin: 4px 2px;
     }
 
-    /* Metric Box */
+    /* Metric Box Responsive */
     .metric-box {
         text-align: center;
-        padding: 15px;
+        padding: 10px;
         background: white;
         border-radius: 10px;
         border-left: 5px solid #2563eb;
+        margin-bottom: 10px;
     }
 
-    /* Professional Image Styling */
-    .img-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
+    /* Responsive Profile Image */
     .prof-img {
-        border-radius: 30px; /* Rounded corners */
+        border-radius: 30px;
         border: 4px solid white;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        object-fit: cover;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 300px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -82,7 +90,7 @@ with st.sidebar:
     selection = st.radio("Go to", ["Home", "Projects", "Blog", "Contact"])
     
     st.markdown("---")
-    st.write("🌐 **Connect with me:**")
+    st.write("🌐 **Connect:**")
     st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lamaw09)")
     st.markdown("[![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://facebook.com)")
 
@@ -94,87 +102,80 @@ if selection == "Home":
         st.subheader("Full-Stack Solutions 💡")
         st.title("Klyde Joseph P. Yabo")
         st.write("""
-        I specialize in building **Agentic AI systems** and **Automated Web Architectures**. 
-        My goal is to transform manual workflows into high-speed, autonomous digital processes.
+        I build **Agentic AI systems** and **Automated Web Architectures**. 
+        Transforming manual workflows into autonomous digital processes.
         """)
         
-        # Skill chips
         skills = ["Python", "Streamlit", "Playwright", "FastAPI", "PostgreSQL", "Tailwind CSS"]
         skill_html = "".join([f'<span class="skill-tag">{s}</span>' for s in skills])
         st.markdown(skill_html, unsafe_allow_html=True)
         
         st.markdown("---")
-        # Success Metrics
-        m1, m2, m3 = st.columns(3)
-        with m1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Projects</p></div>', unsafe_allow_html=True)
-        with m2: st.markdown('<div class="metric-box"><h3>99%</h3><p>Uptime</p></div>', unsafe_allow_html=True)
-        with m3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Clients</p></div>', unsafe_allow_html=True)
+        # Responsive Metric Row
+        m_col1, m_col2, m_col3 = st.columns(3)
+        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Projects</p></div>', unsafe_allow_html=True)
+        with m_col2: st.markdown('<div class="metric-box"><h3>99%</h3><p>Uptime</p></div>', unsafe_allow_html=True)
+        with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Clients</p></div>', unsafe_allow_html=True)
 
     with col2:
-        # We use a sub-column to make the image smaller and more centered
-        sub_col1, sub_col2, sub_col3 = st.columns([1, 4, 1])
-        with sub_col2:
-            st.markdown('<div class="img-container">', unsafe_allow_html=True)
-            st.image("ID.png", use_container_width=True)
-            st.markdown('</div>', unsafe_allow_html=True)
-            st.markdown("<p style='text-align: center; color: #64748b; font-size: 0.9rem; margin-top: 10px;'>Klyde Joseph P. Yabo</p>", unsafe_allow_html=True)
+        # Centered responsive image
+        st.image("ID.png", use_container_width=True)
+        st.markdown("<p style='text-align: center; color: #64748b; font-size: 0.9rem;'>Developer & Automation Specialist</p>", unsafe_allow_html=True)
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
     st.title("🚀 Engineering Gallery")
-    st.write("Each project represents a unique challenge solved with clean code.")
     
-    col_a, col_b = st.columns(2)
-    
+    # Using a container for projects to manage spacing
     projects = [
         {
             "title": "FB to Discord Webhook", 
-            "desc": "An autonomous scraper utilizing Playwright to broadcast filtered news feeds from Facebook to Discord servers instantly.", 
+            "desc": "Autonomous scraper utilizing Playwright to broadcast news feeds instantly.", 
             "link": "https://github.com/lamaw09/Facebook-to-Discord-Webhook",
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
-            "tags": ["Scraping", "Automation", "Real-time"]
+            "tags": ["Scraping", "Automation"]
         },
         {
             "title": "Agentic AI Orchestrator", 
-            "desc": "A multi-agent system designed to handle complex customer support queries using GPT-4 and custom tools.", 
+            "desc": "Multi-agent system designed for complex support queries using GPT-4.", 
             "link": "#",
             "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
-            "tags": ["AI", "LLMs", "Python"]
+            "tags": ["AI", "Python"]
         }
     ]
     
+    # Project columns that collapse on mobile
+    p_col1, p_col2 = st.columns(2)
     for i, p in enumerate(projects):
-        target_col = col_a if i % 2 == 0 else col_b
+        target_col = p_col1 if i % 2 == 0 else p_col2
         with target_col:
             tag_html = "".join([f'<span class="skill-tag">{tag}</span>' for tag in p['tags']])
             st.markdown(f"""
             <div class="project-card">
-                <img src="{p['image']}" style="width:100%; border-radius:10px; height:200px; object-fit:cover;">
-                <h3 style="margin-top:15px;">{p['title']}</h3>
-                <p style="color:#64748b; font-size:0.9rem; min-height:50px;">{p['desc']}</p>
+                <img src="{p['image']}" style="width:100%; border-radius:10px; height:180px; object-fit:cover;">
+                <h3 style="margin-top:15px; font-size: 1.2rem;">{p['title']}</h3>
+                <p style="color:#64748b; font-size:0.85rem; min-height:40px;">{p['desc']}</p>
                 <div style="margin-bottom:15px;">{tag_html}</div>
-                <a href="{p['link']}" target="_blank" style="color:#2563eb; text-decoration:none; font-weight:bold;">View Code ↗</a>
+                <a href="{p['link']}" target="_blank" style="color:#2563eb; text-decoration:none; font-weight:bold; font-size: 0.9rem;">View Code ↗</a>
             </div>
             """, unsafe_allow_html=True)
 
 # --- CONTACT SECTION ---
 elif selection == "Contact":
-    st.title("📬 Let's Build Something")
-    st.write("I'm currently open for freelance opportunities and collaborations.")
-    
+    st.title("📬 Get In Touch")
     c1, c2 = st.columns([2, 1])
     with c1:
         with st.form("contact_form"):
-            name = st.text_input("Full Name")
-            email = st.text_input("Email Address")
-            msg = st.text_area("How can I help you?")
-            if st.form_submit_button("🚀 Send Message"):
+            name = st.text_input("Name")
+            email = st.text_input("Email")
+            msg = st.text_area("Message")
+            if st.form_submit_button("Send"):
                 st.balloons()
-                st.success("Message sent! I will get back to you within 24 hours.")
+                st.success("Sent!")
     with c2:
-        st.info("**Location:** Clarin, Northern Mindanao, PH")
-        st.info("**Availability:** Mon-Fri, 9am - 6pm")
+        st.info("**📍 Location:** Clarin, Northern Mindanao")
+        st.info("**📧 Email:** yabo.klyde@example.com") # Replace with real email
 
 # --- FOOTER ---
 st.markdown("---")
-st.markdown(f"<p style='text-align: center; color: #94a3b8;'>© {date.today().year} Klyde Joseph | Built with Streamlit</p>", unsafe_allow_html=True)
+st.markdown(f"<p style='text-align: center; color: #94a3b8; font-size: 0.8rem;'>© {date.today().year} Klyde Joseph | Mobile-Friendly Portfolio</p>", unsafe_allow_html=True)
