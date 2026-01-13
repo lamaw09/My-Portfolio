@@ -2,6 +2,7 @@ import streamlit as st
 from datetime import date
 import requests
 from streamlit_lottie import st_lottie
+import base64
 
 # --- PAGE CONFIG ---
 st.set_page_config(page_title="Klyde Joseph | Portfolio", page_icon="🚀", layout="wide")
@@ -13,63 +14,55 @@ def load_lottieurl(url):
         return None
     return r.json()
 
-lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
+def get_image_base64(path):
+    try:
+        with open(path, "rb") as img_file:
+            return base64.b64encode(img_file.read()).decode()
+    except:
+        return ""
 
-# --- CUSTOM CSS (FINAL PRECISION SIZING) ---
-st.markdown("""
+lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
+img_base64 = get_image_base64("ID.png")
+
+# --- CUSTOM CSS (PRECISION ALIGNMENT) ---
+st.markdown(f"""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
-    .main { background-color: #f8fafc; }
-    html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+    .main {{ background-color: #f8fafc; }}
+    html, body, [class*="css"] {{ font-family: 'Inter', sans-serif; }}
 
     /* Glassmorphism Sidebar */
-    [data-testid="stSidebar"] {
+    [data-testid="stSidebar"] {{
         background-image: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
-    }
+    }}
 
-    /* CENTERED PROFILE BOX - Precision Fix */
-    .profile-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        width: 100%;
-    }
-
-    /* Target the specific container Streamlit puts images in */
-    [data-testid="stVerticalBlock"] > div:has(div.profile-box) {
-        display: flex;
-        flex-direction: column;
-        align-items: center !important;
-    }
-
-    .profile-box {
+    /* PROFILE CARD STYLING */
+    .profile-box {{
         background: white;
-        padding: 2rem;
+        padding: 2.5rem 1.5rem;
         border-radius: 24px;
         border: 1px solid #e2e8f0;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%;
-        max-width: 320px;
-    }
+        text-align: center;
+        margin: 0 auto;
+    }}
 
-    /* Controlled Circular Image */
-    .profile-box img {
-        border-radius: 50% !important; 
-        border: 4px solid #3b82f6;
-        width: 180px !important;
-        height: 180px !important;
+    .profile-img {{
+        width: 170px;
+        height: 170px;
+        border-radius: 50%;
         object-fit: cover;
-        margin-bottom: 15px;
-    }
+        border: 5px solid #3b82f6;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+    }}
 
-    /* Symmetrical Project Cards */
-    .project-card {
+    /* PROJECT CARDS */
+    .project-card {{
         background-color: white;
         padding: 1.5rem;
         border-radius: 20px;
@@ -79,54 +72,56 @@ st.markdown("""
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 500px; 
-    }
-    
-    .project-card:hover {
-        transform: translateY(-5px);
+        height: 520px; 
+        margin-bottom: 20px;
+    }}
+    .project-card:hover {{
+        transform: translateY(-8px);
         border-color: #3b82f6;
-    }
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }}
 
-    .skill-tag {
+    .skill-tag {{
         display: inline-block;
-        background: #f0f7ff;
-        color: #2563eb;
+        background: #eff6ff;
+        color: #1e40af;
         padding: 5px 12px;
         border-radius: 8px;
         font-size: 0.75rem;
-        font-weight: 600;
+        font-weight: 700;
         margin: 3px;
-        border: 1px solid #dbeafe;
-    }
+    }}
 
-    /* Metric Tiles */
-    .metric-box {
+    /* METRICS */
+    .metric-box {{
         text-align: center;
-        padding: 20px 10px;
+        padding: 1.5rem 1rem;
         background: #0f172a;
-        color: #f8fafc;
-        border-radius: 16px;
+        color: white;
+        border-radius: 20px;
         border-bottom: 4px solid #3b82f6;
-    }
-    .metric-box h3 {
+    }}
+    .metric-box h3 {{
         margin: 0;
-        color: #60a5fa !important;
-        font-size: 1.6rem;
-    }
+        color: #3b82f6 !important;
+        font-size: 1.8rem;
+    }}
+    .metric-box p {{
+        margin: 5px 0 0 0;
+        font-size: 0.8rem;
+        opacity: 0.8;
+    }}
 
-    /* Button Styling */
-    .stButton button {
-        background: #2563eb !important;
-        color: white !important;
-        border-radius: 12px !important;
+    /* BUTTONS */
+    div.stButton > button:first-child {{
+        background-color: #2563eb;
+        color: white;
+        border-radius: 12px;
+        border: none;
+        padding: 0.6rem 2rem;
+        font-weight: 600;
         width: 100%;
-        border: none !important;
-        transition: 0.3s;
-    }
-    .stButton button:hover {
-        background: #1e40af !important;
-        transform: scale(1.02);
-    }
+    }}
     </style>
     """, unsafe_allow_html=True)
 
@@ -146,42 +141,36 @@ with st.sidebar:
 
 # --- HOME SECTION ---
 if selection == "Home":
-    col1, col2 = st.columns([1.5, 1], gap="large")
+    col1, col2 = st.columns([1.6, 1], gap="large")
     
     with col1:
         st.markdown("<br><br>", unsafe_allow_html=True)
         st.subheader("Full-Stack Solutions 💡")
         st.title("Klyde Joseph P. Yabo")
-        st.markdown("""
-        I build **Agentic AI systems** and **Automated Web Architectures**. 
-        Transforming manual workflows into autonomous digital processes through robust engineering.
-        """)
+        st.write("I build **Agentic AI systems** and **Automated Web Architectures**. Transforming manual workflows into autonomous digital processes through robust engineering.")
         
         skills = ["Python", "Streamlit", "Playwright", "FastAPI", "Javascript", "OBS Studio", "HTML/CSS"]
         skill_html = "".join([f'<span class="skill-tag">{s}</span>' for s in skills])
         st.markdown(skill_html, unsafe_allow_html=True)
         
-        st.markdown("<br>", unsafe_allow_html=True)
-        # Symmetrical Metrics Row
+        st.markdown("<br><br>", unsafe_allow_html=True)
         m_col1, m_col2, m_col3 = st.columns(3)
-        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Projects Done</p></div>', unsafe_allow_html=True)
-        with m_col2: st.markdown('<div class="metric-box"><h3>99%</h3><p>System Uptime</p></div>', unsafe_allow_html=True)
-        with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Happy Clients</p></div>', unsafe_allow_html=True)
+        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Projects</p></div>', unsafe_allow_html=True)
+        with m_col2: st.markdown('<div class="metric-box"><h3>99%</h3><p>Uptime</p></div>', unsafe_allow_html=True)
+        with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Clients</p></div>', unsafe_allow_html=True)
 
     with col2:
         st.markdown("<br><br>", unsafe_allow_html=True)
-        # Using a single markdown block for the entire profile card to ensure alignment
+        # Use Base64 image if available, else placeholder
+        img_src = f"data:image/png;base64,{img_base64}" if img_base64 else "https://via.placeholder.com/170"
+        
         st.markdown(f"""
-        <div class="profile-container">
-            <div class="profile-box">
-                <img src="https://via.placeholder.com/180" alt="Profile">
-                <h3 style="color: #0f172a; margin-bottom: 5px; font-size: 1.2rem;">Developer & Automation Specialist</h3>
-                <p style="color: #3b82f6; font-weight: 600; margin: 0;">🟢 Available for Freelance</p>
-            </div>
+        <div class="profile-box">
+            <img src="{img_src}" class="profile-img">
+            <h3 style="color: #0f172a; font-size: 1.25rem; margin-bottom: 5px;">Developer & Automation Specialist</h3>
+            <p style="color: #3b82f6; font-weight: 700; margin: 0;">🟢 Available for Freelance</p>
         </div>
         """, unsafe_allow_html=True)
-        # Note: If using local "ID.png", you can use st.image inside the profile-box div 
-        # but for absolute centering, HTML rendering as above is most reliable.
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
@@ -189,20 +178,20 @@ elif selection == "Projects":
     st.write("Robust systems designed for scale and efficiency.")
     
     projects = [
-        {
+        {{
             "title": "FB to Discord Webhook", 
             "desc": "Autonomous scraper utilizing Playwright to broadcast news feeds instantly to Discord servers. Features error handling and multi-feed support.", 
             "link": "https://github.com/lamaw09/Facebook-to-Discord-Webhook",
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
             "tags": ["Scraping", "Automation", "Python"]
-        },
-        {
+        }},
+        {{
             "title": "Streamlit Dashboard", 
             "desc": "A professional data visualization tool for tracking automation metrics in real-time. Includes custom CSS and interactive API integration.", 
             "link": "#",
             "image": "https://images.unsplash.com/photo-1551288049-bbda38a5f072?auto=format&fit=crop&w=800&q=80",
             "tags": ["UI/UX", "Streamlit", "Data"]
-        }
+        }}
     ]
     
     p_col1, p_col2 = st.columns(2)
@@ -213,13 +202,13 @@ elif selection == "Projects":
             st.markdown(f"""
             <div class="project-card">
                 <div>
-                    <img src="{p['image']}" style="width:100%; border-radius:12px; height:200px; object-fit:cover; margin-bottom:15px;">
-                    <h3 style="margin:0; color:#0f172a; font-size:1.2rem;">{p['title']}</h3>
-                    <p style="color:#475569; font-size:0.85rem; margin-top:10px;">{p['desc']}</p>
+                    <img src="{p['image']}" style="width:100%; border-radius:15px; height:200px; object-fit:cover; margin-bottom:20px;">
+                    <h3 style="margin:0; color:#0f172a; font-size:1.3rem;">{p['title']}</h3>
+                    <p style="color:#475569; font-size:0.9rem; margin-top:10px; line-height:1.5;">{p['desc']}</p>
                 </div>
                 <div>
-                    <div style="margin-bottom:15px;">{tag_html}</div>
-                    <a href="{p['link']}" target="_blank" style="display:block; text-align:center; color:white; background:#2563eb; text-decoration:none; font-weight:600; font-size: 0.85rem; padding: 12px; border-radius: 10px;">View Project ↗</a>
+                    <div style="margin-bottom:20px;">{tag_html}</div>
+                    <a href="{p['link']}" target="_blank" style="display:block; text-align:center; color:white; background:#2563eb; text-decoration:none; font-weight:700; font-size: 0.9rem; padding: 12px; border-radius: 12px;">View Source Code ↗</a>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -233,24 +222,25 @@ elif selection == "Contact":
         with st.form("contact_form"):
             name = st.text_input("Full Name", placeholder="Your Name")
             email = st.text_input("Email Address", placeholder="name@email.com")
-            msg = st.text_area("Your Message", placeholder="How can I help you?")
+            msg = st.text_area("Your Message", placeholder="How can I help you today?")
             if st.form_submit_button("Send Message"):
                 st.balloons()
-                st.success(f"Message received, {name}!")
+                st.success(f"Message received, {name}! I'll get back to you shortly.")
     with c2:
         st.markdown("""
-        <div style="background: white; padding: 24px; border-radius: 20px; border: 1px solid #e2e8f0;">
-            <h4 style="margin-top:0; color:#0f172a;">Contact Info</h4>
-            <p style="color:#64748b; font-size:0.8rem; font-weight:700; margin-bottom:0;">LOCATION</p>
-            <p style="color:#1e293b; margin-bottom:15px;">📍 Clarin, Northern Mindanao, PH</p>
-            <p style="color:#64748b; font-size:0.8rem; font-weight:700; margin-bottom:0;">EMAIL</p>
-            <p style="color:#1e293b; margin-bottom:15px;">📧 klydejosephy@gmail.com</p>
-            <div style="background:#f0f7ff; padding:15px; border-radius:12px; border-left:4px solid #3b82f6;">
-                <p style="color:#1d4ed8; font-size:0.8rem; font-weight:600; margin:0;">Open for collaboration!</p>
+        <div style="background: white; padding: 2rem; border-radius: 24px; border: 1px solid #e2e8f0;">
+            <h4 style="margin-top:0; color:#0f172a; margin-bottom:1.5rem;">Contact Details</h4>
+            <p style="color:#64748b; font-size:0.75rem; font-weight:800; margin-bottom:5px; letter-spacing:1px;">LOCATION</p>
+            <p style="color:#1e293b; margin-bottom:20px; font-weight:500;">📍 Clarin, Northern Mindanao, PH</p>
+            <p style="color:#64748b; font-size:0.75rem; font-weight:800; margin-bottom:5px; letter-spacing:1px;">EMAIL</p>
+            <p style="color:#1e293b; margin-bottom:20px; font-weight:500;">📧 klydejosephy@gmail.com</p>
+            <div style="background:#eff6ff; padding:15px; border-radius:15px; border-left:5px solid #3b82f6; margin-top:10px;">
+                <p style="color:#1e40af; font-size:0.85rem; font-weight:600; margin:0;">I'm currently looking for new opportunities!</p>
             </div>
         </div>
         """, unsafe_allow_html=True)
 
 # --- FOOTER ---
 st.markdown("<br><br>", unsafe_allow_html=True)
-st.markdown(f"<p style='text-align: center; color: #94a3b8; font-size: 0.75rem;'>© {date.today().year} Klyde Joseph | Clarin, Northern Mindanao | Built with Streamlit</p>", unsafe_allow_html=True)
+st.markdown("---")
+st.markdown(f"<p style='text-align: center; color: #94a3b8; font-size: 0.8rem; font-weight:500;'>© {date.today().year} Klyde Joseph | Automation Engineering | Built with ❤️</p>", unsafe_allow_html=True)
