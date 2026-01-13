@@ -5,7 +5,7 @@ from streamlit_lottie import st_lottie
 import base64
 
 # --- PAGE CONFIG ---
-st.set_page_config(page_title="Klyde Joseph | Portfolio", page_icon="◻️", layout="wide")
+st.set_page_config(page_title="Klyde Joseph | Portfolio", page_icon="⚡", layout="wide")
 
 # --- ASSETS ---
 def get_image_base64(path):
@@ -17,198 +17,197 @@ def get_image_base64(path):
 
 img_base64 = get_image_base64("ID.png")
 
-# --- SWISS DESIGN CSS ---
+# --- FLAT DESIGN CSS ---
 st.markdown(f"""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
 
-    /* Reset and Global Styles */
-    .main {{ background-color: #ffffff; color: #000000; }}
-    html, body, [class*="css"] {{ font-family: 'Inter', sans-serif; }}
+    /* Reset Shadows and Gradients */
+    .main {{ background-color: #ffffff; color: #2c3e50; }}
+    html, body, [class*="css"] {{ font-family: 'Montserrat', sans-serif; }}
     
-    /* Hard Grid Layout */
+    /* Solid Color Blocks */
     .stMarkdown, .profile-box, .project-card, .metric-box {{
-        border-top: 2px solid #000;
-        border-radius: 0px !important;
-        padding-top: 20px !important;
+        box-shadow: none !important;
+        border: none !important;
     }}
 
-    /* Sidebar Styling - Solid Black */
+    /* Sidebar - Solid Flat Color */
     [data-testid="stSidebar"] {{
-        background-color: #000000 !important;
-        border-right: 2px solid #000;
+        background-color: #2c3e50 !important;
     }}
-    [data-testid="stSidebar"] * {{ color: white !important; }}
+    [data-testid="stSidebar"] * {{ color: #ecf0f1 !important; }}
     
     .sidebar-btn {{
-        display: block; width: 100%; padding: 10px;
-        background: white; color: black !important;
-        text-align: center; font-weight: 900;
-        text-decoration: none; border: 2px solid white;
-        text-transform: uppercase; letter-spacing: 1px;
+        display: block; width: 100%; padding: 12px;
+        background: #3498db; color: white !important;
+        text-align: center; font-weight: 700;
+        text-decoration: none; border-radius: 4px;
+        margin-bottom: 10px;
     }}
-    .sidebar-btn:hover {{ background: black; color: white !important; }}
+    .sidebar-btn:hover {{ background: #2980b9; }}
 
-    /* Swiss Typography */
-    h1 {{ font-weight: 900 !important; text-transform: uppercase; line-height: 0.9 !important; letter-spacing: -3px !important; }}
-    h3 {{ font-weight: 700 !important; text-transform: uppercase; letter-spacing: 1px; }}
-
-    /* Profile Card */
+    /* Flat Typography */
+    h1 {{ font-weight: 900 !important; color: #2c3e50; text-transform: uppercase; }}
+    
+    /* Profile Box - Flat & Solid */
     .profile-box {{
-        text-align: left;
-        background: #f0f0f0;
-        padding: 2rem !important;
-        border: 2px solid #000;
+        background: #f1f2f6;
+        padding: 2.5rem !important;
+        text-align: center;
+        border-bottom: 8px solid #3498db;
     }}
     .profile-img {{
-        width: 100%; border-radius: 0px; filter: grayscale(100%);
-        border-bottom: 2px solid #000; margin-bottom: 20px;
+        width: 180px; height: 180px; border-radius: 50%;
+        object-fit: cover; border: 8px solid #ffffff;
+        margin-bottom: 20px;
     }}
 
-    /* Project Cards - Rigid & Asymmetrical */
+    /* Project Cards - Bold Color Accents */
     .project-card {{
-        background-color: transparent;
-        padding: 0 !important;
-        border-top: 8px solid #000;
-        margin-bottom: 4rem;
-        display: block;
-        height: auto;
+        background-color: #f8f9fa;
+        padding: 1.5rem !important;
+        border-left: 10px solid #e67e22; /* Flat accent color */
+        margin-bottom: 2rem;
+        height: 100%;
     }}
-    .project-img-swiss {{
-        width: 100%; height: 350px; object-fit: cover;
-        filter: grayscale(100%); transition: 0.3s ease;
+    .project-img-flat {{
+        width: 100%; height: 200px; object-fit: cover;
+        margin-bottom: 15px;
     }}
-    .project-img-swiss:hover {{ filter: grayscale(0%); }}
 
+    /* Skill Tags - No rounded corners, solid colors */
     .skill-tag {{
-        display: inline-block; background: #000; color: #fff;
-        padding: 4px 10px; font-size: 0.7rem; font-weight: 700;
-        margin-right: 5px; text-transform: uppercase;
+        display: inline-block; background: #2c3e50; color: #ffffff;
+        padding: 5px 12px; font-size: 0.75rem; font-weight: 700;
+        margin: 3px; text-transform: uppercase;
     }}
 
-    /* Metric Boxes */
+    /* Flat Metrics */
     .metric-box {{
-        background: #fff; padding: 1rem 0 !important;
-        border-top: 4px solid #000;
+        background: #27ae60; color: white;
+        padding: 1.5rem !important;
+        text-align: center;
     }}
-    .metric-box h3 {{ font-size: 3rem !important; margin: 0; }}
-    .metric-box p {{ font-weight: 900; text-transform: uppercase; font-size: 0.8rem; }}
+    .metric-box h3 {{ color: white !important; font-size: 2.5rem !important; margin: 0; }}
+    .metric-box p {{ font-weight: 700; text-transform: uppercase; font-size: 0.7rem; margin: 0; }}
 
-    /* Forms */
+    /* Inputs & Buttons - Sharp & Solid */
     input, textarea {{
-        border: 2px solid #000 !important; border-radius: 0px !important;
+        background: #f1f2f6 !important;
+        border: 2px solid #dfe4ea !important;
+        border-radius: 0px !important;
     }}
     div.stButton > button {{
-        background: #000 !important; color: #fff !important;
-        border-radius: 0px !important; width: 100%; font-weight: 900 !important;
-        text-transform: uppercase; border: none !important; padding: 1rem !important;
+        background: #e74c3c !important; color: white !important;
+        border-radius: 4px !important; width: 100%; font-weight: 700 !important;
+        border: none !important; padding: 12px !important;
+        text-transform: uppercase;
     }}
     </style>
     """, unsafe_allow_html=True)
 
 # --- SIDEBAR ---
 with st.sidebar:
-    st.markdown("<h1 style='font-size: 2.5rem;'>INDEX</h1>", unsafe_allow_html=True)
-    selection = st.radio("", ["01 HOME", "02 PROJECTS", "03 CONTACT"])
+    st.markdown("<h2 style='text-align: center;'>MENU</h2>", unsafe_allow_html=True)
+    selection = st.radio("", ["HOME", "PORTFOLIO", "CONNECT"], label_visibility="collapsed")
     
-    st.markdown("<br><br><br>", unsafe_allow_html=True)
-    st.markdown("<a href='#' class='sidebar-btn'>DOWNLOAD CV</a>", unsafe_allow_html=True)
+    st.markdown("<br><hr style='border: 1px solid #7f8c8d;'><br>", unsafe_allow_html=True)
+    st.markdown("<a href='#' class='sidebar-btn'>GET RESUME</a>", unsafe_allow_html=True)
     
-    st.markdown("<br><p style='font-size: 0.8rem; font-weight: 700;'>SOCIAL_LINKS</p>", unsafe_allow_html=True)
-    st.markdown("[GITHUB](https://github.com/lamaw09)")
-    st.markdown("[INSTAGRAM](https://www.instagram.com/_itsmenoob_/)")
-    st.markdown("[GMAIL](mailto:klydejosephy@gmail.com)")
+    st.markdown("<br><p style='font-size: 0.75rem; opacity: 0.7;'>SOCIAL NODES</p>", unsafe_allow_html=True)
+    st.markdown("● [GITHUB](https://github.com/lamaw09)")
+    st.markdown("● [FACEBOOK](https://facebook.com)")
+    st.markdown("● [INSTAGRAM](https://www.instagram.com/_itsmenoob_/)")
 
 # --- HOME SECTION ---
-if "HOME" in selection:
+if selection == "HOME":
     col1, col2 = st.columns([1.5, 1], gap="large")
     
     with col1:
-        st.markdown("<p style='font-weight: 700; margin-bottom: 0;'>01 // INTRODUCTION</p>", unsafe_allow_html=True)
-        st.markdown("<h1 style='font-size: 7rem;'>KLYDE<br>JOSEPH<br>YABO.</h1>", unsafe_allow_html=True)
-        st.markdown("<p style='font-size: 1.5rem; line-height: 1.2; font-weight: 400; margin-top: 2rem;'>Architecting <b>Agentic AI</b> and autonomous systems through a lens of structural efficiency.</p>", unsafe_allow_html=True)
+        st.markdown("<h1 style='font-size: 4.5rem; line-height: 1;'>KLYDE<br>JOSEPH<br><span style='color: #3498db;'>YABO</span></h1>", unsafe_allow_html=True)
+        st.markdown("<p style='font-size: 1.2rem; color: #7f8c8d;'>FULL-STACK AUTOMATION ENGINEER & AI ARCHITECT</p>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 4px; width: 100px; background: #e67e22; margin: 20px 0;'></div>", unsafe_allow_html=True)
+        st.markdown("<p style='font-size: 1.1rem;'>I build <b>Agentic AI systems</b> that handle manual workflows autonomously. Specialized in Python, Playwright, and scalable automation architecture.</p>", unsafe_allow_html=True)
         
         skills = ["Python", "Playwright", "FastAPI", "Streamlit", "Automation"]
-        skill_html = "".join([f'<span class="skill-tag">{s}</span>' for s in skills])
-        st.markdown(skill_html, unsafe_allow_html=True)
+        st.markdown("".join([f'<span class="skill-tag">{s}</span>' for s in skills]), unsafe_allow_html=True)
         
         st.markdown("<br><br>", unsafe_allow_html=True)
         m_col1, m_col2, m_col3 = st.columns(3)
-        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Builds</p></div>', unsafe_allow_html=True)
-        with m_col2: st.markdown('<div class="metric-box"><h3>99%</h3><p>Uptime</p></div>', unsafe_allow_html=True)
-        with m_col3: st.markdown('<div class="metric-box"><h3>05+</h3><p>Clients</p></div>', unsafe_allow_html=True)
+        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>PROJECTS</p></div>', unsafe_allow_html=True)
+        with m_col2: st.markdown('<div class="metric-box" style="background: #3498db;"><h3>99%</h3><p>UPTIME</p></div>', unsafe_allow_html=True)
+        with m_col3: st.markdown('<div class="metric-box" style="background: #e67e22;"><h3>05+</h3><p>CLIENTS</p></div>', unsafe_allow_html=True)
 
     with col2:
-        img_src = f"data:image/png;base64,{img_base64}" if img_base64 else "https://via.placeholder.com/400x500"
+        img_src = f"data:image/png;base64,{img_base64}" if img_base64 else "https://via.placeholder.com/200"
         st.markdown(f"""
         <div class="profile-box">
             <img src="{img_src}" class="profile-img">
-            <h3>Developer // Mindanao, PH</h3>
-            <p style="font-size: 0.9rem; margin-top: 1rem;">Focused on Python-driven automation and structural web integrity.</p>
+            <h3 style="margin-bottom: 5px;">DEVELOPER</h3>
+            <p style="color: #7f8c8d; font-size: 0.9rem;">MINDANAO, PHILIPPINES</p>
+            <p style="font-weight: 700; color: #27ae60; margin-top: 15px;">● AVAILABLE FOR WORK</p>
         </div>
         """, unsafe_allow_html=True)
 
 # --- PROJECTS SECTION ---
-elif "PROJECTS" in selection:
-    st.markdown("<h1 style='font-size: 5rem;'>PROJECTS</h1>", unsafe_allow_html=True)
+elif selection == "PORTFOLIO":
+    st.markdown("<h1>WORK SAMPLES</h1>", unsafe_allow_html=True)
     
     projects = [
         {
-            "title": "FB TO DISCORD RELAY", 
-            "desc": "Playwright-based autonomous node for instant data synchronization.", 
+            "title": "FB-DISCORD BRIDGE", 
+            "desc": "Autonomous scraper for instant data relay. Built with Playwright.", 
             "link": "https://github.com/lamaw09/Facebook-to-Discord-Webhook",
-            "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80",
-            "tags": ["Scraping", "Python"]
+            "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
+            "tags": ["PYTHON", "SCRAPING"]
         },
         {
-            "title": "TELEMETRY DASHBOARD", 
-            "desc": "High-performance interface for real-time automation monitoring.", 
+            "title": "DATA DASHBOARD", 
+            "desc": "High-speed visualization for automation telemetry.", 
             "link": "#",
-            "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
-            "tags": ["UI", "Streamlit"]
+            "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+            "tags": ["STREAMLIT", "UX"]
         }
     ]
     
-    for p in projects:
-        st.markdown(f"""
-        <div class="project-card">
-            <div style="display: flex; gap: 2rem; align-items: start;">
-                <div style="flex: 1;">
-                    <img src="{p['image']}" class="project-img-swiss">
-                </div>
-                <div style="flex: 1;">
-                    <p style="font-weight: 900; font-size: 0.8rem; margin-bottom: 10px;">CASE STUDY</p>
-                    <h1 style="font-size: 3rem;">{p['title']}</h1>
-                    <p style="font-size: 1.1rem; margin: 1.5rem 0;">{p['desc']}</p>
-                    <div style="margin-bottom: 2rem;">{" ".join([f'<span class="skill-tag">{t}</span>' for t in p['tags']])}</div>
-                    <a href="{p['link']}" style="color: #000; font-weight: 900; text-decoration: underline;">VIEW SOURCE ↗</a>
-                </div>
+    p_col1, p_col2 = st.columns(2)
+    for i, p in enumerate(projects):
+        target_col = p_col1 if i % 2 == 0 else p_col2
+        with target_col:
+            st.markdown(f"""
+            <div class="project-card" style="border-left-color: {'#3498db' if i % 2 == 0 else '#e67e22'};">
+                <img src="{p['image']}" class="project-img-flat">
+                <h3>{p['title']}</h3>
+                <p style="font-size: 0.9rem; color: #7f8c8d;">{p['desc']}</p>
+                <div style="margin: 15px 0;">{" ".join([f'<span class="skill-tag" style="background:#dfe4ea; color:#2c3e50;">{t}</span>' for t in p['tags']])}</div>
+                <a href="{p['link']}" style="color: #3498db; font-weight: 700; text-decoration: none;">[ VIEW CASE STUDY ]</a>
             </div>
-        </div>
-        """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
 # --- CONTACT SECTION ---
-elif "CONTACT" in selection:
-    st.markdown("<h1 style='font-size: 5rem;'>CONTACT</h1>", unsafe_allow_html=True)
+elif selection == "CONNECT":
+    st.markdown("<h1>GET IN TOUCH</h1>", unsafe_allow_html=True)
     
     c1, c2 = st.columns([1, 1], gap="large")
     with c1:
-        with st.form("contact_form"):
-            name = st.text_input("NAME / ORGANIZATION")
-            email = st.text_input("EMAIL ADDRESS")
-            msg = st.text_area("INQUIRY DETAILS")
-            if st.form_submit_button("SUBMIT"):
-                st.success("TRANSMITTED.")
+        with st.form("contact"):
+            st.text_input("YOUR NAME")
+            st.text_input("EMAIL")
+            st.text_area("PROJECT MESSAGE")
+            if st.form_submit_button("SEND MESSAGE"):
+                st.success("SUCCESSFULLY SENT.")
     with c2:
         st.markdown("""
-        <div style="border-top: 8px solid #000; padding-top: 20px;">
-            <p style="font-weight: 900;">DIRECT CHANNELS</p>
-            <p style="font-size: 2rem; font-weight: 700;">klydejosephy@gmail.com</p>
-            <p style="font-size: 1.5rem;">Mindanao, Philippines</p>
-            <p style="margin-top: 2rem; font-size: 0.8rem;">Available for select freelance automation projects and architectural consulting.</p>
+        <div style="background: #f1f2f6; padding: 30px; border-top: 10px solid #2c3e50;">
+            <h3>CHANNELS</h3>
+            <p><b>EMAIL:</b> klydejosephy@gmail.com</p>
+            <p><b>LOC:</b> Clarin, Mindanao, PH</p>
+            <hr>
+            <p style="font-size: 0.8rem; opacity: 0.6;">Typical response time: < 24 hours.</p>
         </div>
         """, unsafe_allow_html=True)
 
 # --- FOOTER ---
-st.markdown("<br><br><br><br>", unsafe_allow_html=True)
-st.markdown(f"<p style='text-align: left; border-top: 2px solid #000; padding-top: 10px; font-weight: 900; font-size: 0.7rem;'>© {date.today().year} KLYDE JOSEPH // ALL RIGHTS RESERVED // BUILT ON STREAMLIT GRID SYSTEM</p>", unsafe_allow_html=True)
+st.markdown("<br><br>", unsafe_allow_html=True)
+st.markdown(f"<p style='text-align: center; color: #bdc3c7; font-size: 0.8rem; font-weight: 700;'>© {date.today().year} KLYDE JOSEPH // FLAT DESIGN FRAMEWORK</p>", unsafe_allow_html=True)
