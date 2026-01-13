@@ -13,6 +13,7 @@ def load_lottieurl(url):
         return None
     return r.json()
 
+# Dynamic animation for the sidebar
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 
 # --- CUSTOM CSS ---
@@ -57,12 +58,19 @@ st.markdown("""
         border-radius: 10px;
         border-left: 5px solid #2563eb;
     }
+
+    /* Profile Image Styling */
+    .profile-img img {
+        border-radius: 20px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
     </style>
     """, unsafe_allow_html=True)
 
 # --- SIDEBAR ---
 with st.sidebar:
-    st_lottie(lottie_coding, height=150, key="coding")
+    if lottie_coding:
+        st_lottie(lottie_coding, height=150, key="coding")
     st.title("Navigation")
     selection = st.radio("Go to", ["Home", "Projects", "Blog", "Contact"])
     
@@ -96,13 +104,12 @@ if selection == "Home":
         with m3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Clients</p></div>', unsafe_allow_html=True)
 
     with col2:
-        with col2:
-    # Replace the link inside the quotes with your actual image link
-    st.image("ID.png", use_container_width=True)
+        # Fixed indentation and duplicate 'with' statement
+        st.image("ID.png", caption="Klyde Joseph P. Yabo", use_container_width=True)
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
-    st.title("Projects")
+    st.title("🚀 Engineering Gallery")
     st.write("Each project represents a unique challenge solved with clean code.")
     
     col_a, col_b = st.columns(2)
@@ -132,7 +139,7 @@ elif selection == "Projects":
             <div class="project-card">
                 <img src="{p['image']}" style="width:100%; border-radius:10px; height:200px; object-fit:cover;">
                 <h3 style="margin-top:15px;">{p['title']}</h3>
-                <p style="color:#64748b; font-size:0.9rem;">{p['desc']}</p>
+                <p style="color:#64748b; font-size:0.9rem; min-height:50px;">{p['desc']}</p>
                 <div style="margin-bottom:15px;">{tag_html}</div>
                 <a href="{p['link']}" target="_blank" style="color:#2563eb; text-decoration:none; font-weight:bold;">View Code ↗</a>
             </div>
