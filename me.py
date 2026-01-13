@@ -29,21 +29,22 @@ st.markdown("""
         }
     }
 
-    /* Professional Image Resizing & Styling */
-    .profile-img-container {
+    /* CENTERED IMAGE & TEXT BOX */
+    .profile-box {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
-        padding: 20px;
+        justify-content: center;
+        text-align: center;
     }
-    
-    /* This targets the image specifically */
+
     [data-testid="stImage"] img {
         border-radius: 20px;
         border: 5px solid white;
         box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        max-width: 280px !important; /* Forces a professional size */
+        max-width: 250px !important; /* Professional resize */
         height: auto;
+        margin-bottom: 15px;
     }
 
     /* Bento-style Cards */
@@ -119,16 +120,17 @@ if selection == "Home":
         st.markdown(skill_html, unsafe_allow_html=True)
         
         st.markdown("---")
-        # Responsive Metric Row
         m_col1, m_col2, m_col3 = st.columns(3)
         with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Projects</p></div>', unsafe_allow_html=True)
         with m_col2: st.markdown('<div class="metric-box"><h3>99%</h3><p>Uptime</p></div>', unsafe_allow_html=True)
         with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Clients</p></div>', unsafe_allow_html=True)
 
     with col2:
-        # Image is now constrained by CSS to max 280px
+        # WRAPPER TO CENTER BOTH IMAGE AND TEXT
+        st.markdown('<div class="profile-box">', unsafe_allow_html=True)
         st.image("ID.png")
-        st.markdown("<p style='text-align: center; color: #64748b; font-size: 0.9rem; font-weight: bold;'>Developer & Automation Specialist</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #64748b; font-size: 1rem; font-weight: bold; margin-top: -10px;'>Developer & Automation Specialist</p>", unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
@@ -169,8 +171,6 @@ elif selection == "Projects":
 # --- CONTACT SECTION ---
 elif selection == "Contact":
     st.title("📬 Get In Touch")
-    st.write("Have a project in mind? Let's talk about how I can help you automate your workflow.")
-    
     c1, c2 = st.columns([2, 1])
     with c1:
         with st.form("contact_form"):
@@ -179,11 +179,10 @@ elif selection == "Contact":
             msg = st.text_area("Your Message")
             if st.form_submit_button("Send Message"):
                 st.balloons()
-                st.success(f"Thank you {name}, your message has been sent!")
+                st.success(f"Thank you {name}!")
     with c2:
         st.info("**📍 Location:** Clarin, Northern Mindanao, PH")
         st.info("**📧 Direct Email:** klydejosephy@gmail.com")
-        st.write("I usually respond within 24 hours.")
 
 # --- FOOTER ---
 st.markdown("---")
