@@ -100,7 +100,7 @@ if selection == "Home":
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
-    st.title("🚀 Engineering Gallery")
+    st.title("Projects")
     st.write("Each project represents a unique challenge solved with clean code.")
     
     col_a, col_b = st.columns(2)
