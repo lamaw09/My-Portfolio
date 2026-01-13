@@ -96,7 +96,9 @@ if selection == "Home":
         with m3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Clients</p></div>', unsafe_allow_html=True)
 
     with col2:
-        st.image("https://via.placeholder.com/400x500.png?text=Profile+Photo", use_container_width=True)
+        with col2:
+    # Replace the link inside the quotes with your actual image link
+    st.image("ID.png", use_container_width=True)
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
