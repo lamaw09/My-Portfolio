@@ -5,259 +5,239 @@ from streamlit_lottie import st_lottie
 import base64
 
 # --- PAGE CONFIG ---
-st.set_page_config(page_title="KLYDE_JOSEPH // PORTFOLIO", page_icon="⚡", layout="wide")
+st.set_page_config(page_title="Klyde Joseph // Tech Portfolio", page_icon="📟", layout="wide")
 
 # --- ASSETS ---
 def load_lottieurl(url):
-    try:
-        r = requests.get(url)
-        return r.json() if r.status_code == 200 else None
-    except:
-        return None
+    r = requests.get(url)
+    return r.json() if r.status_code == 200 else None
 
 def get_image_base64(path):
     try:
         with open(path, "rb") as img_file:
             return base64.b64encode(img_file.read()).decode()
-    except:
-        return ""
+    except: return ""
 
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 img_base64 = get_image_base64("ID.png")
 
-# --- CYBERPUNK CSS OVERHAUL ---
+# --- TECHIE CSS OVERHAUL ---
 st.markdown(f"""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;600;800&family=Orbitron:wght@400;700&display=swap');
 
-    /* Global Foundation */
+    /* Background with Scanlines */
     .main {{
-        background-color: #050505;
-        background-image: 
-            linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-            linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        background-color: #0d1117;
+        background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                          linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
         background-size: 100% 4px, 3px 100%;
     }}
-    
-    html, body, [class*="css"] {{ 
-        font-family: 'Rajdhani', sans-serif; 
-        color: #00ffcc; 
+
+    /* Global Text Styling */
+    html, body, [class*="css"] {{
+        font-family: 'Source Code Pro', monospace;
+        color: #c9d1d9;
     }}
 
-    /* Glitch Animation */
-    @keyframes glitch {{
-        0% {{ text-shadow: 0.05em 0 0 #ff0055, -0.05em -0.025em 0 #00ffcc; }}
-        15% {{ text-shadow: -0.05em -0.025em 0 #ff0055, 0.025em 0.025em 0 #00ffcc; }}
-        100% {{ text-shadow: -0.025em 0 0 #ff0055, -0.025em -0.0125em 0 #00ffcc; }}
-    }}
-
-    /* Sidebar - Corporate Hack Look */
+    /* Neon Sidebar */
     [data-testid="stSidebar"] {{
-        background-color: #0a0a0a !important;
-        border-right: 2px solid #ff0055;
+        background-color: #010409 !important;
+        border-right: 1px solid #238636;
     }}
     .sidebar-btn {{
-        display: block; width: 100%; padding: 12px; margin-top: 10px;
-        background: transparent; color: #ff0055 !important;
-        text-align: center; border: 1px solid #ff0055;
-        text-decoration: none; font-family: 'Orbitron', sans-serif;
-        font-weight: 600; text-transform: uppercase;
-        transition: 0.3s;
+        display: block; width: 100%; padding: 10px; margin-top: 10px;
+        background: transparent; color: #238636 !important;
+        text-align: center; border: 1px solid #238636;
+        text-decoration: none; border-radius: 4px;
+        font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
     }}
-    .sidebar-btn:hover {{ 
-        background: #ff0055; color: white !important; 
-        box-shadow: 0 0 15px #ff0055;
+    .sidebar-btn:hover {{
+        background: rgba(35, 134, 54, 0.2);
+        box-shadow: 0 0 10px #238636;
     }}
 
-    /* Profile Card - HUD Look */
+    /* Tech Profile Card */
     .profile-box {{
-        background: rgba(0, 255, 204, 0.05);
-        padding: 3rem 2rem;
-        border: 2px solid #00ffcc;
-        border-radius: 0px; /* Cyberpunk is angular */
-        clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+        background: rgba(22, 27, 34, 0.8);
+        padding: 2.5rem;
+        border: 1px solid #30363d;
+        border-top: 4px solid #58a6ff;
+        border-radius: 8px;
         text-align: center;
-        box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+        backdrop-filter: blur(10px);
     }}
     .profile-img {{
-        width: 170px; height: 170px; border-radius: 0%;
-        object-fit: cover; border: 3px solid #ff0055;
-        filter: grayscale(1) contrast(1.2) brightness(1.2);
-        margin-bottom: 25px;
+        width: 160px; height: 160px; border-radius: 4px;
+        object-fit: cover; border: 2px solid #58a6ff;
+        filter: grayscale(40%) contrast(110%);
+        margin-bottom: 20px;
     }}
 
-    /* Project Cards - Neural Link Style */
+    /* Project Cards - HUD Style */
     .project-card {{
-        background: #0d0d0d; border-radius: 0; padding: 0;
-        border: 1px solid #333;
-        transition: all 0.4s ease;
-        position: relative;
-        overflow: hidden;
+        background: rgba(22, 27, 34, 0.7);
+        padding: 1.5rem;
+        border: 1px solid #30363d;
+        border-left: 5px solid #58a6ff;
+        transition: 0.3s;
+        height: 520px;
     }}
     .project-card:hover {{
-        border-color: #00ffcc;
-        box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
-        transform: translateY(-5px);
+        border-color: #58a6ff;
+        background: rgba(33, 38, 45, 1);
+        transform: translateX(10px);
+        box-shadow: -5px 0 20px rgba(88, 166, 255, 0.2);
     }}
-    .project-img {{ 
-        width: 100%; height: 260px; object-fit: cover; 
-        opacity: 0.7; filter: hue-rotate(180deg) brightness(0.8);
-    }}
-    .project-body {{ padding: 2rem; border-top: 1px solid #00ffcc; }}
 
-    /* Neon Metrics */
-    .metric-box {{
-        text-align: center; padding: 1.5rem; background: transparent;
-        border-left: 4px solid #ff0055;
-    }}
-    .metric-box h3 {{
-        margin: 0; font-size: 2.5rem; font-family: 'Orbitron', sans-serif;
-        color: #ff0055; text-shadow: 0 0 10px #ff0055;
-    }}
-    .metric-box p {{ color: #00ffcc; font-size: 0.8rem; letter-spacing: 2px; }}
-
-    /* Cyber Tags */
+    /* Skill Tags */
     .skill-tag {{
-        display: inline-block; background: transparent; color: #00ffcc;
-        padding: 4px 12px; border: 1px solid #00ffcc;
-        font-size: 0.7rem; font-family: 'Orbitron', sans-serif;
-        margin: 4px; text-transform: uppercase;
+        display: inline-block;
+        background: #161b22;
+        color: #58a6ff;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        border: 1px solid #30363d;
+        margin: 3px;
     }}
 
-    /* Inputs & Buttons */
-    .stTextInput input, .stTextArea textarea {{
-        background-color: #111 !important; color: #00ffcc !important;
-        border: 1px solid #333 !important; border-radius: 0px !important;
+    /* Big Tech Header */
+    .glitch-text {{
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 800;
+        color: #ffffff;
+        text-shadow: 2px 2px #58a6ff;
     }}
-    div.stButton > button {{
-        background: transparent !important; color: #ff0055 !important;
-        border: 2px solid #ff0055 !important; border-radius: 0px !important;
-        font-family: 'Orbitron', sans-serif !important; width: 100% !important;
-        text-transform: uppercase !important; letter-spacing: 2px !important;
+
+    /* Animated Metrics */
+    .metric-box {{
+        text-align: left; padding: 1rem;
+        border-left: 2px solid #238636;
+        background: rgba(35, 134, 54, 0.05);
     }}
-    div.stButton > button:hover {{
-        background: #ff0055 !important; color: black !important;
-        box-shadow: 0 0 20px #ff0055 !important;
-    }}
+    .metric-box h3 {{ color: #238636; margin: 0; font-size: 1.8rem; }}
+    .metric-box p {{ font-size: 0.7rem; color: #8b949e; text-transform: uppercase; }}
+
     </style>
     """, unsafe_allow_html=True)
 
 # --- SIDEBAR ---
 with st.sidebar:
-    st.markdown("<h2 style='text-align: center; font-family: Orbitron; color: #ff0055;'>SYS_NAV</h2>", unsafe_allow_html=True)
-    selection = st.radio("", ["HOME", "PROJECTS", "CONTACT"], label_visibility="collapsed")
+    if lottie_coding:
+        st_lottie(lottie_coding, height=120, key="coding")
+    st.markdown("<h2 style='text-align: center; color: #58a6ff; font-family: Orbitron;'>ROOT_NAV</h2>", unsafe_allow_html=True)
+    selection = st.radio("", ["Console", "Repositories", "Ping"], label_visibility="collapsed")
     
-    st.markdown("<br><hr style='border-color: #333;'><br>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #666; font-size: 0.7rem; font-weight: 700;'>ACCESS_DATA</p>", unsafe_allow_html=True)
-    st.markdown("<a href='#' class='sidebar-btn'>DOWNLOAD_CV.EXE</a>", unsafe_allow_html=True)
+    st.markdown("---")
+    st.markdown("<p style='color: #8b949e; font-size: 0.7rem;'>// ACCESS_FILES</p>", unsafe_allow_html=True)
+    st.markdown("<a href='#' class='sidebar-btn'>FETCH RESUME.PDF</a>", unsafe_allow_html=True)
     
-    st.markdown("<br><p style='color: #666; font-size: 0.7rem; font-weight: 700;'>NEURAL_NETS</p>", unsafe_allow_html=True)
-    st.markdown(f"""
-        <div style="font-family: Orbitron; font-size: 0.8rem;">
-            <a href="https://github.com/lamaw09" style="color:#00ffcc; text-decoration:none;">GITHUB</a><br>
-            <a href="mailto:klydejosephy@gmail.com" style="color:#00ffcc; text-decoration:none;">GMAIL</a><br>
-            <a href="https://www.instagram.com/_itsmenoob_/" style="color:#00ffcc; text-decoration:none;">INSTA</a>
-        </div>
-    """, unsafe_allow_html=True)
+    st.markdown("<br><p style='color: #8b949e; font-size: 0.7rem;'>// SOCIAL_NODES</p>", unsafe_allow_html=True)
+    st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lamaw09)")
+    st.markdown("[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:klydejosephy@gmail.com)")
 
-# --- HOME SECTION ---
-if selection == "HOME":
-    col1, col2 = st.columns([1.5, 1], gap="large")
+# --- HOME SECTION (CONSOLE) ---
+if selection == "Console":
+    col1, col2 = st.columns([1.6, 1], gap="large")
     
     with col1:
-        st.markdown("<br><br>", unsafe_allow_html=True)
-        st.markdown("<p style='color: #ff0055; font-weight: 700; font-family: Orbitron; letter-spacing: 3px;'>STATUS: ONLINE</p>", unsafe_allow_html=True)
-        
-        # --- GLITCH NAME ---
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #58a6ff; font-weight: 600;'>[system_status: online]</p>", unsafe_allow_html=True)
+        st.markdown("<h1 class='glitch-text' style='font-size: 3.5rem;'>KLYDE JOSEPH<br>P. YABO</h1>", unsafe_allow_html=True)
         st.markdown("""
-            <h1 style='font-size: 4rem; font-family: "Orbitron"; font-weight: 900; line-height: 1.0; color: white; animation: glitch 1s infinite;'>
-                KLYDE_JOSEPH<br>
-                <span style='color: #00ffcc; font-size: 3.5rem;'>YABO.P</span>
-            </h1>
+            <p style='font-size: 1.1rem; color: #8b949e; line-height: 1.6;'>
+            > ARCHITECTING <b>AGENTIC AI</b> SYSTEMS<br>
+            > DEPLOYING <b>AUTOMATED SCRAPERS</b><br>
+            > TRANSFORMING DATA WORKFLOWS INTO AUTONOMOUS PROCESSES.
+            </p>
         """, unsafe_allow_html=True)
         
-        st.markdown("<p style='font-size: 1.3rem; color: #00ffcc; opacity: 0.8; line-height: 1.6; max-width: 550px; margin-top: 25px;'>Neural Link: <b>AGENTIC_AI_DEVELOPER</b>. Specializing in autonomous web architectures and black-box data extraction.</p>", unsafe_allow_html=True)
-        
-        skills = ["PYTHON", "STREAMLIT", "PLAYWRIGHT", "FASTAPI", "AGENTIC_AI", "OSINT_SCRAPING"]
+        skills = ["Python", "Playwright", "FastAPI", "Streamlit", "Docker", "NoSQL", "Selenium"]
         skill_html = "".join([f'<span class="skill-tag">{s}</span>' for s in skills])
-        st.markdown(f"<div style='margin-top: 20px;'>{skill_html}</div>", unsafe_allow_html=True)
+        st.markdown(skill_html, unsafe_allow_html=True)
         
         st.markdown("<br><br>", unsafe_allow_html=True)
         m_col1, m_col2, m_col3 = st.columns(3)
-        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>CORES_BUILT</p></div>', unsafe_allow_html=True)
-        with m_col2: st.markdown('<div class="metric-box"><h3>99%</h3><p>UPTIME_SYNC</p></div>', unsafe_allow_html=True)
-        with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>GLOBAL_NODES</p></div>', unsafe_allow_html=True)
+        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Nodes Deployed</p></div>', unsafe_allow_html=True)
+        with m_col2: st.markdown('<div class="metric-box"><h3>99.9%</h3><p>Script Uptime</p></div>', unsafe_allow_html=True)
+        with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Global Integrations</p></div>', unsafe_allow_html=True)
 
     with col2:
-        st.markdown("<br><br>", unsafe_allow_html=True)
+        st.markdown("<br>", unsafe_allow_html=True)
         img_src = f"data:image/png;base64,{img_base64}" if img_base64 else "https://via.placeholder.com/180"
         st.markdown(f"""
         <div class="profile-box">
             <img src="{img_src}" class="profile-img">
-            <h3 style="font-family: Orbitron; font-size: 1.2rem; color: #ff0055;">AUTOMATION_ARCHITECT</h3>
-            <p style="color: #00ffcc; font-size: 0.9rem; margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
-                LOC: MINDANAO_PH<br>
-                AUTH: FREELANCE_OPEN
+            <h3 style="color: #ffffff; font-size: 1.2rem; font-family: Orbitron;">LEAD AUTOMATION ENG</h3>
+            <div style="color: #238636; font-size: 0.8rem; margin: 10px 0;">
+                ● STACK_AVAILABLE_FOR_HIRE
+            </div>
+            <p style="color: #8b949e; font-size: 0.85rem; border-top: 1px solid #30363d; padding-top: 15px;">
+                LOC: Mindanao_PH_Node<br>
+                Spec: Python / Intelligent Scraping
             </p>
         </div>
         """, unsafe_allow_html=True)
 
-# --- PROJECTS SECTION ---
-elif selection == "PROJECTS":
-    st.markdown("<h1 style='text-align: center; font-family: Orbitron; font-size: 3rem; color: #ff0055;'>ACTIVE_OPERATIONS</h1>", unsafe_allow_html=True)
+# --- PROJECTS SECTION (REPOSITORIES) ---
+elif selection == "Repositories":
+    st.markdown("<h1 style='font-family: Orbitron; color: #58a6ff;'>// FEATURED_SCRIPTS</h1>", unsafe_allow_html=True)
     
     projects = [
         {
-            "title": "FB_2_DISCORD_GATEWAY", 
-            "desc": "Autonomous scraper node using Playwright protocol to broadcast news feeds via secure Discord webhooks.", 
+            "title": "FB_to_Discord_Relay", 
+            "desc": "Autonomous scraper using Playwright to bridge social feeds into secure Discord webhooks. Features retry-logic & proxy rotation.", 
             "link": "https://github.com/lamaw09/Facebook-to-Discord-Webhook",
-            "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80",
-            "tags": ["Scraping", "Webhooks", "Python"]
+            "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&w=800&q=80",
+            "tags": ["Automation", "Playwright", "Webhooks"]
         },
         {
-            "title": "INTEL_DASHBOARD_V1", 
-            "desc": "Real-time visual data interface for monitoring system health and autonomous agent synchronization.", 
+            "title": "Live_Telemetry_Dashboard", 
+            "desc": "Real-time visualization suite for tracking crawler health and data extraction velocity. Custom CSS injection for dark-mode HUD.", 
             "link": "#",
-            "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
-            "tags": ["UI/UX", "FastAPI", "Telemetry"]
+            "image": "https://images.unsplash.com/photo-1551288049-bbda38a5f072?auto=format&fit=crop&w=800&q=80",
+            "tags": ["Analytics", "Streamlit", "API"]
         }
     ]
     
-    p_col1, p_col2 = st.columns(2, gap="large")
+    p_col1, p_col2 = st.columns(2)
     for i, p in enumerate(projects):
         target_col = p_col1 if i % 2 == 0 else p_col2
         with target_col:
             tag_html = "".join([f'<span class="skill-tag">{tag}</span>' for tag in p['tags']])
             st.markdown(f"""
             <div class="project-card">
-                <img src="{p['image']}" class="project-img">
-                <div class="project-body">
-                    <h3 style="font-family: Orbitron; color: #ff0055;">{p['title']}</h3>
-                    <p style="color: #00ffcc; font-size: 0.9rem; height: 60px;">{p['desc']}</p>
-                    <div style="margin: 15px 0;">{tag_html}</div>
-                    <a href="{p['link']}" style="color: white; font-family: Orbitron; text-decoration: none; border-bottom: 1px solid #ff0055;">EXECUTE_CASE_STUDY →</a>
-                </div>
+                <img src="{p['image']}" style="width:100%; height:200px; object-fit:cover; border: 1px solid #30363d;">
+                <h3 style="color:#58a6ff; margin-top:15px;">{p['title']}</h3>
+                <p style="color:#8b949e; font-size:0.9rem;">{p['desc']}</p>
+                <div style="margin-bottom:20px;">{tag_html}</div>
+                <a href="{p['link']}" target="_blank" style="color:#238636; text-decoration:none; font-weight:bold;">[ VIEW_SOURCE ]</a>
             </div>
             """, unsafe_allow_html=True)
 
-# --- CONTACT SECTION ---
-elif selection == "CONTACT":
-    st.markdown("<h1 style='text-align: center; font-family: Orbitron; font-size: 3rem; color: #00ffcc;'>OPEN_CHANNEL</h1>", unsafe_allow_html=True)
+# --- CONTACT SECTION (PING) ---
+elif selection == "Ping":
+    st.markdown("<h1 style='font-family: Orbitron; color: #58a6ff;'>// INITIATE_CONTACT</h1>", unsafe_allow_html=True)
     
-    c1, c2, c3 = st.columns([1, 2, 1])
-    with c2:
+    c1, c2 = st.columns([1.5, 1], gap="large")
+    with c1:
         with st.form("contact_form"):
-            st.markdown("<p style='font-family: Orbitron; font-size: 0.8rem;'>ENCRYPTED_MESSAGE_PAYLOAD</p>", unsafe_allow_html=True)
-            name = st.text_input("SENDER_ID")
-            email = st.text_input("RETURN_PATH")
-            msg = st.text_area("INTEL_CONTENT")
+            name = st.text_input("SENDER_ID", placeholder="Name")
+            email = st.text_input("REPLY_ADDR", placeholder="email@domain.com")
+            msg = st.text_area("PAYLOAD_MSG", placeholder="Details of your mission...")
             if st.form_submit_button("SEND_PACKET"):
-                st.success("PACKET_RECEIVED. STAND BY FOR DECRYPTION.")
+                st.success("PACKET_RECEIVED. ACKNOWLEDGEMENT PENDING.")
+    with c2:
+        st.markdown(f"""
+        <div style="background: #161b22; padding: 20px; border: 1px solid #30363d;">
+            <p style="color: #238636;">> NODE_LOCATION: Mindanao, PH</p>
+            <p style="color: #238636;">> PROTOCOL: klydejosephy@gmail.com</p>
+            <hr style="border-color:#30363d">
+            <p style='color: #8b949e; font-size: 0.8rem;'>System is currently active for freelance assignments.</p>
+        </div>
+        """, unsafe_allow_html=True)
 
 # --- FOOTER ---
-st.markdown("<br><br><br>", unsafe_allow_html=True)
-st.markdown(f"""
-    <div style='text-align: center; border-top: 1px solid #333; padding-top: 20px;'>
-        <p style='color: #444; font-family: Orbitron; font-size: 0.7rem;'>© {date.today().year} KLYDE_JOSEPH // REPLICA_VER_2.0.26</p>
-    </div>
-""", unsafe_allow_html=True)
+st.markdown("<br><hr style='border-color: #30363d;'>", unsafe_allow_html=True)
+st.markdown(f"<p style='text-align: center; color: #484f58; font-size: 0.75rem;'>VER_2.0 // © {date.today().year} Klyde Joseph // COMPILED_WITH_PYTHON_3.12</p>", unsafe_allow_html=True)
