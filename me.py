@@ -59,10 +59,17 @@ st.markdown("""
         border-left: 5px solid #2563eb;
     }
 
-    /* Profile Image Styling */
-    .profile-img img {
-        border-radius: 20px;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    /* Professional Image Styling */
+    .img-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .prof-img {
+        border-radius: 30px; /* Rounded corners */
+        border: 4px solid white;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        object-fit: cover;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -81,7 +88,7 @@ with st.sidebar:
 
 # --- HOME SECTION ---
 if selection == "Home":
-    col1, col2 = st.columns([2, 1], gap="large")
+    col1, col2 = st.columns([1.5, 1], gap="large")
     
     with col1:
         st.subheader("Full-Stack Solutions 💡")
@@ -104,8 +111,13 @@ if selection == "Home":
         with m3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Clients</p></div>', unsafe_allow_html=True)
 
     with col2:
-        # Fixed indentation and duplicate 'with' statement
-        st.image("ID.png", caption="Klyde Joseph P. Yabo", use_container_width=True)
+        # We use a sub-column to make the image smaller and more centered
+        sub_col1, sub_col2, sub_col3 = st.columns([1, 4, 1])
+        with sub_col2:
+            st.markdown('<div class="img-container">', unsafe_allow_html=True)
+            st.image("ID.png", use_container_width=True)
+            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown("<p style='text-align: center; color: #64748b; font-size: 0.9rem; margin-top: 10px;'>Klyde Joseph P. Yabo</p>", unsafe_allow_html=True)
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
