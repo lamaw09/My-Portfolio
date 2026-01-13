@@ -88,7 +88,7 @@ elif selection == "Projects":
     col_a, col_b = st.columns(2)
     
     projects = [
-        {"title": "AI Content Auditor", "desc": "A tool to verify human-written content vs AI generated.", "link": "#"},
+        {"title": "FB to Discord Webhook", "desc": "Automated scraper that broadcasts Facebook posts to Discord using Playwright.", "link": "https://github.com/lamaw09/Facebook-to-Discord-Webhook"},
         {"title": "Eco-Tracker Pro", "desc": "Dashboard for monitoring small business carbon footprints.", "link": "#"},
         {"title": "SaaS Boilerplate", "desc": "A high-performance template using FastAPI and React.", "link": "#"},
         {"title": "Media Automation", "desc": "Automating OBS scenes via Python scripts for streamers.", "link": "#"}
