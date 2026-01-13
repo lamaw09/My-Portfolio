@@ -78,7 +78,7 @@ if selection == "Home":
 
     with col2:
         # Placeholder for a professional headshot
-        st.image("", use_container_width=True)
+        st.image("https://via.placeholder.com/400x400.png?text=Professional+Headshot", use_container_width=True)
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
