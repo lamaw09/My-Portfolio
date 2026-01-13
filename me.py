@@ -25,7 +25,7 @@ def get_image_base64(path):
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 img_base64 = get_image_base64("ID.png")
 
-# --- CUSTOM CSS (RESPONSIVE & REFINED) ---
+# --- CUSTOM CSS (RESPONSIVE & SYNTAX SAFE) ---
 st.markdown(f"""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -33,7 +33,6 @@ st.markdown(f"""
     .main {{ background-color: #f8fafc; color: #0f172a; }}
     html, body, [class*="css"] {{ font-family: 'Inter', sans-serif; }}
 
-    /* Mobile-First Container Padding */
     .block-container {{
         padding: 1.5rem 1rem !important;
     }}
@@ -44,7 +43,6 @@ st.markdown(f"""
         }}
     }}
 
-    /* Responsive Typography */
     .hero-name {{
         font-size: clamp(2.5rem, 8vw, 5rem);
         font-weight: 900;
@@ -56,14 +54,13 @@ st.markdown(f"""
         font-size: clamp(2rem, 5vw, 3.5rem);
         font-weight: 900;
         text-align: center;
+        margin-bottom: 1rem;
     }}
 
-    /* Sidebar - Ensure it doesn't vanish awkwardly */
     [data-testid="stSidebar"] {{
         background-image: linear-gradient(180deg, #020617 0%, #0f172a 100%);
     }}
 
-    /* Profile Card Responsive */
     .profile-box {{
         background: white;
         padding: 2rem 1.5rem;
@@ -84,7 +81,6 @@ st.markdown(f"""
         margin-bottom: 20px;
     }}
 
-    /* Project Cards Responsive */
     .project-card {{
         background-color: white;
         padding: 1.5rem;
@@ -111,7 +107,6 @@ st.markdown(f"""
         margin-bottom: 15px;
     }}
 
-    /* Skill Tags Responsive */
     .skill-tag {{
         display: inline-block;
         background: #f1f5f9;
@@ -124,7 +119,6 @@ st.markdown(f"""
         border: 1px solid #e2e8f0;
     }}
 
-    /* Metric Boxes Responsive */
     .metric-box {{
         text-align: center;
         padding: 1.5rem 0.5rem;
@@ -141,7 +135,6 @@ st.markdown(f"""
         -webkit-text-fill-color: transparent;
     }}
 
-    /* Forms and Buttons */
     div.stButton > button {{
         background: linear-gradient(90deg, #2563eb, #3b82f6) !important;
         color: white !important;
@@ -151,9 +144,6 @@ st.markdown(f"""
         width: 100%;
         border: none !important;
     }}
-
-    /* Hide horizontal scroll */
-    .main .block-container {{ overflow-x: hidden; }}
     </style>
     """, unsafe_allow_html=True)
 
@@ -180,6 +170,7 @@ if selection == "Home":
     
     with col1:
         st.markdown("<p style='color: #3b82f6; font-weight: 800; letter-spacing: 2px;'>FULL-STACK SOLUTIONS 💡</p>", unsafe_allow_html=True)
+        # FIXED: Used single quotes inside f-string double quotes
         st.markdown(f'<h1 class="hero-name">Klyde Joseph<br><span style="color: #94a3b8;">P. Yabo</span></h1>', unsafe_allow_html=True)
         st.markdown("<p style='font-size: 1.1rem; color: #475569; line-height: 1.6;'>Expert in building <b>Agentic AI systems</b> and <b>Automated Web Architectures</b>. I transform manual workflows into high-speed autonomous digital processes.</p>", unsafe_allow_html=True)
         
@@ -207,6 +198,7 @@ if selection == "Home":
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
+    # FIXED: Used single quotes for class name
     st.markdown("<h1 class='section-title'>🚀 Featured Projects</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; color: #64748b; margin-bottom: 2rem;'>Precision engineering for modern web automation.</p>", unsafe_allow_html=True)
     
@@ -247,7 +239,8 @@ elif selection == "Projects":
 
 # --- CONTACT SECTION ---
 elif selection == "Contact":
-    st.markdown("<h1 class="section-title">📬 Let's Connect</h1>", unsafe_allow_html=True)
+    # FIXED: Used single quotes for class name
+    st.markdown("<h1 class='section-title'>📬 Let's Connect</h1>", unsafe_allow_html=True)
     
     c1, c2 = st.columns([1.2, 1], gap="large")
     with c1:
