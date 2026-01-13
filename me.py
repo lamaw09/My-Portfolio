@@ -25,7 +25,7 @@ def get_image_base64(path):
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 img_base64 = get_image_base64("ID.png")
 
-# --- CUSTOM CSS (RESPONSIVE & SYNTAX SAFE) ---
+# --- CUSTOM CSS ---
 st.markdown(f"""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -61,6 +61,7 @@ st.markdown(f"""
         background-image: linear-gradient(180deg, #020617 0%, #0f172a 100%);
     }}
 
+    /* PROFILE IMAGE RESIZING LOGIC */
     .profile-box {{
         background: white;
         padding: 2rem 1.5rem;
@@ -71,14 +72,17 @@ st.markdown(f"""
         margin-top: 1rem;
     }}
     .profile-img {{
-        width: 100%;
-        max-width: 180px;
-        aspect-ratio: 1/1;
-        border-radius: 50%;
+        width: 180px; /* Adjust this value to resize your ID.png */
+        height: 180px;
         object-fit: cover;
+        border-radius: 50%;
         border: 4px solid #f8fafc;
         outline: 2px solid #3b82f6;
         margin-bottom: 20px;
+        transition: 0.3s;
+    }}
+    .profile-img:hover {{
+        transform: scale(1.05);
     }}
 
     .project-card {{
@@ -170,7 +174,6 @@ if selection == "Home":
     
     with col1:
         st.markdown("<p style='color: #3b82f6; font-weight: 800; letter-spacing: 2px;'>FULL-STACK SOLUTIONS 💡</p>", unsafe_allow_html=True)
-        # FIXED: Used single quotes inside f-string double quotes
         st.markdown(f'<h1 class="hero-name">Klyde Joseph<br><span style="color: #94a3b8;">P. Yabo</span></h1>', unsafe_allow_html=True)
         st.markdown("<p style='font-size: 1.1rem; color: #475569; line-height: 1.6;'>Expert in building <b>Agentic AI systems</b> and <b>Automated Web Architectures</b>. I transform manual workflows into high-speed autonomous digital processes.</p>", unsafe_allow_html=True)
         
@@ -184,7 +187,7 @@ if selection == "Home":
         m_col3.markdown('<div class="metric-box"><h3>5+</h3><p>Clients</p></div>', unsafe_allow_html=True)
 
     with col2:
-        img_src = f"data:image/png;base64,{img_base64}" if img_base64 else "https://via.placeholder.com/220"
+        img_src = f"data:image/png;base64,{img_base64}" if img_base64 else "https://via.placeholder.com/180"
         st.markdown(f"""
         <div class="profile-box">
             <img src="{img_src}" class="profile-img">
@@ -198,7 +201,6 @@ if selection == "Home":
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
-    # FIXED: Used single quotes for class name
     st.markdown("<h1 class='section-title'>🚀 Featured Projects</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; color: #64748b; margin-bottom: 2rem;'>Precision engineering for modern web automation.</p>", unsafe_allow_html=True)
     
@@ -239,7 +241,6 @@ elif selection == "Projects":
 
 # --- CONTACT SECTION ---
 elif selection == "Contact":
-    # FIXED: Used single quotes for class name
     st.markdown("<h1 class='section-title'>📬 Let's Connect</h1>", unsafe_allow_html=True)
     
     c1, c2 = st.columns([1.2, 1], gap="large")
