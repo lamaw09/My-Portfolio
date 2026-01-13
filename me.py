@@ -3,16 +3,25 @@ from datetime import date
 import requests
 from streamlit_lottie import st_lottie
 import base64
+import pandas as pd
+from streamlit_gsheets import GSheetsConnection
 
 # --- PAGE CONFIG ---
 st.set_page_config(page_title="Klyde Joseph | Portfolio", page_icon="🚀", layout="wide")
 
+# --- BACKEND CONNECTION ---
+# Connects to your Google Sheet as a database
+conn = st.connection("gsheets", type=GSheetsConnection)
+
 # --- ASSETS ---
 def load_lottieurl(url):
-    r = requests.get(url)
-    if r.status_code != 200:
+    try:
+        r = requests.get(url)
+        if r.status_code != 200:
+            return None
+        return r.json()
+    except:
         return None
-    return r.json()
 
 def get_image_base64(path):
     try:
@@ -24,7 +33,7 @@ def get_image_base64(path):
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 img_base64 = get_image_base64("ID.png")
 
-# --- CUSTOM CSS (PROFESSIONAL ENHANCEMENTS) ---
+# --- CUSTOM CSS ---
 st.markdown(f"""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -47,120 +56,52 @@ st.markdown(f"""
         background-image: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
     }}
     .sidebar-btn {{
-        display: block;
-        width: 100%;
-        padding: 10px;
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        text-align: center;
-        border-radius: 10px;
-        text-decoration: none;
-        margin-top: 10px;
-        font-weight: 600;
-        border: 1px solid rgba(255,255,255,0.2);
+        display: block; width: 100%; padding: 10px; background: rgba(255, 255, 255, 0.1);
+        color: white; text-align: center; border-radius: 10px; text-decoration: none;
+        margin-top: 10px; font-weight: 600; border: 1px solid rgba(255,255,255,0.2);
     }}
     .sidebar-btn:hover {{ background: #2563eb; border-color: #2563eb; }}
 
     /* Profile Card */
     .profile-box {{
-        background: white;
-        padding: 3rem 2rem;
-        border-radius: 30px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
-        text-align: center;
-        transition: transform 0.3s ease;
+        background: white; padding: 3rem 2rem; border-radius: 30px; border: 1px solid #e2e8f0;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); text-align: center;
     }}
     .profile-img {{
-        width: 180px;
-        height: 180px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 6px solid #f1f5f9;
-        outline: 2px solid #3b82f6;
-        margin-bottom: 25px;
+        width: 180px; height: 180px; border-radius: 50%; object-fit: cover;
+        border: 6px solid #f1f5f9; outline: 2px solid #3b82f6; margin-bottom: 25px;
     }}
 
     /* Project Cards */
     .project-card {{
-        background-color: white;
-        padding: 2rem;
-        border-radius: 24px;
-        border: 1px solid #e2e8f0;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 550px; 
+        background-color: white; padding: 2rem; border-radius: 24px; border: 1px solid #e2e8f0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex;
+        flex-direction: column; justify-content: space-between; height: 550px; 
     }}
     .project-card:hover {{
-        transform: translateY(-12px);
-        border-color: #3b82f6;
+        transform: translateY(-12px); border-color: #3b82f6;
         box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.15);
     }}
 
     .skill-tag {{
-        display: inline-block;
-        background: #f1f5f9;
-        color: #475569;
-        padding: 6px 14px;
-        border-radius: 10px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        margin: 4px;
-        border: 1px solid #e2e8f0;
-    }}
-    .project-card:hover .skill-tag {{
-        background: #eff6ff;
-        color: #2563eb;
-        border-color: #dbeafe;
+        display: inline-block; background: #f1f5f9; color: #475569; padding: 6px 14px;
+        border-radius: 10px; font-size: 0.8rem; font-weight: 600; margin: 4px; border: 1px solid #e2e8f0;
     }}
 
     /* Professional Metrics */
     .metric-box {{
-        text-align: center;
-        padding: 2rem 1rem;
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 24px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        text-align: center; padding: 2rem 1rem; background: #ffffff;
+        border: 1px solid #e2e8f0; border-radius: 24px;
     }}
     .metric-box h3 {{
-        margin: 0;
-        background: linear-gradient(90deg, #2563eb, #3b82f6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-size: 2.2rem;
-        font-weight: 800;
+        margin: 0; background: linear-gradient(90deg, #2563eb, #3b82f6);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        font-size: 2.2rem; font-weight: 800;
     }}
-    .metric-box p {{
-        color: #64748b;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-size: 0.7rem;
-        margin-top: 8px;
-    }}
+    .metric-box p {{ color: #64748b; font-weight: 600; font-size: 0.7rem; margin-top: 8px; }}
 
     /* Contact UI */
-    .contact-info-card {{
-        background: #0f172a;
-        color: white;
-        padding: 2.5rem;
-        border-radius: 24px;
-    }}
-
-    /* Buttons */
-    div.stButton > button {{
-        background: #2563eb !important;
-        color: white !important;
-        border-radius: 12px !important;
-        padding: 0.8rem 2rem !important;
-        font-weight: 700 !important;
-        letter-spacing: 0.5px !important;
-        border: none !important;
-        box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39) !important;
-    }}
+    .contact-info-card {{ background: #0f172a; color: white; padding: 2.5rem; border-radius: 24px; }}
     </style>
     """, unsafe_allow_html=True)
 
@@ -177,21 +118,18 @@ with st.sidebar:
     
     st.markdown("<br><p style='color: #94a3b8; font-size: 0.8rem; font-weight: 600;'>SOCIALS</p>", unsafe_allow_html=True)
     st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lamaw09)")
-    st.markdown("[![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://facebook.com)")
-    st.markdown("[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/_itsmenoob_/)")
     st.markdown("[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:klydejosephy@gmail.com)")
 
 # --- HOME SECTION ---
 if selection == "Home":
     col1, col2 = st.columns([1.6, 1], gap="large")
-    
     with col1:
         st.markdown("<br><br>", unsafe_allow_html=True)
-        st.markdown("<p style='color: #2563eb; font-weight: 700; font-size: 1.1rem; margin-bottom: 0;'>Full-Stack Solutions 💡</p>", unsafe_allow_html=True)
-        st.markdown("<h1 style='font-size: 4rem; font-weight: 800; line-height: 1.1; margin-top: 0;'>Klyde Joseph<br><span style='color: #64748b;'>P. Yabo</span></h1>", unsafe_allow_html=True)
-        st.markdown("<p style='font-size: 1.2rem; color: #475569; line-height: 1.6;'>Building <b>Agentic AI systems</b> and <b>Automated Web Architectures</b>. Specialized in transforming manual workflows into autonomous, high-performance digital processes.</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #2563eb; font-weight: 700;'>Full-Stack Solutions 💡</p>", unsafe_allow_html=True)
+        st.markdown("<h1 style='font-size: 4rem; font-weight: 800;'>Klyde Joseph<br><span style='color: #64748b;'>P. Yabo</span></h1>", unsafe_allow_html=True)
+        st.markdown("<p style='font-size: 1.2rem; color: #475569;'>Building <b>Agentic AI systems</b> and <b>Automated Web Architectures</b>.</p>", unsafe_allow_html=True)
         
-        skills = ["Python", "Streamlit", "Playwright", "FastAPI", "Javascript", "OBS Studio", "HTML/CSS"]
+        skills = ["Python", "Streamlit", "Playwright", "FastAPI", "Javascript", "HTML/CSS"]
         skill_html = "".join([f'<span class="skill-tag">{s}</span>' for s in skills])
         st.markdown(skill_html, unsafe_allow_html=True)
         
@@ -207,30 +145,29 @@ if selection == "Home":
         st.markdown(f"""
         <div class="profile-box">
             <img src="{img_src}" class="profile-img">
-            <h3 style="color: #0f172a; font-size: 1.4rem; font-weight: 700; margin-bottom: 8px;">Developer & Automation Specialist</h3>
+            <h3 style="color: #0f172a; font-size: 1.4rem; font-weight: 700;">Developer & Automation Specialist</h3>
             <div style="display: inline-block; padding: 6px 16px; background: #f0fdf4; color: #16a34a; border-radius: 20px; font-size: 0.85rem; font-weight: 700;">
                 🟢 Available for Freelance
             </div>
-            <p style="color: #64748b; font-size: 0.9rem; margin-top: 20px;">Based in Mindanao, PH. Expert in Python-driven automation and intelligent web scraping.</p>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 20px;">Based in Mindanao, PH. Expert in Python-driven automation.</p>
         </div>
         """, unsafe_allow_html=True)
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
-    st.markdown("<h1 style='text-align: center; font-size: 3rem;'>🚀 Featured Projects</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #64748b; font-size: 1.1rem; margin-bottom: 3rem;'>Robust systems designed for scale, precision, and efficiency.</p>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>🚀 Featured Projects</h1>", unsafe_allow_html=True)
     
     projects = [
         {
             "title": "FB to Discord Webhook", 
-            "desc": "An autonomous scraper utilizing Playwright to broadcast targeted news feeds instantly to Discord. Features sophisticated error handling and multi-feed synchronization.", 
+            "desc": "Autonomous scraper utilizing Playwright to broadcast targeted news feeds instantly to Discord.", 
             "link": "https://github.com/lamaw09/Facebook-to-Discord-Webhook",
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
             "tags": ["Scraping", "Automation", "Python"]
         },
         {
             "title": "Streamlit Dashboard", 
-            "desc": "A high-performance data visualization suite for tracking automation health in real-time. Features custom CSS themes and REST API integration.", 
+            "desc": "High-performance data visualization suite for tracking automation health in real-time.", 
             "link": "#",
             "image": "https://images.unsplash.com/photo-1551288049-bbda38a5f072?auto=format&fit=crop&w=800&q=80",
             "tags": ["UI/UX", "Streamlit", "Analytics"]
@@ -245,50 +182,66 @@ elif selection == "Projects":
             st.markdown(f"""
             <div class="project-card">
                 <div>
-                    <img src="{p['image']}" style="width:100%; border-radius:18px; height:220px; object-fit:cover; margin-bottom:25px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">
-                    <h3 style="margin:0; color:#0f172a; font-size:1.5rem; font-weight: 700;">{p['title']}</h3>
-                    <p style="color:#475569; font-size:1rem; margin-top:12px; line-height:1.6;">{p['desc']}</p>
+                    <img src="{p['image']}" style="width:100%; border-radius:18px; height:220px; object-fit:cover; margin-bottom:25px;">
+                    <h3 style="margin:0; color:#0f172a; font-weight: 700;">{p['title']}</h3>
+                    <p style="color:#475569; margin-top:12px;">{p['desc']}</p>
                 </div>
                 <div>
                     <div style="margin-bottom:25px;">{tag_html}</div>
-                    <a href="{p['link']}" target="_blank" style="display:block; text-align:center; color:white; background:#2563eb; text-decoration:none; font-weight:700; font-size: 0.95rem; padding: 14px; border-radius: 12px; transition: 0.3s;">View Case Study ↗</a>
+                    <a href="{p['link']}" target="_blank" style="display:block; text-align:center; color:white; background:#2563eb; text-decoration:none; font-weight:700; padding: 14px; border-radius: 12px;">View Project ↗</a>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
-# --- CONTACT SECTION ---
+# --- CONTACT SECTION (BACKEND INTEGRATED) ---
 elif selection == "Contact":
-    st.markdown("<h1 style='text-align: center; font-size: 3rem;'>📬 Get In Touch</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #64748b; font-size: 1.1rem; margin-bottom: 3rem;'>Let's collaborate on your next automation or AI project.</p>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>📬 Get In Touch</h1>", unsafe_allow_html=True)
     
     c1, c2 = st.columns([1.5, 1], gap="large")
     with c1:
-        with st.form("contact_form"):
+        # Form logic handles saving to Google Sheets
+        with st.form("contact_form", clear_on_submit=True):
             st.markdown("<p style='font-weight: 600; color: #475569;'>Send a Message</p>", unsafe_allow_html=True)
             name = st.text_input("Full Name", placeholder="e.g. John Doe")
             email = st.text_input("Email Address", placeholder="name@company.com")
-            msg = st.text_area("Your Project Description", placeholder="Briefly describe what you're looking to build...")
-            if st.form_submit_button("Submit Inquiry"):
-                st.balloons()
-                st.success(f"Thank you, {name}! Your inquiry has been sent.")
+            msg = st.text_area("Project Description", placeholder="What are we building?")
+            
+            submit_button = st.form_submit_button("Submit Inquiry")
+            
+            if submit_button:
+                if name and email and msg:
+                    # BACKEND PROCESS
+                    try:
+                        # 1. Fetch current data
+                        existing_data = conn.read(worksheet="Messages")
+                        # 2. Prepare new entry
+                        new_entry = pd.DataFrame([{
+                            "Date": str(date.today()),
+                            "Name": name,
+                            "Email": email,
+                            "Message": msg
+                        }])
+                        # 3. Append and Update
+                        updated_df = pd.concat([existing_data, new_entry], ignore_index=True)
+                        conn.update(worksheet="Messages", data=updated_df)
+                        
+                        st.balloons()
+                        st.success(f"Success! Thanks {name}, I'll get back to you soon.")
+                    except Exception as e:
+                        st.error("Error connecting to backend. Please try again later.")
+                else:
+                    st.warning("Please fill in all fields.")
     with c2:
         st.markdown(f"""
         <div class="contact-info-card">
             <h3 style="margin-top:0; color:white;">Contact Details</h3>
-            <p style="color: #94a3b8; font-size: 0.8rem; font-weight: 800; margin-bottom: 5px; letter-spacing: 1.2px;">LOCATION</p>
-            <p style="margin-bottom: 25px; font-size: 1.1rem;">📍 Clarin, Northern Mindanao, PH</p>
-            
-            <p style="color: #94a3b8; font-size: 0.8rem; font-weight: 800; margin-bottom: 5px; letter-spacing: 1.2px;">DIRECT EMAIL</p>
-            <p style="margin-bottom: 25px; font-size: 1.1rem;">📧 klydejosephy@gmail.com</p>
-            
-            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 18px; border-left: 4px solid #3b82f6;">
-                <p style="color: #60a5fa; font-size: 0.9rem; font-weight: 600; margin: 0;">Business Hours</p>
-                <p style="color: white; font-size: 0.85rem; margin-top: 5px;">Mon - Fri: 9:00 AM - 6:00 PM (GMT+8)</p>
-            </div>
+            <p style="color: #94a3b8; font-size: 0.8rem; font-weight: 800; letter-spacing: 1.2px;">LOCATION</p>
+            <p style="margin-bottom: 25px;">📍 Clarin, Northern Mindanao, PH</p>
+            <p style="color: #94a3b8; font-size: 0.8rem; font-weight: 800; letter-spacing: 1.2px;">DIRECT EMAIL</p>
+            <p>📧 klydejosephy@gmail.com</p>
         </div>
         """, unsafe_allow_html=True)
 
 # --- FOOTER ---
-st.markdown("<br><br><br>", unsafe_allow_html=True)
-st.markdown("<hr style='opacity: 0.1;'>", unsafe_allow_html=True)
-st.markdown(f"<p style='text-align: center; color: #64748b; font-size: 0.9rem; font-weight:500;'>© {date.today().year} Klyde Joseph | Automation Engineering Portfolio | Built with Streamlit & Python</p>", unsafe_allow_html=True)
+st.markdown("<br><hr style='opacity: 0.1;'>", unsafe_allow_html=True)
+st.markdown(f"<p style='text-align: center; color: #64748b; font-size: 0.9rem;'>© {date.today().year} Klyde Joseph | Built with Streamlit</p>", unsafe_allow_html=True)
