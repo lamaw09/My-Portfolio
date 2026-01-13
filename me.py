@@ -15,18 +15,35 @@ def load_lottieurl(url):
 
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 
-# --- CUSTOM CSS (RESPONSIVE FOCUS) ---
+# --- CUSTOM CSS ---
 st.markdown("""
     <style>
     .main { background-color: #f8fafc; }
     html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 
-    /* Fix for mobile responsiveness: Stacking columns */
+    /* Mobile Responsiveness */
     @media (max-width: 768px) {
         .stColumn {
             width: 100% !important;
             margin-bottom: 20px;
         }
+    }
+
+    /* Professional Image Resizing & Styling */
+    .profile-img-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    
+    /* This targets the image specifically */
+    [data-testid="stImage"] img {
+        border-radius: 20px;
+        border: 5px solid white;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        max-width: 280px !important; /* Forces a professional size */
+        height: auto;
     }
 
     /* Bento-style Cards */
@@ -58,26 +75,15 @@ st.markdown("""
         margin: 4px 2px;
     }
 
-    /* Metric Box Responsive */
+    /* Metric Box */
     .metric-box {
         text-align: center;
         padding: 10px;
         background: black;
+        color: white;
         border-radius: 10px;
         border-left: 5px solid #2563eb;
         margin-bottom: 10px;
-    }
-
-    /* Responsive Profile Image */
-    .prof-img {
-        border-radius: 30px;
-        border: 4px solid white;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 300px;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -87,13 +93,12 @@ with st.sidebar:
     if lottie_coding:
         st_lottie(lottie_coding, height=150, key="coding")
     st.title("Navigation")
-    selection = st.radio("Go to", ["Home", "Projects", "Blog", "Contact"])
+    selection = st.radio("Go to", ["Home", "Projects", "Contact"])
     
     st.markdown("---")
     st.write("🌐 **Connect:**")
     st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lamaw09)")
     st.markdown("[![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://facebook.com)")
-    # Fixed Connections Below
     st.markdown("[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/_itsmenoob_/)")
     st.markdown("[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:klydejosephy@gmail.com)")
 
@@ -121,27 +126,31 @@ if selection == "Home":
         with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Clients</p></div>', unsafe_allow_html=True)
 
     with col2:
-        # Centered responsive image
-        st.image("ID.png", use_container_width=True)
-        st.markdown("<p style='text-align: center; color: #64748b; font-size: 0.9rem;'>Developer & Automation Specialist</p>", unsafe_allow_html=True)
+        # Image is now constrained by CSS to max 280px
+        st.image("ID.png")
+        st.markdown("<p style='text-align: center; color: #64748b; font-size: 0.9rem; font-weight: bold;'>Developer & Automation Specialist</p>", unsafe_allow_html=True)
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
-    st.title("🚀 Projects")
+    st.title("🚀 Featured Projects")
     
-    # Using a container for projects to manage spacing
     projects = [
         {
             "title": "FB to Discord Webhook", 
-            "desc": "Autonomous scraper utilizing Playwright to broadcast news feeds instantly.", 
+            "desc": "Autonomous scraper utilizing Playwright to broadcast news feeds instantly to Discord servers.", 
             "link": "https://github.com/lamaw09/Facebook-to-Discord-Webhook",
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
-            "tags": ["Scraping", "Automation"]
+            "tags": ["Scraping", "Automation", "Python"]
         },
-
+        {
+            "title": "Streamlit Dashboard", 
+            "desc": "A professional data visualization tool for tracking automation metrics in real-time.", 
+            "link": "#",
+            "image": "https://images.unsplash.com/photo-1551288049-bbda38a5f072?auto=format&fit=crop&w=800&q=80",
+            "tags": ["UI/UX", "Streamlit", "Data"]
+        }
     ]
     
-    # Project columns that collapse on mobile
     p_col1, p_col2 = st.columns(2)
     for i, p in enumerate(projects):
         target_col = p_col1 if i % 2 == 0 else p_col2
@@ -151,28 +160,31 @@ elif selection == "Projects":
             <div class="project-card">
                 <img src="{p['image']}" style="width:100%; border-radius:10px; height:180px; object-fit:cover;">
                 <h3 style="margin-top:15px; font-size: 1.2rem;">{p['title']}</h3>
-                <p style="color:#64748b; font-size:0.85rem; min-height:40px;">{p['desc']}</p>
+                <p style="color:#64748b; font-size:0.85rem; min-height:45px;">{p['desc']}</p>
                 <div style="margin-bottom:15px;">{tag_html}</div>
-                <a href="{p['link']}" target="_blank" style="color:#2563eb; text-decoration:none; font-weight:bold; font-size: 0.9rem;">View Code ↗</a>
+                <a href="{p['link']}" target="_blank" style="color:#2563eb; text-decoration:none; font-weight:bold; font-size: 0.9rem;">Source Code ↗</a>
             </div>
             """, unsafe_allow_html=True)
 
 # --- CONTACT SECTION ---
 elif selection == "Contact":
     st.title("📬 Get In Touch")
+    st.write("Have a project in mind? Let's talk about how I can help you automate your workflow.")
+    
     c1, c2 = st.columns([2, 1])
     with c1:
         with st.form("contact_form"):
-            name = st.text_input("Name")
-            email = st.text_input("Email")
-            msg = st.text_area("Message")
-            if st.form_submit_button("Send"):
+            name = st.text_input("Full Name")
+            email = st.text_input("Email Address")
+            msg = st.text_area("Your Message")
+            if st.form_submit_button("Send Message"):
                 st.balloons()
-                st.success("Sent!")
+                st.success(f"Thank you {name}, your message has been sent!")
     with c2:
-        st.info("**📍 Location:** Clarin, Northern Mindanao")
-        st.info("**📧 Email:** klydejosephy@gmail.com")
+        st.info("**📍 Location:** Clarin, Northern Mindanao, PH")
+        st.info("**📧 Direct Email:** klydejosephy@gmail.com")
+        st.write("I usually respond within 24 hours.")
 
 # --- FOOTER ---
 st.markdown("---")
-st.markdown(f"<p style='text-align: center; color: #94a3b8; font-size: 0.8rem;'>© {date.today().year} Klyde Joseph | Mobile-Friendly Portfolio</p>", unsafe_allow_html=True)
+st.markdown(f"<p style='text-align: center; color: #94a3b8; font-size: 0.8rem;'>© {date.today().year} Klyde Joseph | Built with Streamlit & ❤️</p>", unsafe_allow_html=True)
