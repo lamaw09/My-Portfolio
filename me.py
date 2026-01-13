@@ -15,7 +15,7 @@ def load_lottieurl(url):
 
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 
-# --- CUSTOM CSS (REFINED SIZING & UI/UX) ---
+# --- CUSTOM CSS (FINAL PRECISION SIZING) ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
@@ -27,41 +27,51 @@ st.markdown("""
     [data-testid="stSidebar"] {
         background-image: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
     }
-    [data-testid="stSidebarNav"] {padding-top: 2rem;}
 
-    /* CENTERED PROFILE BOX - Refined Sizing */
-    .profile-box {
+    /* CENTERED PROFILE BOX - Precision Fix */
+    .profile-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: 1.5rem;
+        width: 100%;
+    }
+
+    /* Target the specific container Streamlit puts images in */
+    [data-testid="stVerticalBlock"] > div:has(div.profile-box) {
+        display: flex;
+        flex-direction: column;
+        align-items: center !important;
+    }
+
+    .profile-box {
         background: white;
+        padding: 2rem;
         border-radius: 24px;
         border: 1px solid #e2e8f0;
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 320px;
     }
 
-    /* Fixed Image Size for ID.png */
-    [data-testid="stImage"] img {
+    /* Controlled Circular Image */
+    .profile-box img {
         border-radius: 50% !important; 
         border: 4px solid #3b82f6;
-        transition: transform 0.3s ease;
-        width: 160px !important; /* Controlled size */
-        height: 160px !important; /* Forces aspect ratio */
+        width: 180px !important;
+        height: 180px !important;
         object-fit: cover;
-        margin-bottom: 10px;
-    }
-    
-    [data-testid="stImage"] img:hover {
-        transform: rotate(3deg) scale(1.05);
+        margin-bottom: 15px;
     }
 
-    /* Project Cards - Normalized Height */
+    /* Symmetrical Project Cards */
     .project-card {
         background-color: white;
-        padding: 1.2rem;
+        padding: 1.5rem;
         border-radius: 20px;
         border: 1px solid #e2e8f0;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -69,31 +79,30 @@ st.markdown("""
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 480px; /* Fixed height for symmetry */
-        margin-bottom: 20px;
-    }
-    .project-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.1);
-        border-color: #3b82f6;
+        height: 500px; 
     }
     
+    .project-card:hover {
+        transform: translateY(-5px);
+        border-color: #3b82f6;
+    }
+
     .skill-tag {
         display: inline-block;
         background: #f0f7ff;
         color: #2563eb;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 0.7rem;
+        padding: 5px 12px;
+        border-radius: 8px;
+        font-size: 0.75rem;
         font-weight: 600;
-        margin: 2px;
+        margin: 3px;
         border: 1px solid #dbeafe;
     }
 
-    /* Metric Tiles - Better Spacing */
+    /* Metric Tiles */
     .metric-box {
         text-align: center;
-        padding: 15px 5px;
+        padding: 20px 10px;
         background: #0f172a;
         color: #f8fafc;
         border-radius: 16px;
@@ -102,21 +111,21 @@ st.markdown("""
     .metric-box h3 {
         margin: 0;
         color: #60a5fa !important;
-        font-size: 1.5rem;
-    }
-    .metric-box p {
-        margin: 0;
-        font-size: 0.75rem;
-        font-weight: 400;
+        font-size: 1.6rem;
     }
 
-    /* Form and Buttons */
+    /* Button Styling */
     .stButton button {
-        background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%) !important;
-        border: none !important;
-        padding: 10px 24px !important;
+        background: #2563eb !important;
+        color: white !important;
         border-radius: 12px !important;
-        font-weight: 600 !important;
+        width: 100%;
+        border: none !important;
+        transition: 0.3s;
+    }
+    .stButton button:hover {
+        background: #1e40af !important;
+        transform: scale(1.02);
     }
     </style>
     """, unsafe_allow_html=True)
@@ -137,7 +146,7 @@ with st.sidebar:
 
 # --- HOME SECTION ---
 if selection == "Home":
-    col1, col2 = st.columns([1.6, 1], gap="large")
+    col1, col2 = st.columns([1.5, 1], gap="large")
     
     with col1:
         st.markdown("<br><br>", unsafe_allow_html=True)
@@ -160,12 +169,19 @@ if selection == "Home":
         with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Happy Clients</p></div>', unsafe_allow_html=True)
 
     with col2:
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown('<div class="profile-box">', unsafe_allow_html=True)
-        st.image("ID.png")
-        st.markdown("<p style='color: #0f172a; font-size: 1.1rem; font-weight: 700; margin-top: 5px; margin-bottom: 0px;'>Developer & Automation Specialist</p>", unsafe_allow_html=True)
-        st.markdown("<p style='color: #3b82f6; font-size: 0.85rem; font-weight: 600;'>🟢 Available for Freelance</p>", unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown("<br><br>", unsafe_allow_html=True)
+        # Using a single markdown block for the entire profile card to ensure alignment
+        st.markdown(f"""
+        <div class="profile-container">
+            <div class="profile-box">
+                <img src="https://via.placeholder.com/180" alt="Profile">
+                <h3 style="color: #0f172a; margin-bottom: 5px; font-size: 1.2rem;">Developer & Automation Specialist</h3>
+                <p style="color: #3b82f6; font-weight: 600; margin: 0;">🟢 Available for Freelance</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        # Note: If using local "ID.png", you can use st.image inside the profile-box div 
+        # but for absolute centering, HTML rendering as above is most reliable.
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
@@ -197,13 +213,13 @@ elif selection == "Projects":
             st.markdown(f"""
             <div class="project-card">
                 <div>
-                    <img src="{p['image']}" style="width:100%; border-radius:12px; height:180px; object-fit:cover; margin-bottom:15px;">
+                    <img src="{p['image']}" style="width:100%; border-radius:12px; height:200px; object-fit:cover; margin-bottom:15px;">
                     <h3 style="margin:0; color:#0f172a; font-size:1.2rem;">{p['title']}</h3>
                     <p style="color:#475569; font-size:0.85rem; margin-top:10px;">{p['desc']}</p>
                 </div>
                 <div>
                     <div style="margin-bottom:15px;">{tag_html}</div>
-                    <a href="{p['link']}" target="_blank" style="display:block; text-align:center; color:white; background:#2563eb; text-decoration:none; font-weight:600; font-size: 0.85rem; padding: 10px; border-radius: 10px;">View Project ↗</a>
+                    <a href="{p['link']}" target="_blank" style="display:block; text-align:center; color:white; background:#2563eb; text-decoration:none; font-weight:600; font-size: 0.85rem; padding: 12px; border-radius: 10px;">View Project ↗</a>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -223,14 +239,14 @@ elif selection == "Contact":
                 st.success(f"Message received, {name}!")
     with c2:
         st.markdown("""
-        <div style="background: white; padding: 24px; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+        <div style="background: white; padding: 24px; border-radius: 20px; border: 1px solid #e2e8f0;">
             <h4 style="margin-top:0; color:#0f172a;">Contact Info</h4>
             <p style="color:#64748b; font-size:0.8rem; font-weight:700; margin-bottom:0;">LOCATION</p>
             <p style="color:#1e293b; margin-bottom:15px;">📍 Clarin, Northern Mindanao, PH</p>
             <p style="color:#64748b; font-size:0.8rem; font-weight:700; margin-bottom:0;">EMAIL</p>
             <p style="color:#1e293b; margin-bottom:15px;">📧 klydejosephy@gmail.com</p>
-            <div style="background:#f0f7ff; padding:10px; border-radius:10px; border-left:4px solid #3b82f6;">
-                <p style="color:#1d4ed8; font-size:0.8rem; font-weight:600; margin:0;">Currently accepting new projects!</p>
+            <div style="background:#f0f7ff; padding:15px; border-radius:12px; border-left:4px solid #3b82f6;">
+                <p style="color:#1d4ed8; font-size:0.8rem; font-weight:600; margin:0;">Open for collaboration!</p>
             </div>
         </div>
         """, unsafe_allow_html=True)
