@@ -207,7 +207,7 @@ if selection == "Home":
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
-    st.markdown("<h1 class="section-title">🚀 Featured Projects</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 class='section-title'>🚀 Featured Projects</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; color: #64748b; margin-bottom: 2rem;'>Precision engineering for modern web automation.</p>", unsafe_allow_html=True)
     
     projects = [
