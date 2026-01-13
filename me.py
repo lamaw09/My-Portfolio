@@ -62,7 +62,7 @@ st.markdown("""
     .metric-box {
         text-align: center;
         padding: 10px;
-        background: white;
+        background: black;
         border-radius: 10px;
         border-left: 5px solid #2563eb;
         margin-bottom: 10px;
@@ -124,7 +124,7 @@ if selection == "Home":
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
-    st.title("🚀 Engineering Gallery")
+    st.title("🚀 Projects")
     
     # Using a container for projects to manage spacing
     projects = [
@@ -135,13 +135,7 @@ elif selection == "Projects":
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
             "tags": ["Scraping", "Automation"]
         },
-        {
-            "title": "Agentic AI Orchestrator", 
-            "desc": "Multi-agent system designed for complex support queries using GPT-4.", 
-            "link": "#",
-            "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
-            "tags": ["AI", "Python"]
-        }
+
     ]
     
     # Project columns that collapse on mobile
