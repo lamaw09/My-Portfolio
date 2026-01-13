@@ -2,7 +2,7 @@ import streamlit as st
 from datetime import date
 
 # --- PAGE CONFIG ---
-st.set_page_config(page_title="Professional Portfolio", page_icon="🚀", layout="wide")
+st.set_page_config(page_title="Klyde Joseph | Portfolio", page_icon="🚀", layout="wide")
 
 # --- CUSTOM CSS FOR PROFESSIONAL UI/UX ---
 st.markdown("""
@@ -25,7 +25,7 @@ st.markdown("""
         border: 1px solid #e2e8f0;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
     .project-card:hover {
         transform: translateY(-5px);
@@ -39,9 +39,10 @@ st.markdown("""
         color: #2563eb;
         padding: 4px 12px;
         border-radius: 20px;
-        font-size: 0.85rem;
+        font-size: 0.75rem;
         font-weight: 600;
-        margin: 4px;
+        margin: 4px 2px;
+        border: 1px solid #dbeafe;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -50,7 +51,8 @@ st.markdown("""
 with st.sidebar:
     st.title("Navigation")
     selection = st.radio("Go to", ["Home", "Projects", "Blog", "Contact"])
-    st.info("")
+    st.markdown("---")
+    st.info("Currently focusing on Agentic AI and Web Automation.")
 
 # --- HOME SECTION ---
 if selection == "Home":
@@ -68,17 +70,17 @@ if selection == "Home":
         """)
         
         # Skill chips
-        skills = ["Python", "Streamlit", "HTML/CSS", "Javascript", "OBS Studio", "Vercel"]
+        skills = ["Python", "Streamlit", "HTML/CSS", "Javascript", "Playwright", "Git"]
         skill_html = "".join([f'<span class="skill-tag">{s}</span>' for s in skills])
         st.markdown(skill_html, unsafe_allow_html=True)
         
         st.markdown("---")
         if st.button("🚀 View My Projects"):
-            st.info("Use the sidebar to navigate to Projects!")
+            st.info("Please select 'Projects' from the sidebar!")
 
     with col2:
-        # Placeholder for a professional headshot
-        st.image("https://via.placeholder.com/400x400.png?text=Professional+Headshot", use_container_width=True)
+        # Professional headshot placeholder
+        st.image("https://via.placeholder.com/400x400.png?text=Klyde+Joseph", use_container_width=True)
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
@@ -87,21 +89,53 @@ elif selection == "Projects":
     
     col_a, col_b = st.columns(2)
     
+    # Enhanced Project Data
     projects = [
-        {"title": "FB to Discord Webhook", "desc": "Automated scraper that broadcasts Facebook posts to Discord using Playwright.", "link": "https://github.com/lamaw09/Facebook-to-Discord-Webhook"},
-        {"title": "Eco-Tracker Pro", "desc": "Dashboard for monitoring small business carbon footprints.", "link": "#"},
-        {"title": "SaaS Boilerplate", "desc": "A high-performance template using FastAPI and React.", "link": "#"},
-        {"title": "Media Automation", "desc": "Automating OBS scenes via Python scripts for streamers.", "link": "#"}
+        {
+            "title": "FB to Discord Webhook", 
+            "desc": "Automated scraper that broadcasts Facebook posts to Discord in real-time using Playwright.", 
+            "link": "https://github.com/lamaw09/Facebook-to-Discord-Webhook",
+            "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
+            "tags": ["Python", "Playwright", "Webhooks"]
+        },
+        {
+            "title": "Eco-Tracker Pro", 
+            "desc": "Real-time dashboard for monitoring small business carbon footprints and sustainability metrics.", 
+            "link": "#",
+            "image": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80",
+            "tags": ["Data Viz", "Streamlit", "GreenTech"]
+        },
+        {
+            "title": "AI Content Auditor", 
+            "desc": "Advanced NLP tool to verify human-written content vs AI generated text with high accuracy.", 
+            "link": "#",
+            "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
+            "tags": ["OpenAI", "NLP", "Python"]
+        },
+        {
+            "title": "Media Automation", 
+            "desc": "Python-driven OBS automation for dynamic scene switching and automated streaming workflows.", 
+            "link": "#",
+            "image": "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?auto=format&fit=crop&w=800&q=80",
+            "tags": ["OBS Studio", "Automation", "LiveStream"]
+        }
     ]
     
     for i, p in enumerate(projects):
         target_col = col_a if i % 2 == 0 else col_b
         with target_col:
+            # Generate HTML for tags
+            tag_html = "".join([f'<span class="skill-tag">{tag}</span>' for tag in p['tags']])
+            
             st.markdown(f"""
             <div class="project-card">
-                <h3>{p['title']}</h3>
-                <p>{p['desc']}</p>
-                <a href="{p['link']}" style="text-decoration:none; color:#2563eb; font-weight:bold;">View Project →</a>
+                <img src="{p['image']}" style="width:100%; border-radius:8px; margin-bottom:15px; height:200px; object-fit:cover;">
+                <h3 style="margin-top:0; color:#1e293b;">{p['title']}</h3>
+                <p style="color:#64748b; font-size:0.95rem; min-height:60px;">{p['desc']}</p>
+                <div style="margin-bottom:15px;">{tag_html}</div>
+                <a href="{p['link']}" target="_blank" style="text-decoration:none; color:#2563eb; font-weight:bold; font-size:0.9rem;">
+                    View Project Details →
+                </a>
             </div>
             """, unsafe_allow_html=True)
 
@@ -136,4 +170,4 @@ elif selection == "Contact":
 
 # --- FOOTER ---
 st.markdown("---")
-st.markdown(f"<p style='text-align: center;'>© {date.today().year} | Designed with ❤️ in Python</p>", unsafe_allow_html=True)
+st.markdown(f"<p style='text-align: center; color: #64748b;'>© {date.today().year} | Designed with ❤️ by Klyde Joseph</p>", unsafe_allow_html=True)
