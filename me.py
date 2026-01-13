@@ -93,6 +93,8 @@ with st.sidebar:
     st.write("🌐 **Connect:**")
     st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lamaw09)")
     st.markdown("[![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://facebook.com)")
+    st.markdown("[![Instagram](https://www.instagram.com/_itsmenoob_/)")
+    st.markdown("[![Gmail](klydejosephy@gmail.com/)")
 
 # --- HOME SECTION ---
 if selection == "Home":
@@ -106,7 +108,7 @@ if selection == "Home":
         Transforming manual workflows into autonomous digital processes.
         """)
         
-        skills = ["Python", "Streamlit", "Playwright", "FastAPI", "PostgreSQL", "Tailwind CSS"]
+        skills = ["Python", "Streamlit", "Playwright", "FastAPI", "Javascript", "OBS Studio", "HTML/CSS"]
         skill_html = "".join([f'<span class="skill-tag">{s}</span>' for s in skills])
         st.markdown(skill_html, unsafe_allow_html=True)
         
