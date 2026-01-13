@@ -5,239 +5,210 @@ from streamlit_lottie import st_lottie
 import base64
 
 # --- PAGE CONFIG ---
-st.set_page_config(page_title="Klyde Joseph // Tech Portfolio", page_icon="📟", layout="wide")
+st.set_page_config(page_title="Klyde Joseph | Portfolio", page_icon="◻️", layout="wide")
 
 # --- ASSETS ---
-def load_lottieurl(url):
-    r = requests.get(url)
-    return r.json() if r.status_code == 200 else None
-
 def get_image_base64(path):
     try:
         with open(path, "rb") as img_file:
             return base64.b64encode(img_file.read()).decode()
-    except: return ""
+    except:
+        return ""
 
-lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 img_base64 = get_image_base64("ID.png")
 
-# --- TECHIE CSS OVERHAUL ---
+# --- SWISS DESIGN CSS ---
 st.markdown(f"""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;600;800&family=Orbitron:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
 
-    /* Background with Scanlines */
-    .main {{
-        background-color: #0d1117;
-        background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
-                          linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-        background-size: 100% 4px, 3px 100%;
+    /* Reset and Global Styles */
+    .main {{ background-color: #ffffff; color: #000000; }}
+    html, body, [class*="css"] {{ font-family: 'Inter', sans-serif; }}
+    
+    /* Hard Grid Layout */
+    .stMarkdown, .profile-box, .project-card, .metric-box {{
+        border-top: 2px solid #000;
+        border-radius: 0px !important;
+        padding-top: 20px !important;
     }}
 
-    /* Global Text Styling */
-    html, body, [class*="css"] {{
-        font-family: 'Source Code Pro', monospace;
-        color: #c9d1d9;
-    }}
-
-    /* Neon Sidebar */
+    /* Sidebar Styling - Solid Black */
     [data-testid="stSidebar"] {{
-        background-color: #010409 !important;
-        border-right: 1px solid #238636;
+        background-color: #000000 !important;
+        border-right: 2px solid #000;
     }}
+    [data-testid="stSidebar"] * {{ color: white !important; }}
+    
     .sidebar-btn {{
-        display: block; width: 100%; padding: 10px; margin-top: 10px;
-        background: transparent; color: #238636 !important;
-        text-align: center; border: 1px solid #238636;
-        text-decoration: none; border-radius: 4px;
-        font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+        display: block; width: 100%; padding: 10px;
+        background: white; color: black !important;
+        text-align: center; font-weight: 900;
+        text-decoration: none; border: 2px solid white;
+        text-transform: uppercase; letter-spacing: 1px;
     }}
-    .sidebar-btn:hover {{
-        background: rgba(35, 134, 54, 0.2);
-        box-shadow: 0 0 10px #238636;
-    }}
+    .sidebar-btn:hover {{ background: black; color: white !important; }}
 
-    /* Tech Profile Card */
+    /* Swiss Typography */
+    h1 {{ font-weight: 900 !important; text-transform: uppercase; line-height: 0.9 !important; letter-spacing: -3px !important; }}
+    h3 {{ font-weight: 700 !important; text-transform: uppercase; letter-spacing: 1px; }}
+
+    /* Profile Card */
     .profile-box {{
-        background: rgba(22, 27, 34, 0.8);
-        padding: 2.5rem;
-        border: 1px solid #30363d;
-        border-top: 4px solid #58a6ff;
-        border-radius: 8px;
-        text-align: center;
-        backdrop-filter: blur(10px);
+        text-align: left;
+        background: #f0f0f0;
+        padding: 2rem !important;
+        border: 2px solid #000;
     }}
     .profile-img {{
-        width: 160px; height: 160px; border-radius: 4px;
-        object-fit: cover; border: 2px solid #58a6ff;
-        filter: grayscale(40%) contrast(110%);
-        margin-bottom: 20px;
+        width: 100%; border-radius: 0px; filter: grayscale(100%);
+        border-bottom: 2px solid #000; margin-bottom: 20px;
     }}
 
-    /* Project Cards - HUD Style */
+    /* Project Cards - Rigid & Asymmetrical */
     .project-card {{
-        background: rgba(22, 27, 34, 0.7);
-        padding: 1.5rem;
-        border: 1px solid #30363d;
-        border-left: 5px solid #58a6ff;
-        transition: 0.3s;
-        height: 520px;
+        background-color: transparent;
+        padding: 0 !important;
+        border-top: 8px solid #000;
+        margin-bottom: 4rem;
+        display: block;
+        height: auto;
     }}
-    .project-card:hover {{
-        border-color: #58a6ff;
-        background: rgba(33, 38, 45, 1);
-        transform: translateX(10px);
-        box-shadow: -5px 0 20px rgba(88, 166, 255, 0.2);
+    .project-img-swiss {{
+        width: 100%; height: 350px; object-fit: cover;
+        filter: grayscale(100%); transition: 0.3s ease;
     }}
+    .project-img-swiss:hover {{ filter: grayscale(0%); }}
 
-    /* Skill Tags */
     .skill-tag {{
-        display: inline-block;
-        background: #161b22;
-        color: #58a6ff;
-        padding: 4px 10px;
-        border-radius: 4px;
-        font-size: 0.75rem;
-        border: 1px solid #30363d;
-        margin: 3px;
+        display: inline-block; background: #000; color: #fff;
+        padding: 4px 10px; font-size: 0.7rem; font-weight: 700;
+        margin-right: 5px; text-transform: uppercase;
     }}
 
-    /* Big Tech Header */
-    .glitch-text {{
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 800;
-        color: #ffffff;
-        text-shadow: 2px 2px #58a6ff;
-    }}
-
-    /* Animated Metrics */
+    /* Metric Boxes */
     .metric-box {{
-        text-align: left; padding: 1rem;
-        border-left: 2px solid #238636;
-        background: rgba(35, 134, 54, 0.05);
+        background: #fff; padding: 1rem 0 !important;
+        border-top: 4px solid #000;
     }}
-    .metric-box h3 {{ color: #238636; margin: 0; font-size: 1.8rem; }}
-    .metric-box p {{ font-size: 0.7rem; color: #8b949e; text-transform: uppercase; }}
+    .metric-box h3 {{ font-size: 3rem !important; margin: 0; }}
+    .metric-box p {{ font-weight: 900; text-transform: uppercase; font-size: 0.8rem; }}
 
+    /* Forms */
+    input, textarea {{
+        border: 2px solid #000 !important; border-radius: 0px !important;
+    }}
+    div.stButton > button {{
+        background: #000 !important; color: #fff !important;
+        border-radius: 0px !important; width: 100%; font-weight: 900 !important;
+        text-transform: uppercase; border: none !important; padding: 1rem !important;
+    }}
     </style>
     """, unsafe_allow_html=True)
 
 # --- SIDEBAR ---
 with st.sidebar:
-    if lottie_coding:
-        st_lottie(lottie_coding, height=120, key="coding")
-    st.markdown("<h2 style='text-align: center; color: #58a6ff; font-family: Orbitron;'>ROOT_NAV</h2>", unsafe_allow_html=True)
-    selection = st.radio("", ["Console", "Repositories", "Ping"], label_visibility="collapsed")
+    st.markdown("<h1 style='font-size: 2.5rem;'>INDEX</h1>", unsafe_allow_html=True)
+    selection = st.radio("", ["01 HOME", "02 PROJECTS", "03 CONTACT"])
     
-    st.markdown("---")
-    st.markdown("<p style='color: #8b949e; font-size: 0.7rem;'>// ACCESS_FILES</p>", unsafe_allow_html=True)
-    st.markdown("<a href='#' class='sidebar-btn'>FETCH RESUME.PDF</a>", unsafe_allow_html=True)
+    st.markdown("<br><br><br>", unsafe_allow_html=True)
+    st.markdown("<a href='#' class='sidebar-btn'>DOWNLOAD CV</a>", unsafe_allow_html=True)
     
-    st.markdown("<br><p style='color: #8b949e; font-size: 0.7rem;'>// SOCIAL_NODES</p>", unsafe_allow_html=True)
-    st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lamaw09)")
-    st.markdown("[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:klydejosephy@gmail.com)")
+    st.markdown("<br><p style='font-size: 0.8rem; font-weight: 700;'>SOCIAL_LINKS</p>", unsafe_allow_html=True)
+    st.markdown("[GITHUB](https://github.com/lamaw09)")
+    st.markdown("[INSTAGRAM](https://www.instagram.com/_itsmenoob_/)")
+    st.markdown("[GMAIL](mailto:klydejosephy@gmail.com)")
 
-# --- HOME SECTION (CONSOLE) ---
-if selection == "Console":
-    col1, col2 = st.columns([1.6, 1], gap="large")
+# --- HOME SECTION ---
+if "HOME" in selection:
+    col1, col2 = st.columns([1.5, 1], gap="large")
     
     with col1:
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("<p style='color: #58a6ff; font-weight: 600;'>[system_status: online]</p>", unsafe_allow_html=True)
-        st.markdown("<h1 class='glitch-text' style='font-size: 3.5rem;'>KLYDE JOSEPH<br>P. YABO</h1>", unsafe_allow_html=True)
-        st.markdown("""
-            <p style='font-size: 1.1rem; color: #8b949e; line-height: 1.6;'>
-            > ARCHITECTING <b>AGENTIC AI</b> SYSTEMS<br>
-            > DEPLOYING <b>AUTOMATED SCRAPERS</b><br>
-            > TRANSFORMING DATA WORKFLOWS INTO AUTONOMOUS PROCESSES.
-            </p>
-        """, unsafe_allow_html=True)
+        st.markdown("<p style='font-weight: 700; margin-bottom: 0;'>01 // INTRODUCTION</p>", unsafe_allow_html=True)
+        st.markdown("<h1 style='font-size: 7rem;'>KLYDE<br>JOSEPH<br>YABO.</h1>", unsafe_allow_html=True)
+        st.markdown("<p style='font-size: 1.5rem; line-height: 1.2; font-weight: 400; margin-top: 2rem;'>Architecting <b>Agentic AI</b> and autonomous systems through a lens of structural efficiency.</p>", unsafe_allow_html=True)
         
-        skills = ["Python", "Playwright", "FastAPI", "Streamlit", "Docker", "NoSQL", "Selenium"]
+        skills = ["Python", "Playwright", "FastAPI", "Streamlit", "Automation"]
         skill_html = "".join([f'<span class="skill-tag">{s}</span>' for s in skills])
         st.markdown(skill_html, unsafe_allow_html=True)
         
         st.markdown("<br><br>", unsafe_allow_html=True)
         m_col1, m_col2, m_col3 = st.columns(3)
-        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Nodes Deployed</p></div>', unsafe_allow_html=True)
-        with m_col2: st.markdown('<div class="metric-box"><h3>99.9%</h3><p>Script Uptime</p></div>', unsafe_allow_html=True)
-        with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Global Integrations</p></div>', unsafe_allow_html=True)
+        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Builds</p></div>', unsafe_allow_html=True)
+        with m_col2: st.markdown('<div class="metric-box"><h3>99%</h3><p>Uptime</p></div>', unsafe_allow_html=True)
+        with m_col3: st.markdown('<div class="metric-box"><h3>05+</h3><p>Clients</p></div>', unsafe_allow_html=True)
 
     with col2:
-        st.markdown("<br>", unsafe_allow_html=True)
-        img_src = f"data:image/png;base64,{img_base64}" if img_base64 else "https://via.placeholder.com/180"
+        img_src = f"data:image/png;base64,{img_base64}" if img_base64 else "https://via.placeholder.com/400x500"
         st.markdown(f"""
         <div class="profile-box">
             <img src="{img_src}" class="profile-img">
-            <h3 style="color: #ffffff; font-size: 1.2rem; font-family: Orbitron;">LEAD AUTOMATION ENG</h3>
-            <div style="color: #238636; font-size: 0.8rem; margin: 10px 0;">
-                ● STACK_AVAILABLE_FOR_HIRE
-            </div>
-            <p style="color: #8b949e; font-size: 0.85rem; border-top: 1px solid #30363d; padding-top: 15px;">
-                LOC: Mindanao_PH_Node<br>
-                Spec: Python / Intelligent Scraping
-            </p>
+            <h3>Developer // Mindanao, PH</h3>
+            <p style="font-size: 0.9rem; margin-top: 1rem;">Focused on Python-driven automation and structural web integrity.</p>
         </div>
         """, unsafe_allow_html=True)
 
-# --- PROJECTS SECTION (REPOSITORIES) ---
-elif selection == "Repositories":
-    st.markdown("<h1 style='font-family: Orbitron; color: #58a6ff;'>// FEATURED_SCRIPTS</h1>", unsafe_allow_html=True)
+# --- PROJECTS SECTION ---
+elif "PROJECTS" in selection:
+    st.markdown("<h1 style='font-size: 5rem;'>PROJECTS</h1>", unsafe_allow_html=True)
     
     projects = [
         {
-            "title": "FB_to_Discord_Relay", 
-            "desc": "Autonomous scraper using Playwright to bridge social feeds into secure Discord webhooks. Features retry-logic & proxy rotation.", 
+            "title": "FB TO DISCORD RELAY", 
+            "desc": "Playwright-based autonomous node for instant data synchronization.", 
             "link": "https://github.com/lamaw09/Facebook-to-Discord-Webhook",
-            "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&w=800&q=80",
-            "tags": ["Automation", "Playwright", "Webhooks"]
+            "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80",
+            "tags": ["Scraping", "Python"]
         },
         {
-            "title": "Live_Telemetry_Dashboard", 
-            "desc": "Real-time visualization suite for tracking crawler health and data extraction velocity. Custom CSS injection for dark-mode HUD.", 
+            "title": "TELEMETRY DASHBOARD", 
+            "desc": "High-performance interface for real-time automation monitoring.", 
             "link": "#",
-            "image": "https://images.unsplash.com/photo-1551288049-bbda38a5f072?auto=format&fit=crop&w=800&q=80",
-            "tags": ["Analytics", "Streamlit", "API"]
+            "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+            "tags": ["UI", "Streamlit"]
         }
     ]
     
-    p_col1, p_col2 = st.columns(2)
-    for i, p in enumerate(projects):
-        target_col = p_col1 if i % 2 == 0 else p_col2
-        with target_col:
-            tag_html = "".join([f'<span class="skill-tag">{tag}</span>' for tag in p['tags']])
-            st.markdown(f"""
-            <div class="project-card">
-                <img src="{p['image']}" style="width:100%; height:200px; object-fit:cover; border: 1px solid #30363d;">
-                <h3 style="color:#58a6ff; margin-top:15px;">{p['title']}</h3>
-                <p style="color:#8b949e; font-size:0.9rem;">{p['desc']}</p>
-                <div style="margin-bottom:20px;">{tag_html}</div>
-                <a href="{p['link']}" target="_blank" style="color:#238636; text-decoration:none; font-weight:bold;">[ VIEW_SOURCE ]</a>
+    for p in projects:
+        st.markdown(f"""
+        <div class="project-card">
+            <div style="display: flex; gap: 2rem; align-items: start;">
+                <div style="flex: 1;">
+                    <img src="{p['image']}" class="project-img-swiss">
+                </div>
+                <div style="flex: 1;">
+                    <p style="font-weight: 900; font-size: 0.8rem; margin-bottom: 10px;">CASE STUDY</p>
+                    <h1 style="font-size: 3rem;">{p['title']}</h1>
+                    <p style="font-size: 1.1rem; margin: 1.5rem 0;">{p['desc']}</p>
+                    <div style="margin-bottom: 2rem;">{" ".join([f'<span class="skill-tag">{t}</span>' for t in p['tags']])}</div>
+                    <a href="{p['link']}" style="color: #000; font-weight: 900; text-decoration: underline;">VIEW SOURCE ↗</a>
+                </div>
             </div>
-            """, unsafe_allow_html=True)
+        </div>
+        """, unsafe_allow_html=True)
 
-# --- CONTACT SECTION (PING) ---
-elif selection == "Ping":
-    st.markdown("<h1 style='font-family: Orbitron; color: #58a6ff;'>// INITIATE_CONTACT</h1>", unsafe_allow_html=True)
+# --- CONTACT SECTION ---
+elif "CONTACT" in selection:
+    st.markdown("<h1 style='font-size: 5rem;'>CONTACT</h1>", unsafe_allow_html=True)
     
-    c1, c2 = st.columns([1.5, 1], gap="large")
+    c1, c2 = st.columns([1, 1], gap="large")
     with c1:
         with st.form("contact_form"):
-            name = st.text_input("SENDER_ID", placeholder="Name")
-            email = st.text_input("REPLY_ADDR", placeholder="email@domain.com")
-            msg = st.text_area("PAYLOAD_MSG", placeholder="Details of your mission...")
-            if st.form_submit_button("SEND_PACKET"):
-                st.success("PACKET_RECEIVED. ACKNOWLEDGEMENT PENDING.")
+            name = st.text_input("NAME / ORGANIZATION")
+            email = st.text_input("EMAIL ADDRESS")
+            msg = st.text_area("INQUIRY DETAILS")
+            if st.form_submit_button("SUBMIT"):
+                st.success("TRANSMITTED.")
     with c2:
-        st.markdown(f"""
-        <div style="background: #161b22; padding: 20px; border: 1px solid #30363d;">
-            <p style="color: #238636;">> NODE_LOCATION: Mindanao, PH</p>
-            <p style="color: #238636;">> PROTOCOL: klydejosephy@gmail.com</p>
-            <hr style="border-color:#30363d">
-            <p style='color: #8b949e; font-size: 0.8rem;'>System is currently active for freelance assignments.</p>
+        st.markdown("""
+        <div style="border-top: 8px solid #000; padding-top: 20px;">
+            <p style="font-weight: 900;">DIRECT CHANNELS</p>
+            <p style="font-size: 2rem; font-weight: 700;">klydejosephy@gmail.com</p>
+            <p style="font-size: 1.5rem;">Mindanao, Philippines</p>
+            <p style="margin-top: 2rem; font-size: 0.8rem;">Available for select freelance automation projects and architectural consulting.</p>
         </div>
         """, unsafe_allow_html=True)
 
 # --- FOOTER ---
-st.markdown("<br><hr style='border-color: #30363d;'>", unsafe_allow_html=True)
-st.markdown(f"<p style='text-align: center; color: #484f58; font-size: 0.75rem;'>VER_2.0 // © {date.today().year} Klyde Joseph // COMPILED_WITH_PYTHON_3.12</p>", unsafe_allow_html=True)
+st.markdown("<br><br><br><br>", unsafe_allow_html=True)
+st.markdown(f"<p style='text-align: left; border-top: 2px solid #000; padding-top: 10px; font-weight: 900; font-size: 0.7rem;'>© {date.today().year} KLYDE JOSEPH // ALL RIGHTS RESERVED // BUILT ON STREAMLIT GRID SYSTEM</p>", unsafe_allow_html=True)
