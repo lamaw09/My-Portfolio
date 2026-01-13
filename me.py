@@ -5,14 +5,15 @@ from streamlit_lottie import st_lottie
 import base64
 
 # --- PAGE CONFIG ---
-st.set_page_config(page_title="Klyde Joseph | Portfolio", page_icon="🚀", layout="wide")
+st.set_page_config(page_title="KLYDE_JOSEPH // PORTFOLIO", page_icon="⚡", layout="wide")
 
 # --- ASSETS ---
 def load_lottieurl(url):
-    r = requests.get(url)
-    if r.status_code != 200:
+    try:
+        r = requests.get(url)
+        return r.json() if r.status_code == 200 else None
+    except:
         return None
-    return r.json()
 
 def get_image_base64(path):
     try:
@@ -24,182 +25,168 @@ def get_image_base64(path):
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 img_base64 = get_image_base64("ID.png")
 
-# --- CUSTOM CSS (PROFESSIONAL ENHANCEMENTS) ---
+# --- CYBERPUNK CSS OVERHAUL ---
 st.markdown(f"""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
 
-    /* Global Styles */
-    .main {{ background-color: #f8fafc; color: #1e293b; }}
-    html, body, [class*="css"] {{ font-family: 'Inter', sans-serif; }}
+    /* Global Foundation */
+    .main {{
+        background-color: #050505;
+        background-image: 
+            linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+            linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        background-size: 100% 4px, 3px 100%;
+    }}
     
-    /* Smooth Scroll Reveal */
-    @keyframes fadeInUp {{
-        from {{ opacity: 0; transform: translateY(20px); }}
-        to {{ opacity: 1; transform: translateY(0); }}
-    }}
-    .stMarkdown, .profile-box, .project-card {{
-        animation: fadeInUp 0.8s ease-out forwards;
+    html, body, [class*="css"] {{ 
+        font-family: 'Rajdhani', sans-serif; 
+        color: #00ffcc; 
     }}
 
-    /* Sidebar Styling */
+    /* Glitch Animation */
+    @keyframes glitch {{
+        0% {{ text-shadow: 0.05em 0 0 #ff0055, -0.05em -0.025em 0 #00ffcc; }}
+        15% {{ text-shadow: -0.05em -0.025em 0 #ff0055, 0.025em 0.025em 0 #00ffcc; }}
+        100% {{ text-shadow: -0.025em 0 0 #ff0055, -0.025em -0.0125em 0 #00ffcc; }}
+    }}
+
+    /* Sidebar - Corporate Hack Look */
     [data-testid="stSidebar"] {{
-        background-image: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+        background-color: #0a0a0a !important;
+        border-right: 2px solid #ff0055;
     }}
     .sidebar-btn {{
-        display: block;
-        width: 100%;
-        padding: 10px;
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        text-align: center;
-        border-radius: 10px;
-        text-decoration: none;
-        margin-top: 10px;
-        font-weight: 600;
-        border: 1px solid rgba(255,255,255,0.2);
+        display: block; width: 100%; padding: 12px; margin-top: 10px;
+        background: transparent; color: #ff0055 !important;
+        text-align: center; border: 1px solid #ff0055;
+        text-decoration: none; font-family: 'Orbitron', sans-serif;
+        font-weight: 600; text-transform: uppercase;
+        transition: 0.3s;
     }}
-    .sidebar-btn:hover {{ background: #2563eb; border-color: #2563eb; }}
+    .sidebar-btn:hover {{ 
+        background: #ff0055; color: white !important; 
+        box-shadow: 0 0 15px #ff0055;
+    }}
 
-    /* Profile Card */
+    /* Profile Card - HUD Look */
     .profile-box {{
-        background: white;
+        background: rgba(0, 255, 204, 0.05);
         padding: 3rem 2rem;
-        border-radius: 30px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+        border: 2px solid #00ffcc;
+        border-radius: 0px; /* Cyberpunk is angular */
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
         text-align: center;
-        transition: transform 0.3s ease;
+        box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
     }}
     .profile-img {{
-        width: 180px;
-        height: 180px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 6px solid #f1f5f9;
-        outline: 2px solid #3b82f6;
+        width: 170px; height: 170px; border-radius: 0%;
+        object-fit: cover; border: 3px solid #ff0055;
+        filter: grayscale(1) contrast(1.2) brightness(1.2);
         margin-bottom: 25px;
     }}
 
-    /* Project Cards */
+    /* Project Cards - Neural Link Style */
     .project-card {{
-        background-color: white;
-        padding: 2rem;
-        border-radius: 24px;
-        border: 1px solid #e2e8f0;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 550px; 
+        background: #0d0d0d; border-radius: 0; padding: 0;
+        border: 1px solid #333;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
     }}
     .project-card:hover {{
-        transform: translateY(-12px);
-        border-color: #3b82f6;
-        box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.15);
+        border-color: #00ffcc;
+        box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
+        transform: translateY(-5px);
     }}
+    .project-img {{ 
+        width: 100%; height: 260px; object-fit: cover; 
+        opacity: 0.7; filter: hue-rotate(180deg) brightness(0.8);
+    }}
+    .project-body {{ padding: 2rem; border-top: 1px solid #00ffcc; }}
 
-    .skill-tag {{
-        display: inline-block;
-        background: #f1f5f9;
-        color: #475569;
-        padding: 6px 14px;
-        border-radius: 10px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        margin: 4px;
-        border: 1px solid #e2e8f0;
-    }}
-    .project-card:hover .skill-tag {{
-        background: #eff6ff;
-        color: #2563eb;
-        border-color: #dbeafe;
-    }}
-
-    /* Professional Metrics */
+    /* Neon Metrics */
     .metric-box {{
-        text-align: center;
-        padding: 2rem 1rem;
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 24px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        text-align: center; padding: 1.5rem; background: transparent;
+        border-left: 4px solid #ff0055;
     }}
     .metric-box h3 {{
-        margin: 0;
-        background: linear-gradient(90deg, #2563eb, #3b82f6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-size: 2.2rem;
-        font-weight: 800;
+        margin: 0; font-size: 2.5rem; font-family: 'Orbitron', sans-serif;
+        color: #ff0055; text-shadow: 0 0 10px #ff0055;
     }}
-    .metric-box p {{
-        color: #64748b;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-size: 0.7rem;
-        margin-top: 8px;
+    .metric-box p {{ color: #00ffcc; font-size: 0.8rem; letter-spacing: 2px; }}
+
+    /* Cyber Tags */
+    .skill-tag {{
+        display: inline-block; background: transparent; color: #00ffcc;
+        padding: 4px 12px; border: 1px solid #00ffcc;
+        font-size: 0.7rem; font-family: 'Orbitron', sans-serif;
+        margin: 4px; text-transform: uppercase;
     }}
 
-    /* Contact UI */
-    .contact-info-card {{
-        background: #0f172a;
-        color: white;
-        padding: 2.5rem;
-        border-radius: 24px;
+    /* Inputs & Buttons */
+    .stTextInput input, .stTextArea textarea {{
+        background-color: #111 !important; color: #00ffcc !important;
+        border: 1px solid #333 !important; border-radius: 0px !important;
     }}
-
-    /* Buttons */
     div.stButton > button {{
-        background: #2563eb !important;
-        color: white !important;
-        border-radius: 12px !important;
-        padding: 0.8rem 2rem !important;
-        font-weight: 700 !important;
-        letter-spacing: 0.5px !important;
-        border: none !important;
-        box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39) !important;
+        background: transparent !important; color: #ff0055 !important;
+        border: 2px solid #ff0055 !important; border-radius: 0px !important;
+        font-family: 'Orbitron', sans-serif !important; width: 100% !important;
+        text-transform: uppercase !important; letter-spacing: 2px !important;
+    }}
+    div.stButton > button:hover {{
+        background: #ff0055 !important; color: black !important;
+        box-shadow: 0 0 20px #ff0055 !important;
     }}
     </style>
     """, unsafe_allow_html=True)
 
 # --- SIDEBAR ---
 with st.sidebar:
-    if lottie_coding:
-        st_lottie(lottie_coding, height=150, key="coding")
-    st.markdown("<h2 style='text-align: center; color: white;'>Navigation</h2>", unsafe_allow_html=True)
-    selection = st.radio("", ["Home", "Projects", "Contact"])
+    st.markdown("<h2 style='text-align: center; font-family: Orbitron; color: #ff0055;'>SYS_NAV</h2>", unsafe_allow_html=True)
+    selection = st.radio("", ["HOME", "PROJECTS", "CONTACT"], label_visibility="collapsed")
     
-    st.markdown("---")
-    st.markdown("<p style='color: #94a3b8; font-size: 0.8rem; font-weight: 600;'>RESUME</p>", unsafe_allow_html=True)
-    st.markdown("<a href='#' class='sidebar-btn'>📄 Download CV</a>", unsafe_allow_html=True)
+    st.markdown("<br><hr style='border-color: #333;'><br>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #666; font-size: 0.7rem; font-weight: 700;'>ACCESS_DATA</p>", unsafe_allow_html=True)
+    st.markdown("<a href='#' class='sidebar-btn'>DOWNLOAD_CV.EXE</a>", unsafe_allow_html=True)
     
-    st.markdown("<br><p style='color: #94a3b8; font-size: 0.8rem; font-weight: 600;'>SOCIALS</p>", unsafe_allow_html=True)
-    st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lamaw09)")
-    st.markdown("[![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://facebook.com)")
-    st.markdown("[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/_itsmenoob_/)")
-    st.markdown("[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:klydejosephy@gmail.com)")
+    st.markdown("<br><p style='color: #666; font-size: 0.7rem; font-weight: 700;'>NEURAL_NETS</p>", unsafe_allow_html=True)
+    st.markdown(f"""
+        <div style="font-family: Orbitron; font-size: 0.8rem;">
+            <a href="https://github.com/lamaw09" style="color:#00ffcc; text-decoration:none;">GITHUB</a><br>
+            <a href="mailto:klydejosephy@gmail.com" style="color:#00ffcc; text-decoration:none;">GMAIL</a><br>
+            <a href="https://www.instagram.com/_itsmenoob_/" style="color:#00ffcc; text-decoration:none;">INSTA</a>
+        </div>
+    """, unsafe_allow_html=True)
 
 # --- HOME SECTION ---
-if selection == "Home":
-    col1, col2 = st.columns([1.6, 1], gap="large")
+if selection == "HOME":
+    col1, col2 = st.columns([1.5, 1], gap="large")
     
     with col1:
         st.markdown("<br><br>", unsafe_allow_html=True)
-        st.markdown("<p style='color: #2563eb; font-weight: 700; font-size: 1.1rem; margin-bottom: 0;'>Full-Stack Solutions 💡</p>", unsafe_allow_html=True)
-        st.markdown("<h1 style='font-size: 4rem; font-weight: 800; line-height: 1.1; margin-top: 0;'>Klyde Joseph<br><span style='color: #64748b;'>P. Yabo</span></h1>", unsafe_allow_html=True)
-        st.markdown("<p style='font-size: 1.2rem; color: #475569; line-height: 1.6;'>Building <b>Agentic AI systems</b> and <b>Automated Web Architectures</b>. Specialized in transforming manual workflows into autonomous, high-performance digital processes.</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #ff0055; font-weight: 700; font-family: Orbitron; letter-spacing: 3px;'>STATUS: ONLINE</p>", unsafe_allow_html=True)
         
-        skills = ["Python", "Streamlit", "Playwright", "FastAPI", "Javascript", "OBS Studio", "HTML/CSS"]
+        # --- GLITCH NAME ---
+        st.markdown("""
+            <h1 style='font-size: 4rem; font-family: "Orbitron"; font-weight: 900; line-height: 1.0; color: white; animation: glitch 1s infinite;'>
+                KLYDE_JOSEPH<br>
+                <span style='color: #00ffcc; font-size: 3.5rem;'>YABO.P</span>
+            </h1>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("<p style='font-size: 1.3rem; color: #00ffcc; opacity: 0.8; line-height: 1.6; max-width: 550px; margin-top: 25px;'>Neural Link: <b>AGENTIC_AI_DEVELOPER</b>. Specializing in autonomous web architectures and black-box data extraction.</p>", unsafe_allow_html=True)
+        
+        skills = ["PYTHON", "STREAMLIT", "PLAYWRIGHT", "FASTAPI", "AGENTIC_AI", "OSINT_SCRAPING"]
         skill_html = "".join([f'<span class="skill-tag">{s}</span>' for s in skills])
-        st.markdown(skill_html, unsafe_allow_html=True)
+        st.markdown(f"<div style='margin-top: 20px;'>{skill_html}</div>", unsafe_allow_html=True)
         
         st.markdown("<br><br>", unsafe_allow_html=True)
         m_col1, m_col2, m_col3 = st.columns(3)
-        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Projects Delivered</p></div>', unsafe_allow_html=True)
-        with m_col2: st.markdown('<div class="metric-box"><h3>99%</h3><p>System Uptime</p></div>', unsafe_allow_html=True)
-        with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Global Clients</p></div>', unsafe_allow_html=True)
+        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>CORES_BUILT</p></div>', unsafe_allow_html=True)
+        with m_col2: st.markdown('<div class="metric-box"><h3>99%</h3><p>UPTIME_SYNC</p></div>', unsafe_allow_html=True)
+        with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>GLOBAL_NODES</p></div>', unsafe_allow_html=True)
 
     with col2:
         st.markdown("<br><br>", unsafe_allow_html=True)
@@ -207,88 +194,70 @@ if selection == "Home":
         st.markdown(f"""
         <div class="profile-box">
             <img src="{img_src}" class="profile-img">
-            <h3 style="color: #0f172a; font-size: 1.4rem; font-weight: 700; margin-bottom: 8px;">Developer & Automation Specialist</h3>
-            <div style="display: inline-block; padding: 6px 16px; background: #f0fdf4; color: #16a34a; border-radius: 20px; font-size: 0.85rem; font-weight: 700;">
-                🟢 Available for Freelance
-            </div>
-            <p style="color: #64748b; font-size: 0.9rem; margin-top: 20px;">Based in Mindanao, PH. Expert in Python-driven automation and intelligent web scraping.</p>
+            <h3 style="font-family: Orbitron; font-size: 1.2rem; color: #ff0055;">AUTOMATION_ARCHITECT</h3>
+            <p style="color: #00ffcc; font-size: 0.9rem; margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
+                LOC: MINDANAO_PH<br>
+                AUTH: FREELANCE_OPEN
+            </p>
         </div>
         """, unsafe_allow_html=True)
 
 # --- PROJECTS SECTION ---
-elif selection == "Projects":
-    st.markdown("<h1 style='text-align: center; font-size: 3rem;'>🚀 Featured Projects</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #64748b; font-size: 1.1rem; margin-bottom: 3rem;'>Robust systems designed for scale, precision, and efficiency.</p>", unsafe_allow_html=True)
+elif selection == "PROJECTS":
+    st.markdown("<h1 style='text-align: center; font-family: Orbitron; font-size: 3rem; color: #ff0055;'>ACTIVE_OPERATIONS</h1>", unsafe_allow_html=True)
     
     projects = [
         {
-            "title": "FB to Discord Webhook", 
-            "desc": "An autonomous scraper utilizing Playwright to broadcast targeted news feeds instantly to Discord. Features sophisticated error handling and multi-feed synchronization.", 
+            "title": "FB_2_DISCORD_GATEWAY", 
+            "desc": "Autonomous scraper node using Playwright protocol to broadcast news feeds via secure Discord webhooks.", 
             "link": "https://github.com/lamaw09/Facebook-to-Discord-Webhook",
-            "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
-            "tags": ["Scraping", "Automation", "Python"]
+            "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80",
+            "tags": ["Scraping", "Webhooks", "Python"]
         },
         {
-            "title": "Streamlit Dashboard", 
-            "desc": "A high-performance data visualization suite for tracking automation health in real-time. Features custom CSS themes and REST API integration.", 
+            "title": "INTEL_DASHBOARD_V1", 
+            "desc": "Real-time visual data interface for monitoring system health and autonomous agent synchronization.", 
             "link": "#",
-            "image": "https://images.unsplash.com/photo-1551288049-bbda38a5f072?auto=format&fit=crop&w=800&q=80",
-            "tags": ["UI/UX", "Streamlit", "Analytics"]
+            "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
+            "tags": ["UI/UX", "FastAPI", "Telemetry"]
         }
     ]
     
-    p_col1, p_col2 = st.columns(2)
+    p_col1, p_col2 = st.columns(2, gap="large")
     for i, p in enumerate(projects):
         target_col = p_col1 if i % 2 == 0 else p_col2
         with target_col:
             tag_html = "".join([f'<span class="skill-tag">{tag}</span>' for tag in p['tags']])
             st.markdown(f"""
             <div class="project-card">
-                <div>
-                    <img src="{p['image']}" style="width:100%; border-radius:18px; height:220px; object-fit:cover; margin-bottom:25px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">
-                    <h3 style="margin:0; color:#0f172a; font-size:1.5rem; font-weight: 700;">{p['title']}</h3>
-                    <p style="color:#475569; font-size:1rem; margin-top:12px; line-height:1.6;">{p['desc']}</p>
-                </div>
-                <div>
-                    <div style="margin-bottom:25px;">{tag_html}</div>
-                    <a href="{p['link']}" target="_blank" style="display:block; text-align:center; color:white; background:#2563eb; text-decoration:none; font-weight:700; font-size: 0.95rem; padding: 14px; border-radius: 12px; transition: 0.3s;">View Case Study ↗</a>
+                <img src="{p['image']}" class="project-img">
+                <div class="project-body">
+                    <h3 style="font-family: Orbitron; color: #ff0055;">{p['title']}</h3>
+                    <p style="color: #00ffcc; font-size: 0.9rem; height: 60px;">{p['desc']}</p>
+                    <div style="margin: 15px 0;">{tag_html}</div>
+                    <a href="{p['link']}" style="color: white; font-family: Orbitron; text-decoration: none; border-bottom: 1px solid #ff0055;">EXECUTE_CASE_STUDY →</a>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
 # --- CONTACT SECTION ---
-elif selection == "Contact":
-    st.markdown("<h1 style='text-align: center; font-size: 3rem;'>📬 Get In Touch</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #64748b; font-size: 1.1rem; margin-bottom: 3rem;'>Let's collaborate on your next automation or AI project.</p>", unsafe_allow_html=True)
+elif selection == "CONTACT":
+    st.markdown("<h1 style='text-align: center; font-family: Orbitron; font-size: 3rem; color: #00ffcc;'>OPEN_CHANNEL</h1>", unsafe_allow_html=True)
     
-    c1, c2 = st.columns([1.5, 1], gap="large")
-    with c1:
-        with st.form("contact_form"):
-            st.markdown("<p style='font-weight: 600; color: #475569;'>Send a Message</p>", unsafe_allow_html=True)
-            name = st.text_input("Full Name", placeholder="e.g. John Doe")
-            email = st.text_input("Email Address", placeholder="name@company.com")
-            msg = st.text_area("Your Project Description", placeholder="Briefly describe what you're looking to build...")
-            if st.form_submit_button("Submit Inquiry"):
-                st.balloons()
-                st.success(f"Thank you, {name}! Your inquiry has been sent.")
+    c1, c2, c3 = st.columns([1, 2, 1])
     with c2:
-        st.markdown(f"""
-        <div class="contact-info-card">
-            <h3 style="margin-top:0; color:white;">Contact Details</h3>
-            <p style="color: #94a3b8; font-size: 0.8rem; font-weight: 800; margin-bottom: 5px; letter-spacing: 1.2px;">LOCATION</p>
-            <p style="margin-bottom: 25px; font-size: 1.1rem;">📍 Clarin, Northern Mindanao, PH</p>
-            
-            <p style="color: #94a3b8; font-size: 0.8rem; font-weight: 800; margin-bottom: 5px; letter-spacing: 1.2px;">DIRECT EMAIL</p>
-            <p style="margin-bottom: 25px; font-size: 1.1rem;">📧 klydejosephy@gmail.com</p>
-            
-            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 18px; border-left: 4px solid #3b82f6;">
-                <p style="color: #60a5fa; font-size: 0.9rem; font-weight: 600; margin: 0;">Business Hours</p>
-                <p style="color: white; font-size: 0.85rem; margin-top: 5px;">Mon - Fri: 9:00 AM - 6:00 PM (GMT+8)</p>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        with st.form("contact_form"):
+            st.markdown("<p style='font-family: Orbitron; font-size: 0.8rem;'>ENCRYPTED_MESSAGE_PAYLOAD</p>", unsafe_allow_html=True)
+            name = st.text_input("SENDER_ID")
+            email = st.text_input("RETURN_PATH")
+            msg = st.text_area("INTEL_CONTENT")
+            if st.form_submit_button("SEND_PACKET"):
+                st.success("PACKET_RECEIVED. STAND BY FOR DECRYPTION.")
 
 # --- FOOTER ---
 st.markdown("<br><br><br>", unsafe_allow_html=True)
-st.markdown("<hr style='opacity: 0.1;'>", unsafe_allow_html=True)
-st.markdown(f"<p style='text-align: center; color: #64748b; font-size: 0.9rem; font-weight:500;'>© {date.today().year} Klyde Joseph | Automation Engineering Portfolio | Built with Streamlit & Python</p>", unsafe_allow_html=True)
+st.markdown(f"""
+    <div style='text-align: center; border-top: 1px solid #333; padding-top: 20px;'>
+        <p style='color: #444; font-family: Orbitron; font-size: 0.7rem;'>© {date.today().year} KLYDE_JOSEPH // REPLICA_VER_2.0.26</p>
+    </div>
+""", unsafe_allow_html=True)
