@@ -24,103 +24,142 @@ def get_image_base64(path):
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 img_base64 = get_image_base64("ID.png")
 
-# --- CUSTOM CSS (PRECISION ALIGNMENT) ---
+# --- CUSTOM CSS (PROFESSIONAL ENHANCEMENTS) ---
 st.markdown(f"""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-    .main {{ background-color: #f8fafc; }}
+    /* Global Styles */
+    .main {{ background-color: #f8fafc; color: #1e293b; }}
     html, body, [class*="css"] {{ font-family: 'Inter', sans-serif; }}
+    
+    /* Smooth Scroll Reveal */
+    @keyframes fadeInUp {{
+        from {{ opacity: 0; transform: translateY(20px); }}
+        to {{ opacity: 1; transform: translateY(0); }}
+    }}
+    .stMarkdown, .profile-box, .project-card {{
+        animation: fadeInUp 0.8s ease-out forwards;
+    }}
 
-    /* Glassmorphism Sidebar */
+    /* Sidebar Styling */
     [data-testid="stSidebar"] {{
         background-image: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
     }}
+    .sidebar-btn {{
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        text-align: center;
+        border-radius: 10px;
+        text-decoration: none;
+        margin-top: 10px;
+        font-weight: 600;
+        border: 1px solid rgba(255,255,255,0.2);
+    }}
+    .sidebar-btn:hover {{ background: #2563eb; border-color: #2563eb; }}
 
-    /* PROFILE CARD STYLING */
+    /* Profile Card */
     .profile-box {{
         background: white;
-        padding: 2.5rem 1.5rem;
-        border-radius: 24px;
+        padding: 3rem 2rem;
+        border-radius: 30px;
         border: 1px solid #e2e8f0;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
         text-align: center;
-        margin: 0 auto;
+        transition: transform 0.3s ease;
     }}
-
     .profile-img {{
-        width: 170px;
-        height: 170px;
+        width: 180px;
+        height: 180px;
         border-radius: 50%;
         object-fit: cover;
-        border: 5px solid #3b82f6;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+        border: 6px solid #f1f5f9;
+        outline: 2px solid #3b82f6;
+        margin-bottom: 25px;
     }}
 
-    /* PROJECT CARDS */
+    /* Project Cards */
     .project-card {{
         background-color: white;
-        padding: 1.5rem;
-        border-radius: 20px;
+        padding: 2rem;
+        border-radius: 24px;
         border: 1px solid #e2e8f0;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 520px; 
-        margin-bottom: 20px;
+        height: 550px; 
     }}
     .project-card:hover {{
-        transform: translateY(-8px);
+        transform: translateY(-12px);
         border-color: #3b82f6;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.15);
     }}
 
     .skill-tag {{
         display: inline-block;
+        background: #f1f5f9;
+        color: #475569;
+        padding: 6px 14px;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin: 4px;
+        border: 1px solid #e2e8f0;
+    }}
+    .project-card:hover .skill-tag {{
         background: #eff6ff;
-        color: #1e40af;
-        padding: 5px 12px;
-        border-radius: 8px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        margin: 3px;
+        color: #2563eb;
+        border-color: #dbeafe;
     }}
 
-    /* METRICS */
+    /* Professional Metrics */
     .metric-box {{
         text-align: center;
-        padding: 1.5rem 1rem;
-        background: #0f172a;
-        color: white;
-        border-radius: 20px;
-        border-bottom: 4px solid #3b82f6;
+        padding: 2rem 1rem;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     }}
     .metric-box h3 {{
         margin: 0;
-        color: #3b82f6 !important;
-        font-size: 1.8rem;
+        background: linear-gradient(90deg, #2563eb, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 2.2rem;
+        font-weight: 800;
     }}
     .metric-box p {{
-        margin: 5px 0 0 0;
-        font-size: 0.8rem;
-        opacity: 0.8;
+        color: #64748b;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.7rem;
+        margin-top: 8px;
     }}
 
-    /* BUTTONS */
-    div.stButton > button:first-child {{
-        background-color: #2563eb;
+    /* Contact UI */
+    .contact-info-card {{
+        background: #0f172a;
         color: white;
-        border-radius: 12px;
-        border: none;
-        padding: 0.6rem 2rem;
-        font-weight: 600;
-        width: 100%;
+        padding: 2.5rem;
+        border-radius: 24px;
+    }}
+
+    /* Buttons */
+    div.stButton > button {{
+        background: #2563eb !important;
+        color: white !important;
+        border-radius: 12px !important;
+        padding: 0.8rem 2rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.5px !important;
+        border: none !important;
+        box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39) !important;
     }}
     </style>
     """, unsafe_allow_html=True)
@@ -128,12 +167,15 @@ st.markdown(f"""
 # --- SIDEBAR ---
 with st.sidebar:
     if lottie_coding:
-        st_lottie(lottie_coding, height=120, key="coding")
-    st.title("Navigation")
-    selection = st.radio("Go to", ["Home", "Projects", "Contact"])
+        st_lottie(lottie_coding, height=150, key="coding")
+    st.markdown("<h2 style='text-align: center; color: white;'>Navigation</h2>", unsafe_allow_html=True)
+    selection = st.radio("", ["Home", "Projects", "Contact"])
     
     st.markdown("---")
-    st.write("🌐 **Connect:**")
+    st.markdown("<p style='color: #94a3b8; font-size: 0.8rem; font-weight: 600;'>RESUME</p>", unsafe_allow_html=True)
+    st.markdown("<a href='#' class='sidebar-btn'>📄 Download CV</a>", unsafe_allow_html=True)
+    
+    st.markdown("<br><p style='color: #94a3b8; font-size: 0.8rem; font-weight: 600;'>SOCIALS</p>", unsafe_allow_html=True)
     st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lamaw09)")
     st.markdown("[![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://facebook.com)")
     st.markdown("[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/_itsmenoob_/)")
@@ -145,9 +187,9 @@ if selection == "Home":
     
     with col1:
         st.markdown("<br><br>", unsafe_allow_html=True)
-        st.subheader("Full-Stack Solutions 💡")
-        st.title("Klyde Joseph P. Yabo")
-        st.write("I build **Agentic AI systems** and **Automated Web Architectures**. Transforming manual workflows into autonomous digital processes through robust engineering.")
+        st.markdown("<p style='color: #2563eb; font-weight: 700; font-size: 1.1rem; margin-bottom: 0;'>Full-Stack Solutions 💡</p>", unsafe_allow_html=True)
+        st.markdown("<h1 style='font-size: 4rem; font-weight: 800; line-height: 1.1; margin-top: 0;'>Klyde Joseph<br><span style='color: #64748b;'>P. Yabo</span></h1>", unsafe_allow_html=True)
+        st.markdown("<p style='font-size: 1.2rem; color: #475569; line-height: 1.6;'>Building <b>Agentic AI systems</b> and <b>Automated Web Architectures</b>. Specialized in transforming manual workflows into autonomous, high-performance digital processes.</p>", unsafe_allow_html=True)
         
         skills = ["Python", "Streamlit", "Playwright", "FastAPI", "Javascript", "OBS Studio", "HTML/CSS"]
         skill_html = "".join([f'<span class="skill-tag">{s}</span>' for s in skills])
@@ -155,43 +197,44 @@ if selection == "Home":
         
         st.markdown("<br><br>", unsafe_allow_html=True)
         m_col1, m_col2, m_col3 = st.columns(3)
-        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Projects</p></div>', unsafe_allow_html=True)
-        with m_col2: st.markdown('<div class="metric-box"><h3>99%</h3><p>Uptime</p></div>', unsafe_allow_html=True)
-        with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Clients</p></div>', unsafe_allow_html=True)
+        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Projects Delivered</p></div>', unsafe_allow_html=True)
+        with m_col2: st.markdown('<div class="metric-box"><h3>99%</h3><p>System Uptime</p></div>', unsafe_allow_html=True)
+        with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Global Clients</p></div>', unsafe_allow_html=True)
 
     with col2:
         st.markdown("<br><br>", unsafe_allow_html=True)
-        # Use Base64 image if available, else placeholder
-        img_src = f"data:image/png;base64,{img_base64}" if img_base64 else "https://via.placeholder.com/170"
-        
+        img_src = f"data:image/png;base64,{img_base64}" if img_base64 else "https://via.placeholder.com/180"
         st.markdown(f"""
         <div class="profile-box">
             <img src="{img_src}" class="profile-img">
-            <h3 style="color: #0f172a; font-size: 1.25rem; margin-bottom: 5px;">Developer & Automation Specialist</h3>
-            <p style="color: #3b82f6; font-weight: 700; margin: 0;">🟢 Available for Freelance</p>
+            <h3 style="color: #0f172a; font-size: 1.4rem; font-weight: 700; margin-bottom: 8px;">Developer & Automation Specialist</h3>
+            <div style="display: inline-block; padding: 6px 16px; background: #f0fdf4; color: #16a34a; border-radius: 20px; font-size: 0.85rem; font-weight: 700;">
+                🟢 Available for Freelance
+            </div>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 20px;">Based in Mindanao, PH. Expert in Python-driven automation and intelligent web scraping.</p>
         </div>
         """, unsafe_allow_html=True)
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
-    st.title("🚀 Featured Projects")
-    st.write("Robust systems designed for scale and efficiency.")
+    st.markdown("<h1 style='text-align: center; font-size: 3rem;'>🚀 Featured Projects</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #64748b; font-size: 1.1rem; margin-bottom: 3rem;'>Robust systems designed for scale, precision, and efficiency.</p>", unsafe_allow_html=True)
     
     projects = [
-        {{
+        {
             "title": "FB to Discord Webhook", 
-            "desc": "Autonomous scraper utilizing Playwright to broadcast news feeds instantly to Discord servers. Features error handling and multi-feed support.", 
+            "desc": "An autonomous scraper utilizing Playwright to broadcast targeted news feeds instantly to Discord. Features sophisticated error handling and multi-feed synchronization.", 
             "link": "https://github.com/lamaw09/Facebook-to-Discord-Webhook",
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
             "tags": ["Scraping", "Automation", "Python"]
-        }},
-        {{
+        },
+        {
             "title": "Streamlit Dashboard", 
-            "desc": "A professional data visualization tool for tracking automation metrics in real-time. Includes custom CSS and interactive API integration.", 
+            "desc": "A high-performance data visualization suite for tracking automation health in real-time. Features custom CSS themes and REST API integration.", 
             "link": "#",
             "image": "https://images.unsplash.com/photo-1551288049-bbda38a5f072?auto=format&fit=crop&w=800&q=80",
-            "tags": ["UI/UX", "Streamlit", "Data"]
-        }}
+            "tags": ["UI/UX", "Streamlit", "Analytics"]
+        }
     ]
     
     p_col1, p_col2 = st.columns(2)
@@ -202,45 +245,50 @@ elif selection == "Projects":
             st.markdown(f"""
             <div class="project-card">
                 <div>
-                    <img src="{p['image']}" style="width:100%; border-radius:15px; height:200px; object-fit:cover; margin-bottom:20px;">
-                    <h3 style="margin:0; color:#0f172a; font-size:1.3rem;">{p['title']}</h3>
-                    <p style="color:#475569; font-size:0.9rem; margin-top:10px; line-height:1.5;">{p['desc']}</p>
+                    <img src="{p['image']}" style="width:100%; border-radius:18px; height:220px; object-fit:cover; margin-bottom:25px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">
+                    <h3 style="margin:0; color:#0f172a; font-size:1.5rem; font-weight: 700;">{p['title']}</h3>
+                    <p style="color:#475569; font-size:1rem; margin-top:12px; line-height:1.6;">{p['desc']}</p>
                 </div>
                 <div>
-                    <div style="margin-bottom:20px;">{tag_html}</div>
-                    <a href="{p['link']}" target="_blank" style="display:block; text-align:center; color:white; background:#2563eb; text-decoration:none; font-weight:700; font-size: 0.9rem; padding: 12px; border-radius: 12px;">View Source Code ↗</a>
+                    <div style="margin-bottom:25px;">{tag_html}</div>
+                    <a href="{p['link']}" target="_blank" style="display:block; text-align:center; color:white; background:#2563eb; text-decoration:none; font-weight:700; font-size: 0.95rem; padding: 14px; border-radius: 12px; transition: 0.3s;">View Case Study ↗</a>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
 # --- CONTACT SECTION ---
 elif selection == "Contact":
-    st.title("📬 Get In Touch")
+    st.markdown("<h1 style='text-align: center; font-size: 3rem;'>📬 Get In Touch</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #64748b; font-size: 1.1rem; margin-bottom: 3rem;'>Let's collaborate on your next automation or AI project.</p>", unsafe_allow_html=True)
     
-    c1, c2 = st.columns([2, 1], gap="large")
+    c1, c2 = st.columns([1.5, 1], gap="large")
     with c1:
         with st.form("contact_form"):
-            name = st.text_input("Full Name", placeholder="Your Name")
-            email = st.text_input("Email Address", placeholder="name@email.com")
-            msg = st.text_area("Your Message", placeholder="How can I help you today?")
-            if st.form_submit_button("Send Message"):
+            st.markdown("<p style='font-weight: 600; color: #475569;'>Send a Message</p>", unsafe_allow_html=True)
+            name = st.text_input("Full Name", placeholder="e.g. John Doe")
+            email = st.text_input("Email Address", placeholder="name@company.com")
+            msg = st.text_area("Your Project Description", placeholder="Briefly describe what you're looking to build...")
+            if st.form_submit_button("Submit Inquiry"):
                 st.balloons()
-                st.success(f"Message received, {name}! I'll get back to you shortly.")
+                st.success(f"Thank you, {name}! Your inquiry has been sent.")
     with c2:
-        st.markdown("""
-        <div style="background: white; padding: 2rem; border-radius: 24px; border: 1px solid #e2e8f0;">
-            <h4 style="margin-top:0; color:#0f172a; margin-bottom:1.5rem;">Contact Details</h4>
-            <p style="color:#64748b; font-size:0.75rem; font-weight:800; margin-bottom:5px; letter-spacing:1px;">LOCATION</p>
-            <p style="color:#1e293b; margin-bottom:20px; font-weight:500;">📍 Clarin, Northern Mindanao, PH</p>
-            <p style="color:#64748b; font-size:0.75rem; font-weight:800; margin-bottom:5px; letter-spacing:1px;">EMAIL</p>
-            <p style="color:#1e293b; margin-bottom:20px; font-weight:500;">📧 klydejosephy@gmail.com</p>
-            <div style="background:#eff6ff; padding:15px; border-radius:15px; border-left:5px solid #3b82f6; margin-top:10px;">
-                <p style="color:#1e40af; font-size:0.85rem; font-weight:600; margin:0;">I'm currently looking for new opportunities!</p>
+        st.markdown(f"""
+        <div class="contact-info-card">
+            <h3 style="margin-top:0; color:white;">Contact Details</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; font-weight: 800; margin-bottom: 5px; letter-spacing: 1.2px;">LOCATION</p>
+            <p style="margin-bottom: 25px; font-size: 1.1rem;">📍 Clarin, Northern Mindanao, PH</p>
+            
+            <p style="color: #94a3b8; font-size: 0.8rem; font-weight: 800; margin-bottom: 5px; letter-spacing: 1.2px;">DIRECT EMAIL</p>
+            <p style="margin-bottom: 25px; font-size: 1.1rem;">📧 klydejosephy@gmail.com</p>
+            
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 18px; border-left: 4px solid #3b82f6;">
+                <p style="color: #60a5fa; font-size: 0.9rem; font-weight: 600; margin: 0;">Business Hours</p>
+                <p style="color: white; font-size: 0.85rem; margin-top: 5px;">Mon - Fri: 9:00 AM - 6:00 PM (GMT+8)</p>
             </div>
         </div>
         """, unsafe_allow_html=True)
 
 # --- FOOTER ---
-st.markdown("<br><br>", unsafe_allow_html=True)
-st.markdown("---")
-st.markdown(f"<p style='text-align: center; color: #94a3b8; font-size: 0.8rem; font-weight:500;'>© {date.today().year} Klyde Joseph | Automation Engineering | Built with ❤️</p>", unsafe_allow_html=True)
+st.markdown("<br><br><br>", unsafe_allow_html=True)
+st.markdown("<hr style='opacity: 0.1;'>", unsafe_allow_html=True)
+st.markdown(f"<p style='text-align: center; color: #64748b; font-size: 0.9rem; font-weight:500;'>© {date.today().year} Klyde Joseph | Automation Engineering Portfolio | Built with Streamlit & Python</p>", unsafe_allow_html=True)
