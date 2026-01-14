@@ -24,8 +24,8 @@ def get_image_base64(path):
     except:
         return ""
 
-# Function to load and encode PDF for browser viewing
-def get_pdf_base64(path):
+# Updated helper to get JPG base64
+def get_jpg_base64(path):
     try:
         with open(path, "rb") as f:
             data = f.read()
@@ -35,8 +35,9 @@ def get_pdf_base64(path):
 
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 img_base64 = get_image_base64("ID.png")
-# Ensure Resume.pdf is in your directory
-resume_base64 = get_pdf_base64("Resume.pdf")
+
+# CHANGED: Loading Resume.jpg instead of Resume.pdf
+resume_base64 = get_jpg_base64("Resume.jpg")
 
 # --- CUSTOM CSS (PROFESSIONAL ENHANCEMENTS) ---
 st.markdown(f"""
@@ -52,7 +53,7 @@ st.markdown(f"""
         from {{ opacity: 0; transform: translateY(20px); }}
         to {{ opacity: 1; transform: translateY(0); }}
     }}
-    .stMarkdown, .profile-box, .project-card {{
+    .stMarkdown, .profile-box, .project-card, .resume-viewer-container {{
         animation: fadeInUp 0.8s ease-out forwards;
     }}
 
@@ -194,6 +195,22 @@ st.markdown(f"""
         box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39) !important;
         width: 100%;
     }}
+
+    /* Resume Viewer Styles */
+    .resume-viewer-container {{
+        text-align: center;
+        background: white;
+        padding: 20px;
+        border-radius: 24px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }}
+    .resume-img {{
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        border: 1px solid #f1f5f9;
+    }}
     </style>
     """, unsafe_allow_html=True)
 
@@ -202,19 +219,18 @@ with st.sidebar:
     if lottie_coding:
         st_lottie(lottie_coding, height=150, key="coding")
     st.markdown("<h2 style='text-align: center; color: white;'>Navigation</h2>", unsafe_allow_html=True)
-    # Added "Resume" to navigation as a more reliable viewing method
     selection = st.radio("", ["Home", "Projects", "Resume", "Contact"])
     
     st.markdown("---")
     st.markdown("<p style='color: #94a3b8; font-size: 0.8rem; font-weight: 600;'>RESUME</p>", unsafe_allow_html=True)
     
-    # Standard Download Button (The most reliable way to get the file to the user)
+    # Updated Download Button for JPG
     if resume_base64:
         st.download_button(
             label="💾 Download Resume",
             data=base64.b64decode(resume_base64),
-            file_name="Klyde_Joseph_Resume.pdf",
-            mime="application/pdf",
+            file_name="Klyde_Joseph_Resume.jpg",
+            mime="image/jpeg",
         )
     else:
         st.markdown("<a href='#' class='sidebar-btn'>📄 CV Not Found</a>", unsafe_allow_html=True)
@@ -295,15 +311,18 @@ elif selection == "Projects":
             </div>
             """, unsafe_allow_html=True)
 
-# --- RESUME SECTION (NEW FIX) ---
+# --- RESUME SECTION (MODIFIED FOR JPG) ---
 elif selection == "Resume":
     st.markdown("<h1 style='text-align: center; font-size: 3rem;'>📄 My Resume</h1>", unsafe_allow_html=True)
     if resume_base64:
-        # Embed PDF using an iframe
-        pdf_display = f'<iframe src="data:application/pdf;base64,{resume_base64}" width="100%" height="1000px" type="application/pdf"></iframe>'
-        st.markdown(pdf_display, unsafe_allow_html=True)
+        # UPDATED: Replaced iframe with a clean image viewer
+        st.markdown(f"""
+            <div class="resume-viewer-container">
+                <img src="data:image/jpeg;base64,{resume_base64}" class="resume-img" alt="Resume JPG">
+            </div>
+            """, unsafe_allow_html=True)
     else:
-        st.error("Resume.pdf file not found. Please ensure it is in the root directory.")
+        st.error("Resume.jpg file not found. Please ensure it is in the root directory and named exactly 'Resume.jpg'.")
 
 # --- CONTACT SECTION ---
 elif selection == "Contact":
