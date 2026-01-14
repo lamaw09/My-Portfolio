@@ -24,7 +24,7 @@ def get_image_base64(path):
     except:
         return ""
 
-# NEW: Function to load and encode PDF for download
+# Function to load and encode PDF for browser viewing
 def get_pdf_base64(path):
     try:
         with open(path, "rb") as f:
@@ -35,7 +35,7 @@ def get_pdf_base64(path):
 
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 img_base64 = get_image_base64("ID.png")
-# Load the resume (Ensure Resume.pdf is in your directory)
+# Ensure Resume.pdf is in your directory
 resume_base64 = get_pdf_base64("Resume.pdf")
 
 # --- CUSTOM CSS (PROFESSIONAL ENHANCEMENTS) ---
@@ -105,8 +105,8 @@ st.markdown(f"""
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 100%; /* Fill the column height */
-        min-height: 580px; /* Uniform height for alignment */
+        height: 100%; 
+        min-height: 580px;
     }}
     .project-card:hover {{
         transform: translateY(-12px);
@@ -207,9 +207,10 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("<p style='color: #94a3b8; font-size: 0.8rem; font-weight: 600;'>RESUME</p>", unsafe_allow_html=True)
     
-    # Download logic for the sidebar button
+    # Logic to VIEW the resume in a new tab
     if resume_base64:
-        st.markdown(f'<a href="data:application/pdf;base64,{resume_base64}" download="Klyde_Joseph_Resume.pdf" class="sidebar-btn">📄 Download CV</a>', unsafe_allow_html=True)
+        # Removed "download" attribute and added target="_blank"
+        st.markdown(f'<a href="data:application/pdf;base64,{resume_base64}" target="_blank" class="sidebar-btn">👁️ View Resume</a>', unsafe_allow_html=True)
     else:
         st.markdown("<a href='#' class='sidebar-btn'>📄 CV Not Found</a>", unsafe_allow_html=True)
     
