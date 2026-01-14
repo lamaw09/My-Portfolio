@@ -37,7 +37,7 @@ lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fc
 img_base64 = get_image_base64("ID.png")
 
 # CHANGED: Loading Resume.jpg instead of Resume.pdf
-resume_base64 = get_jpg_base64("Resume.jpg")
+resume_base64 = get_jpg_base64("resume.jpg")
 
 # --- CUSTOM CSS (PROFESSIONAL ENHANCEMENTS) ---
 st.markdown(f"""
