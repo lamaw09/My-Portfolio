@@ -9,10 +9,13 @@ st.set_page_config(page_title="My portfolio", page_icon="🚀", layout="wide")
 
 # --- ASSETS ---
 def load_lottieurl(url):
-    r = requests.get(url)
-    if r.status_code != 200:
+    try:
+        r = requests.get(url)
+        if r.status_code != 200:
+            return None
+        return r.json()
+    except:
         return None
-    return r.json()
 
 def get_image_base64(path):
     try:
@@ -59,7 +62,7 @@ st.markdown(f"""
         font-weight: 600;
         border: 1px solid rgba(255,255,255,0.2);
     }}
-    .sidebar-btn:hover {{ background: #2563eb; border-color: #2563eb; }}
+    .sidebar-btn:hover {{ background: #2563eb; border-color: #2563eb; color: white; }}
 
     /* Profile Card */
     .profile-box {{
@@ -81,22 +84,40 @@ st.markdown(f"""
         margin-bottom: 25px;
     }}
 
-    /* Project Cards */
+    /* FIXED PROJECT CARDS & IMAGE CONTAINER */
     .project-card {{
         background-color: white;
-        padding: 2rem;
+        padding: 1.5rem;
         border-radius: 24px;
         border: 1px solid #e2e8f0;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 550px; 
+        height: 100%; /* Fill the column height */
+        min-height: 580px; /* Uniform height for alignment */
     }}
     .project-card:hover {{
         transform: translateY(-12px);
         border-color: #3b82f6;
         box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.15);
+    }}
+    .project-img-container {{
+        width: 100%;
+        height: 220px;
+        overflow: hidden;
+        border-radius: 18px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    }}
+    .project-img-container img {{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }}
+    .project-card:hover .project-img-container img {{
+        transform: scale(1.05);
     }}
 
     .skill-tag {{
@@ -160,6 +181,7 @@ st.markdown(f"""
         letter-spacing: 0.5px !important;
         border: none !important;
         box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39) !important;
+        width: 100%;
     }}
     </style>
     """, unsafe_allow_html=True)
@@ -223,21 +245,21 @@ elif selection == "Projects":
     projects = [
         {
             "title": "FB to Discord Webhook", 
-            "desc": "An autonomous scraper utilizing Playwright to broadcast targeted news feeds instantly to Discord. Features sophisticated error handling and multi-feed synchronization.", 
+            "desc": "An autonomous scraper utilizing Playwright to broadcast targeted news feeds instantly to Discord. Features sophisticated error handling, anti-detection bypasses, and multi-feed synchronization for real-time updates.", 
             "link": "https://github.com/lamaw09/Facebook-to-Discord-Webhook",
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
             "tags": ["Scraping", "Automation", "Python"]
         },
         {
             "title": "Streamlit Dashboard", 
-            "desc": "A high-performance data visualization suite for tracking automation health in real-time. Features custom CSS themes and REST API integration.", 
+            "desc": "A high-performance data visualization suite for tracking automation health in real-time. Features custom CSS themes, interactive Plotly charts, and seamless REST API integration.", 
             "link": "#",
             "image": "https://images.unsplash.com/photo-1551288049-bbda38a5f072?auto=format&fit=crop&w=800&q=80",
             "tags": ["UI/UX", "Streamlit", "Analytics"]
         }
     ]
     
-    p_col1, p_col2 = st.columns(2)
+    p_col1, p_col2 = st.columns(2, gap="large")
     for i, p in enumerate(projects):
         target_col = p_col1 if i % 2 == 0 else p_col2
         with target_col:
@@ -245,12 +267,14 @@ elif selection == "Projects":
             st.markdown(f"""
             <div class="project-card">
                 <div>
-                    <img src="{p['image']}" style="width:100%; border-radius:18px; height:220px; object-fit:cover; margin-bottom:25px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">
+                    <div class="project-img-container">
+                        <img src="{p['image']}">
+                    </div>
                     <h3 style="margin:0; color:#0f172a; font-size:1.5rem; font-weight: 700;">{p['title']}</h3>
                     <p style="color:#475569; font-size:1rem; margin-top:12px; line-height:1.6;">{p['desc']}</p>
                 </div>
                 <div>
-                    <div style="margin-bottom:25px;">{tag_html}</div>
+                    <div style="margin-top:15px; margin-bottom:25px;">{tag_html}</div>
                     <a href="{p['link']}" target="_blank" style="display:block; text-align:center; color:white; background:#2563eb; text-decoration:none; font-weight:700; font-size: 0.95rem; padding: 14px; border-radius: 12px; transition: 0.3s;">View Case Study ↗</a>
                 </div>
             </div>
