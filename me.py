@@ -250,13 +250,6 @@ elif selection == "Projects":
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
             "tags": ["Scraping", "Automation", "Python"]
         },
-        {
-            "title": "Streamlit Dashboard", 
-            "desc": "A high-performance data visualization suite for tracking automation health in real-time. Features custom CSS themes, interactive Plotly charts, and seamless REST API integration.", 
-            "link": "#",
-            "image": "https://images.unsplash.com/photo-1551288049-bbda38a5f072?auto=format&fit=crop&w=800&q=80",
-            "tags": ["UI/UX", "Streamlit", "Analytics"]
-        }
     ]
     
     p_col1, p_col2 = st.columns(2, gap="large")
