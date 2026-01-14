@@ -5,7 +5,7 @@ from streamlit_lottie import st_lottie
 import base64
 
 # --- PAGE CONFIG ---
-st.set_page_config(page_title="Klyde Joseph", page_icon="🚀", layout="wide")
+st.set_page_config(page_title="My portfolio", page_icon="🚀", layout="wide")
 
 # --- ASSETS ---
 def load_lottieurl(url):
