@@ -202,15 +202,20 @@ with st.sidebar:
     if lottie_coding:
         st_lottie(lottie_coding, height=150, key="coding")
     st.markdown("<h2 style='text-align: center; color: white;'>Navigation</h2>", unsafe_allow_html=True)
-    selection = st.radio("", ["Home", "Projects", "Contact"])
+    # Added "Resume" to navigation as a more reliable viewing method
+    selection = st.radio("", ["Home", "Projects", "Resume", "Contact"])
     
     st.markdown("---")
     st.markdown("<p style='color: #94a3b8; font-size: 0.8rem; font-weight: 600;'>RESUME</p>", unsafe_allow_html=True)
     
-    # Logic to VIEW the resume in a new tab
+    # Standard Download Button (The most reliable way to get the file to the user)
     if resume_base64:
-        # Removed "download" attribute and added target="_blank"
-        st.markdown(f'<a href="data:application/pdf;base64,{resume_base64}" target="_blank" class="sidebar-btn">👁️ View Resume</a>', unsafe_allow_html=True)
+        st.download_button(
+            label="💾 Download Resume",
+            data=base64.b64decode(resume_base64),
+            file_name="Klyde_Joseph_Resume.pdf",
+            mime="application/pdf",
+        )
     else:
         st.markdown("<a href='#' class='sidebar-btn'>📄 CV Not Found</a>", unsafe_allow_html=True)
     
@@ -289,6 +294,16 @@ elif selection == "Projects":
                 </div>
             </div>
             """, unsafe_allow_html=True)
+
+# --- RESUME SECTION (NEW FIX) ---
+elif selection == "Resume":
+    st.markdown("<h1 style='text-align: center; font-size: 3rem;'>📄 My Resume</h1>", unsafe_allow_html=True)
+    if resume_base64:
+        # Embed PDF using an iframe
+        pdf_display = f'<iframe src="data:application/pdf;base64,{resume_base64}" width="100%" height="1000px" type="application/pdf"></iframe>'
+        st.markdown(pdf_display, unsafe_allow_html=True)
+    else:
+        st.error("Resume.pdf file not found. Please ensure it is in the root directory.")
 
 # --- CONTACT SECTION ---
 elif selection == "Contact":
