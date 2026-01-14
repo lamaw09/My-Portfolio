@@ -24,8 +24,19 @@ def get_image_base64(path):
     except:
         return ""
 
+# NEW: Function to load and encode PDF for download
+def get_pdf_base64(path):
+    try:
+        with open(path, "rb") as f:
+            data = f.read()
+        return base64.b64encode(data).decode()
+    except:
+        return None
+
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
 img_base64 = get_image_base64("ID.png")
+# Load the resume (Ensure Resume.pdf is in your directory)
+resume_base64 = get_pdf_base64("Resume.pdf")
 
 # --- CUSTOM CSS (PROFESSIONAL ENHANCEMENTS) ---
 st.markdown(f"""
@@ -54,7 +65,7 @@ st.markdown(f"""
         width: 100%;
         padding: 10px;
         background: rgba(255, 255, 255, 0.1);
-        color: white;
+        color: white !important;
         text-align: center;
         border-radius: 10px;
         text-decoration: none;
@@ -62,7 +73,7 @@ st.markdown(f"""
         font-weight: 600;
         border: 1px solid rgba(255,255,255,0.2);
     }}
-    .sidebar-btn:hover {{ background: #2563eb; border-color: #2563eb; color: white; }}
+    .sidebar-btn:hover {{ background: #2563eb; border-color: #2563eb; color: white !important; }}
 
     /* Profile Card */
     .profile-box {{
@@ -195,7 +206,12 @@ with st.sidebar:
     
     st.markdown("---")
     st.markdown("<p style='color: #94a3b8; font-size: 0.8rem; font-weight: 600;'>RESUME</p>", unsafe_allow_html=True)
-    st.markdown("<a href='#' class='sidebar-btn'>📄 Download CV</a>", unsafe_allow_html=True)
+    
+    # Download logic for the sidebar button
+    if resume_base64:
+        st.markdown(f'<a href="data:application/pdf;base64,{resume_base64}" download="Klyde_Joseph_Resume.pdf" class="sidebar-btn">📄 Download CV</a>', unsafe_allow_html=True)
+    else:
+        st.markdown("<a href='#' class='sidebar-btn'>📄 CV Not Found</a>", unsafe_allow_html=True)
     
     st.markdown("<br><p style='color: #94a3b8; font-size: 0.8rem; font-weight: 600;'>SOCIALS</p>", unsafe_allow_html=True)
     st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lamaw09)")
