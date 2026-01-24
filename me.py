@@ -257,9 +257,9 @@ if selection == "Home":
         
         st.markdown("<br><br>", unsafe_allow_html=True)
         m_col1, m_col2, m_col3 = st.columns(3)
-        with m_col1: st.markdown('<div class="metric-box"><h3>15+</h3><p>Projects Delivered</p></div>', unsafe_allow_html=True)
+        with m_col1: st.markdown('<div class="metric-box"><h3>1</h3><p>Project Delivered</p></div>', unsafe_allow_html=True)
         with m_col2: st.markdown('<div class="metric-box"><h3>99%</h3><p>System Uptime</p></div>', unsafe_allow_html=True)
-        with m_col3: st.markdown('<div class="metric-box"><h3>5+</h3><p>Global Clients</p></div>', unsafe_allow_html=True)
+        with m_col3: st.markdown('<div class="metric-box"><h3>0/h3><p>Global Clients</p></div>', unsafe_allow_html=True)
 
     with col2:
         st.markdown("<br><br>", unsafe_allow_html=True)
