@@ -288,6 +288,13 @@ elif selection == "Projects":
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
             "tags": ["Scraping", "Automation", "Python"]
         },
+         {
+            "title": "News-RSS-to-Discord", 
+            "desc": "An autonomous scraper utilizing Playwright to broadcast targeted news feeds instantly to Discord. Features sophisticated error handling, anti-detection bypasses, and multi-feed synchronization for real-time updates.", 
+            "link": "https://github.com/lamaw09/News-RSS-to-Discord",
+            "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
+            "tags": ["SIntelligence-Gathering", "OSINT", "Real-Time-Monitoring", "News-Aggregator", "Webhook-Integration", "Autonomous-Bot", "Social-Media-Scraper" ]
+        },
     ]
     
     p_col1, p_col2 = st.columns(2, gap="large")
