@@ -39,7 +39,7 @@ img_base64 = get_image_base64("ID.png")
 # CHANGED: Loading Resume.jpg instead of Resume.pdf
 resume_base64 = get_jpg_base64("resume.jpg")
 
-# --- CUSTOM CSS (PROFESSIONAL ENHANCEMENTS) ---
+# --- CUSTOM CSS (FIXED SIZES ADDED) ---
 st.markdown(f"""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -106,8 +106,8 @@ st.markdown(f"""
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 100%; 
-        min-height: 580px;
+        height: 550px; /* FIXED HEIGHT FOR CARDS */
+        margin-bottom: 20px;
     }}
     .project-card:hover {{
         transform: translateY(-12px);
@@ -116,10 +116,10 @@ st.markdown(f"""
     }}
     .project-img-container {{
         width: 100%;
-        height: 220px;
+        height: 200px; /* FIXED HEIGHT FOR IMAGES */
         overflow: hidden;
         border-radius: 18px;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
     }}
     .project-img-container img {{
@@ -132,15 +132,27 @@ st.markdown(f"""
         transform: scale(1.05);
     }}
 
+    .project-description {{
+        height: 100px; /* FIXED HEIGHT FOR TEXT BLOCK */
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        margin-top: 10px;
+        color: #475569;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }}
+
     .skill-tag {{
         display: inline-block;
         background: #f1f5f9;
         color: #475569;
-        padding: 6px 14px;
-        border-radius: 10px;
-        font-size: 0.8rem;
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-size: 0.75rem;
         font-weight: 600;
-        margin: 4px;
+        margin: 2px;
         border: 1px solid #e2e8f0;
     }}
     .project-card:hover .skill-tag {{
@@ -224,7 +236,6 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("<p style='color: #94a3b8; font-size: 0.8rem; font-weight: 600;'>RESUME</p>", unsafe_allow_html=True)
     
-    # Updated Download Button for JPG
     if resume_base64:
         st.download_button(
             label="💾 Download Resume",
@@ -275,7 +286,7 @@ if selection == "Home":
         </div>
         """, unsafe_allow_html=True)
 
-# --- PROJECTS SECTION ---
+# --- PROJECTS SECTION (SIZES CORRECTED) ---
 elif selection == "Projects":
     st.markdown("<h1 style='text-align: center; font-size: 3rem;'>🚀 Featured Projects</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; color: #64748b; font-size: 1.1rem; margin-bottom: 3rem;'>Robust systems designed for scale, precision, and efficiency.</p>", unsafe_allow_html=True)
@@ -283,31 +294,31 @@ elif selection == "Projects":
     projects = [
         {
             "title": "FB to Discord Webhook", 
-            "desc": "An autonomous scraper utilizing Playwright to broadcast targeted news feeds instantly to Discord. Features sophisticated error handling, anti-detection bypasses, and multi-feed synchronization for real-time updates.", 
+            "desc": "An autonomous scraper utilizing Playwright to broadcast targeted news feeds instantly to Discord. Features sophisticated error handling and anti-detection.", 
             "link": "https://github.com/lamaw09/Facebook-to-Discord-Webhook",
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
             "tags": ["Scraping", "Automation", "Python"]
         },
         {
             "title": "News-RSS-to-Discord", 
-            "desc": "An autonomous scraper utilizing Playwright to broadcast targeted news feeds instantly to Discord. Features sophisticated error handling, anti-detection bypasses, and multi-feed synchronization for real-time updates.", 
+            "desc": "Autonomous scraper utilizing Playwright to broadcast targeted news feeds instantly to Discord. Includes multi-feed synchronization.", 
             "link": "https://github.com/lamaw09/News-RSS-to-Discord",
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
-            "tags": ["Intelligence-Gathering", "OSINT", "Real-Time-Monitoring", "News-Aggregator", "Webhook-Integration", "Autonomous-Bot", "Social-Media-Scraper" ]
+            "tags": ["Intelligence", "OSINT", "Webhook"]
         },
         {
             "title": "Bombo Radyo Website", 
-            "desc": "Local news website integration and automation services for real-time broadcasting updates.", 
+            "desc": "Local news website integration and automation services for real-time broadcasting updates across platforms.", 
             "link": "https://github.com/lamaw09/Bombo-Radyo-Local-Website",
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
-            "tags": ["Scraping", "Automation", "Python"]
+            "tags": ["Scraping", "Web", "Python"]
         }
     ]
     
-    p_col1, p_col2 = st.columns(2, gap="large")
+    # Loop to handle layout automatically
+    cols = st.columns(2, gap="large")
     for i, p in enumerate(projects):
-        target_col = p_col1 if i % 2 == 0 else p_col2
-        with target_col:
+        with cols[i % 2]:
             tag_html = "".join([f'<span class="skill-tag">{tag}</span>' for tag in p['tags']])
             st.markdown(f"""
             <div class="project-card">
@@ -315,17 +326,17 @@ elif selection == "Projects":
                     <div class="project-img-container">
                         <img src="{p['image']}">
                     </div>
-                    <h3 style="margin:0; color:#0f172a; font-size:1.5rem; font-weight: 700;">{p['title']}</h3>
-                    <p style="color:#475569; font-size:1rem; margin-top:12px; line-height:1.6;">{p['desc']}</p>
+                    <h3 style="margin:0; color:#0f172a; font-size:1.4rem; font-weight: 700;">{p['title']}</h3>
+                    <div class="project-description">{p['desc']}</div>
                 </div>
                 <div>
-                    <div style="margin-top:15px; margin-bottom:25px;">{tag_html}</div>
-                    <a href="{p['link']}" target="_blank" style="display:block; text-align:center; color:white; background:#2563eb; text-decoration:none; font-weight:700; font-size: 0.95rem; padding: 14px; border-radius: 12px; transition: 0.3s;">View Case Study ↗</a>
+                    <div style="margin-bottom:20px;">{tag_html}</div>
+                    <a href="{p['link']}" target="_blank" style="display:block; text-align:center; color:white; background:#2563eb; text-decoration:none; font-weight:700; font-size: 0.9rem; padding: 12px; border-radius: 12px;">View Case Study ↗</a>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
-# --- RESUME SECTION (MODIFIED FOR JPG) ---
+# --- RESUME SECTION ---
 elif selection == "Resume":
     st.markdown("<h1 style='text-align: center; font-size: 3rem;'>📄 My Resume</h1>", unsafe_allow_html=True)
     if resume_base64:
@@ -335,41 +346,32 @@ elif selection == "Resume":
             </div>
             """, unsafe_allow_html=True)
     else:
-        st.error("Resume.jpg file not found. Please ensure it is in the root directory and named exactly 'resume.jpg'.")
+        st.error("Resume.jpg file not found.")
 
 # --- CONTACT SECTION ---
 elif selection == "Contact":
     st.markdown("<h1 style='text-align: center; font-size: 3rem;'>📬 Get In Touch</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #64748b; font-size: 1.1rem; margin-bottom: 3rem;'>Let's collaborate on your next automation or AI project.</p>", unsafe_allow_html=True)
     
     c1, c2 = st.columns([1.5, 1], gap="large")
     with c1:
         with st.form("contact_form"):
-            st.markdown("<p style='font-weight: 600; color: #475569;'>Send a Message</p>", unsafe_allow_html=True)
-            name = st.text_input("Full Name", placeholder="e.g. John Doe")
-            email = st.text_input("Email Address", placeholder="name@company.com")
-            msg = st.text_area("Your Project Description", placeholder="Briefly describe what you're looking to build...")
+            name = st.text_input("Full Name")
+            email = st.text_input("Email Address")
+            msg = st.text_area("Your Project Description")
             if st.form_submit_button("Submit Inquiry"):
                 st.balloons()
-                st.success(f"Thank you, {name}! Your inquiry has been sent.")
+                st.success(f"Thank you, {name}!")
     with c2:
         st.markdown(f"""
         <div class="contact-info-card">
-            <h3 style="margin-top:0; color:white;">Contact Details</h3>
-            <p style="color: #94a3b8; font-size: 0.8rem; font-weight: 800; margin-bottom: 5px; letter-spacing: 1.2px;">LOCATION</p>
-            <p style="margin-bottom: 25px; font-size: 1.1rem;">📍 Clarin, Northern Mindanao, PH</p>
-            
-            <p style="color: #94a3b8; font-size: 0.8rem; font-weight: 800; margin-bottom: 5px; letter-spacing: 1.2px;">DIRECT EMAIL</p>
-            <p style="margin-bottom: 25px; font-size: 1.1rem;">📧 klydejosephy@gmail.com</p>
-            
-            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 18px; border-left: 4px solid #3b82f6;">
-                <p style="color: #60a5fa; font-size: 0.9rem; font-weight: 600; margin: 0;">Business Hours</p>
-                <p style="color: white; font-size: 0.85rem; margin-top: 5px;">Mon - Fri: 9:00 AM - 6:00 PM (GMT+8)</p>
-            </div>
+            <h3 style="color:white;">Contact Details</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem;">LOCATION</p>
+            <p>📍 Clarin, Northern Mindanao, PH</p>
+            <p style="color: #94a3b8; font-size: 0.8rem;">DIRECT EMAIL</p>
+            <p>📧 klydejosephy@gmail.com</p>
         </div>
         """, unsafe_allow_html=True)
 
 # --- FOOTER ---
-st.markdown("<br><br><br>", unsafe_allow_html=True)
-st.markdown("<hr style='opacity: 0.1;'>", unsafe_allow_html=True)
-st.markdown(f"<p style='text-align: center; color: #64748b; font-size: 0.9rem; font-weight:500;'>© {date.today().year} Klyde Joseph | Automation Engineering Portfolio | Built with Streamlit & Python</p>", unsafe_allow_html=True)
+st.markdown("<br><br>", unsafe_allow_html=True)
+st.markdown(f"<p style='text-align: center; color: #64748b; font-size: 0.9rem;'>© {date.today().year} Klyde Joseph | Built with Streamlit</p>", unsafe_allow_html=True)
