@@ -288,13 +288,20 @@ elif selection == "Projects":
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
             "tags": ["Scraping", "Automation", "Python"]
         },
-         {
+        {
             "title": "News-RSS-to-Discord", 
             "desc": "An autonomous scraper utilizing Playwright to broadcast targeted news feeds instantly to Discord. Features sophisticated error handling, anti-detection bypasses, and multi-feed synchronization for real-time updates.", 
             "link": "https://github.com/lamaw09/News-RSS-to-Discord",
             "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
-            "tags": ["SIntelligence-Gathering", "OSINT", "Real-Time-Monitoring", "News-Aggregator", "Webhook-Integration", "Autonomous-Bot", "Social-Media-Scraper" ]
+            "tags": ["Intelligence-Gathering", "OSINT", "Real-Time-Monitoring", "News-Aggregator", "Webhook-Integration", "Autonomous-Bot", "Social-Media-Scraper" ]
         },
+        {
+            "title": "Bombo Radyo Website", 
+            "desc": "Local news website integration and automation services for real-time broadcasting updates.", 
+            "link": "https://github.com/lamaw09/Bombo-Radyo-Local-Website",
+            "image": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
+            "tags": ["Scraping", "Automation", "Python"]
+        }
     ]
     
     p_col1, p_col2 = st.columns(2, gap="large")
@@ -322,14 +329,13 @@ elif selection == "Projects":
 elif selection == "Resume":
     st.markdown("<h1 style='text-align: center; font-size: 3rem;'>📄 My Resume</h1>", unsafe_allow_html=True)
     if resume_base64:
-        # UPDATED: Replaced iframe with a clean image viewer
         st.markdown(f"""
             <div class="resume-viewer-container">
                 <img src="data:image/jpeg;base64,{resume_base64}" class="resume-img" alt="Resume JPG">
             </div>
             """, unsafe_allow_html=True)
     else:
-        st.error("Resume.jpg file not found. Please ensure it is in the root directory and named exactly 'Resume.jpg'.")
+        st.error("Resume.jpg file not found. Please ensure it is in the root directory and named exactly 'resume.jpg'.")
 
 # --- CONTACT SECTION ---
 elif selection == "Contact":
