@@ -12,13 +12,15 @@ def load_lottieurl(url):
     try:
         r = requests.get(url)
         return r.json() if r.status_code == 200 else None
-    except: return None
+    except: 
+        return None
 
 def get_base64(path):
     try:
         with open(path, "rb") as f:
             return base64.b64encode(f.read()).decode()
-    except: return ""
+    except: 
+        return ""
 
 # Load assets
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
@@ -177,7 +179,7 @@ with st.sidebar:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # --- HOME ---
-if "Home" in selection:
+if selection == "🏠 Home":
     c1, c2 = st.columns([1.5, 1], gap="large")
     with c1:
         st.markdown("<br><br>", unsafe_allow_html=True)
@@ -188,12 +190,6 @@ if "Home" in selection:
         
         tags = ["Python Expert", "Web Scraping", "Playwright", "LLM Integration", "Streamlit", "API Architecture"]
         st.markdown(" ".join([f'<span class="skill-tag">{t}</span>' for t in tags]), unsafe_allow_html=True)
-        
-        st.markdown("<br>", unsafe_allow_html=True)
-        col_m1, col_m2, col_m3 = st.columns(3)
-        col_m1.metric("Projects", "10+", "+2 this month")
-        col_m2.metric("Efficiency", "90%", "Manual time saved")
-        col_m3.metric("Uptime", "99.9%", "Cloud deployed")
 
     with c2:
         st.markdown("<br><br>", unsafe_allow_html=True)
@@ -213,7 +209,7 @@ if "Home" in selection:
         """, unsafe_allow_html=True)
 
 # --- PROJECTS ---
-elif "Projects" in selection:
+elif selection == "🚀 Projects":
     st.markdown("<h1 style='text-align: center; font-size: 3.5rem;'>Featured Builds</h1>", unsafe_allow_html=True)
     
     projs = [
@@ -239,7 +235,7 @@ elif "Projects" in selection:
             """, unsafe_allow_html=True)
 
 # --- RESUME ---
-elif "Resume" in selection:
+elif selection == "📄 Resume":
     st.markdown("<h1 style='text-align: center;'>Professional Background</h1>", unsafe_allow_html=True)
     if resume_base64:
         st.markdown(f'<div style="text-align:center"><img src="data:image/jpeg;base64,{resume_base64}" style="max-width:80%; border-radius:20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);"></div>', unsafe_allow_html=True)
@@ -247,7 +243,7 @@ elif "Resume" in selection:
         st.info("Upload 'resume.jpg' to the root directory to display here.")
 
 # --- CONTACT ---
-elif "Contact" in selection:
+elif selection == "📬 Contact":
     c1, c2 = st.columns([1, 1], gap="large")
     with c1:
         if lottie_contact: st_lottie(lottie_contact, height=300)
@@ -270,4 +266,5 @@ elif "Contact" in selection:
                 st.success("Message sent! I'll get back to you shortly.")
 
 # --- FOOTER ---
-st.markdown(f"<p style='text-align:center; color:#94a3b8; margin-top:50px;'>© {date.today().year} | Designed with ❤️ by Klyde Joseph</p>", unsafe_allow_html=True)
+st.markdown("<br><hr>", unsafe_allow_html=True)
+st.markdown(f"<p style='text-align:center; color:#94a3b8;'>© {date.today().year} | Designed with ❤️ by Klyde Joseph Yabo</p>", unsafe_allow_html=True)
